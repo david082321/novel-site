@@ -579,9 +579,9 @@ export async function ensureAnnotationSchema(env) {
 // 标准错误响应格式，确保API返回一致的错误结构
 //
 // 使用示例：
-// return errorResponse(400, '参数错误', 'INVALID_PARAM', { field: 'book_id' });
-// return errorResponse(404, '书籍不存在', 'NOT_FOUND');
-// return errorResponse(500, '服务器内部错误');
+// return errorResponse(400, '參數錯誤', 'INVALID_PARAM', { field: 'book_id' });
+// return errorResponse(404, '書籍不存在', 'NOT_FOUND');
+// return errorResponse(500, '伺服器內部錯誤');
 
 export function errorResponse(status, message, code = null, details = null) {
   const response = {
@@ -604,28 +604,28 @@ export function errorResponse(status, message, code = null, details = null) {
 
 // 常用错误响应快捷函数
 export const Errors = {
-  badRequest: (message = '请求参数错误', details = null) =>
+  badRequest: (message = '請求參數錯誤', details = null) =>
     errorResponse(400, message, 'BAD_REQUEST', details),
   
-  unauthorized: (message = '未授权，请先登录') =>
+  unauthorized: (message = '未授權，請先登入') =>
     errorResponse(401, message, 'UNAUTHORIZED'),
   
-  forbidden: (message = '权限不足') =>
+  forbidden: (message = '權限不足') =>
     errorResponse(403, message, 'FORBIDDEN'),
   
-  notFound: (message = '资源不存在') =>
+  notFound: (message = '資源不存在') =>
     errorResponse(404, message, 'NOT_FOUND'),
   
-  conflict: (message = '资源冲突') =>
+  conflict: (message = '資源衝突') =>
     errorResponse(409, message, 'CONFLICT'),
   
-  tooManyRequests: (message = '请求过于频繁，请稍后再试') =>
+  tooManyRequests: (message = '請求過於頻繁，請稍後再試') =>
     errorResponse(429, message, 'RATE_LIMITED'),
   
-  internal: (message = '服务器内部错误') =>
+  internal: (message = '伺服器內部錯誤') =>
     errorResponse(500, message, 'INTERNAL_ERROR'),
   
-  serviceUnavailable: (message = '服务暂时不可用') =>
+  serviceUnavailable: (message = '服務暫時不可用') =>
     errorResponse(503, message, 'SERVICE_UNAVAILABLE')
 };
 

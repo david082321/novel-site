@@ -18,10 +18,10 @@ export async function onRequestDelete(context) {
   ).bind(id).first();
 
   if (!anno) {
-    return Response.json({ error: '批注不存在' }, { status: 404 });
+    return Response.json({ error: '批註不存在' }, { status: 404 });
   }
   if (anno.user_id !== auth.userId) {
-    return Response.json({ error: '只能删除自己的批注' }, { status: 403 });
+    return Response.json({ error: '只能刪除自己的批註' }, { status: 403 });
   }
 
   // 先清理关联点赞记录

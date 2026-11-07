@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>批注管理 - 我的书架</title>
+  <title>批註管理 - 我的書架</title>
   
-  <!-- P3修复：DNS预解析和预连接 -->
+  <!-- P3修復：DNS預解析和預連接 -->
   <link rel="preconnect" href="https://github.com" crossorigin>
   <link rel="dns-prefetch" href="https://github.com">
   
@@ -17,7 +17,7 @@
     .anno-header h1 { font-size: 1.5rem; margin: 0; }
     .anno-header a { color: var(--accent); text-decoration: none; }
     
-    /* 统计卡片 */
+    /* 統計卡片 */
     .stats-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
     .stat-card {
       background: var(--card-bg);
@@ -33,7 +33,7 @@
     .stat-card .num { font-size: 1.5rem; font-weight: 600; color: var(--text); }
     .stat-card .label { font-size: 0.85rem; color: var(--text-light); margin-top: 4px; }
     
-    /* 筛选栏 */
+    /* 篩選欄 */
     .filter-row {
       display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
       background: var(--card-bg); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);
@@ -44,7 +44,7 @@
     }
     .filter-row input[type="text"] { flex: 1; min-width: 150px; }
     
-    /* 批量操作栏 */
+    /* 批次操作欄 */
     .batch-bar {
       display: none; background: var(--accent); color: #fff; padding: 10px 16px;
       border-radius: var(--radius); margin-bottom: 12px; align-items: center; gap: 12px;
@@ -53,7 +53,7 @@
     .batch-bar button { background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 12px; border-radius: var(--radius); cursor: pointer; }
     .batch-bar button:hover { background: rgba(255,255,255,0.3); }
     
-    /* 批注列表 */
+    /* 批註列表 */
     .anno-list { display: flex; flex-direction: column; gap: 12px; }
     .anno-item {
       background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
@@ -93,7 +93,7 @@
     .anno-actions button:hover { border-color: var(--accent); color: var(--accent); }
     .anno-actions button.danger:hover { border-color: #dc2626; color: #dc2626; }
     
-    /* 分页 */
+    /* 分頁 */
     .pagination {
       display: flex; justify-content: center; align-items: center; gap: 12px;
       margin-top: 20px; padding: 16px;
@@ -106,13 +106,13 @@
     .pagination button:not(:disabled):hover { border-color: var(--accent); }
     .pagination .page-info { font-size: 14px; color: var(--text-light); }
     
-    /* 空状态 */
+    /* 空狀態 */
     .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
     
-    /* 加载状态 */
+    /* 載入狀態 */
     .loading-state { text-align: center; padding: 40px; color: var(--text-light); }
     
-    /* Tab 切换 */
+    /* Tab 切換 */
     .tab-bar { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid var(--border); }
     .tab-btn {
       padding: 10px 20px; border: none; background: none; cursor: pointer;
@@ -124,7 +124,7 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
     
-    /* 举报项 */
+    /* 檢舉項 */
     .report-item {
       background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
       padding: 14px; margin-bottom: 12px;
@@ -143,7 +143,7 @@
     .report-actions button.btn-keep { border-color: #16a34a; color: #16a34a; }
     .report-actions button.btn-keep:hover { background: #16a34a; color: #fff; }
     
-    /* P2修复：确认对话框样式 */
+    /* P2修復：確認對話框樣式 */
     .confirm-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5); z-index: 1000;
@@ -171,14 +171,14 @@
 <body>
   <div class="anno-admin">
     <div class="anno-header">
-      <h1>📝 批注管理</h1>
-      <div><a href="/admin.html">← 返回管理后台</a> <a href="#" onclick="doLogout();return false" style="font-size:12px;color:#e74c3c;margin-left:12px">退出登录</a></div>
+      <h1>📝 批註管理</h1>
+      <div><a href="/admin.html">← 返回管理後台</a> <a href="#" onclick="doLogout();return false" style="font-size:12px;color:#e74c3c;margin-left:12px">退出登入</a></div>
     </div>
     
     <div class="stats-row" id="stats-row">
       <div class="stat-card" data-filter="all">
         <div class="num" id="stat-total">-</div>
-        <div class="label">总数</div>
+        <div class="label">總數</div>
       </div>
       <div class="stat-card" data-filter="today">
         <div class="num" id="stat-today">-</div>
@@ -186,7 +186,7 @@
       </div>
       <div class="stat-card" data-filter="reported">
         <div class="num" id="stat-reported">-</div>
-        <div class="label">被举报</div>
+        <div class="label">被檢舉</div>
       </div>
       <div class="stat-card" data-filter="removed">
         <div class="num" id="stat-removed">-</div>
@@ -195,71 +195,71 @@
     </div>
     
     <div class="tab-bar">
-      <button class="tab-btn active" data-tab="annotations">📝 批注列表</button>
-      <button class="tab-btn" data-tab="reports">⚠️ 举报管理</button>
+      <button class="tab-btn active" data-tab="annotations">📝 批註列表</button>
+      <button class="tab-btn" data-tab="reports">⚠️ 檢舉管理</button>
     </div>
     
     <div class="tab-panel active" id="panel-annotations">
     <div class="filter-row">
       <select id="filter-book">
-        <option value="">全部书籍</option>
+        <option value="">全部書籍</option>
       </select>
       <select id="filter-status">
-        <option value="">全部状态</option>
+        <option value="">全部狀態</option>
         <option value="normal">正常</option>
-        <option value="reported">被举报</option>
+        <option value="reported">被檢舉</option>
         <option value="removed">已移除</option>
       </select>
       <select id="filter-visibility">
-        <option value="">全部类型</option>
-        <option value="public">公开</option>
+        <option value="">全部類型</option>
+        <option value="public">公開</option>
         <option value="private">私有</option>
       </select>
-      <input type="text" id="filter-search" placeholder="搜索批注内容或原文...">
-      <button class="btn btn-sm" id="btn-search">搜索</button>
+      <input type="text" id="filter-search" placeholder="搜尋批註內容或原文...">
+      <button class="btn btn-sm" id="btn-search">搜尋</button>
     </div>
     
     <div class="batch-bar" id="batch-bar">
-      <span>已选 <strong id="selected-count">0</strong> 条</span>
-      <button id="batch-remove">批量移除</button>
-      <button id="batch-restore">批量恢复</button>
+      <span>已選 <strong id="selected-count">0</strong> 條</span>
+      <button id="batch-remove">批次移除</button>
+      <button id="batch-restore">批次復原</button>
       <button id="batch-cancel">取消</button>
     </div>
     
     <div class="anno-list" id="anno-list">
-      <div class="loading-state">加载中...</div>
+      <div class="loading-state">載入中...</div>
     </div>
     
     <div class="pagination" id="pagination" style="display:none">
-      <button id="btn-prev">上一页</button>
+      <button id="btn-prev">上一頁</button>
       <span class="page-info"><span id="page-current">1</span> / <span id="page-total">1</span></span>
-      <button id="btn-next">下一页</button>
+      <button id="btn-next">下一頁</button>
     </div>
     </div><!-- end panel-annotations -->
     
     <div class="tab-panel" id="panel-reports">
       <div class="filter-row">
         <select id="report-filter-status">
-          <option value="">全部状态</option>
-          <option value="pending">待处理</option>
-          <option value="escalated">社区投票中</option>
-          <option value="resolved">已处理</option>
+          <option value="">全部狀態</option>
+          <option value="pending">待處理</option>
+          <option value="escalated">社區投票中</option>
+          <option value="resolved">已處理</option>
         </select>
         <select id="report-filter-book">
-          <option value="">全部书籍</option>
+          <option value="">全部書籍</option>
         </select>
       </div>
-      <div id="report-list"><div class="loading-state">加载中...</div></div>
+      <div id="report-list"><div class="loading-state">載入中...</div></div>
       <div class="pagination" id="report-pagination" style="display:none">
-        <button id="report-btn-prev">上一页</button>
+        <button id="report-btn-prev">上一頁</button>
         <span class="page-info"><span id="report-page-current">1</span> / <span id="report-page-total">1</span></span>
-        <button id="report-btn-next">下一页</button>
+        <button id="report-btn-next">下一頁</button>
       </div>
     </div><!-- end panel-reports -->
   </div>
 
   <script>
-    // 认证由HttpOnly Cookie自动携带，页面加载时检查登录状态
+    // 認證由HttpOnly Cookie自動攜帶，頁面載入時檢查登入狀態
     let currentPage = 1;
     let totalPages = 1;
     let selectedIds = new Set();
@@ -278,7 +278,7 @@
       return fetch(path, opts);
     }
 
-    // 获取当前用户信息
+    // 取得目前用戶資訊
     async function doLogout() {
       try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }); } catch {}
       location.href = '/admin.html';
@@ -290,12 +290,12 @@
         const data = await res.json();
         currentRole = data.role;
       } else {
-        alert('请先登录');
+        alert('請先登入');
         location.href = '/admin.html';
       }
     }
 
-    // 加载统计
+    // 載入統計
     async function loadStats() {
       const res = await api('GET', '/api/admin/annotations/stats');
       if (res.ok) {
@@ -307,7 +307,7 @@
       }
     }
 
-    // 加载书籍列表
+    // 載入書籍列表
     async function loadBooks() {
       const res = await api('GET', '/api/admin/books');
       if (res.ok) {
@@ -322,7 +322,7 @@
       }
     }
 
-    // 加载批注列表
+    // 載入批註列表
     async function loadAnnotations() {
       const bookId = document.getElementById('filter-book').value;
       const status = document.getElementById('filter-status').value;
@@ -336,11 +336,11 @@
       if (search) params.set('search', search);
 
       const list = document.getElementById('anno-list');
-      list.innerHTML = '<div class="loading-state">加载中...</div>';
+      list.innerHTML = '<div class="loading-state">載入中...</div>';
 
       const res = await api('GET', `/api/admin/annotations?${params}`);
       if (!res.ok) {
-        list.innerHTML = '<div class="empty-state">加载失败</div>';
+        list.innerHTML = '<div class="empty-state">載入失敗</div>';
         return;
       }
 
@@ -349,7 +349,7 @@
       totalPages = data.pagination?.totalPages || 1;
 
       if (annos.length === 0) {
-        list.innerHTML = '<div class="empty-state">暂无批注</div>';
+        list.innerHTML = '<div class="empty-state">暫無批註</div>';
         document.getElementById('pagination').style.display = 'none';
         return;
       }
@@ -368,7 +368,7 @@
       const roleBadge = a.user_role === 'super_admin' ? '<span class="badge badge-super">超管</span>' :
                         a.user_role === 'admin' ? '<span class="badge badge-admin">管理</span>' :
                         a.user_role === 'demo' ? '<span class="badge badge-demo">demo</span>' : '';
-      const statusBadge = a.status === 'reported' ? '<span class="badge badge-reported">⚠️举报</span>' :
+      const statusBadge = a.status === 'reported' ? '<span class="badge badge-reported">⚠️檢舉</span>' :
                           a.status === 'removed' ? '<span class="badge badge-removed">🚫已移除</span>' : '';
       const visBadge = a.visibility === 'private' ? '<span class="badge badge-private">🔒私有</span>' : '';
       
@@ -393,10 +393,10 @@
                 <div class="anno-actions">
                   <button class="btn-context" data-book="${a.book_id}" data-chapter="${a.chapter_id}" data-para="${a.para_idx}">上下文</button>
                   ${isRemoved ? 
-                    `<button class="btn-restore" data-id="${a.id}">恢复</button>` :
+                    `<button class="btn-restore" data-id="${a.id}">復原</button>` :
                     `<button class="btn-remove" data-id="${a.id}">移除</button>`
                   }
-                  ${canDelete ? `<button class="btn-delete danger" data-id="${a.id}">永久删除</button>` : ''}
+                  ${canDelete ? `<button class="btn-delete danger" data-id="${a.id}">永久刪除</button>` : ''}
                 </div>
               </div>
             </div>
@@ -413,17 +413,17 @@
       if (!dateStr) return '';
       const diff = Date.now() - new Date(dateStr + 'Z').getTime();
       const m = Math.floor(diff / 60000);
-      if (m < 1) return '刚刚';
-      if (m < 60) return m + '分钟前';
+      if (m < 1) return '剛剛';
+      if (m < 60) return m + '分鐘前';
       const h = Math.floor(m / 60);
-      if (h < 24) return h + '小时前';
+      if (h < 24) return h + '小時前';
       const d = Math.floor(h / 24);
       if (d < 30) return d + '天前';
-      return new Date(dateStr).toLocaleDateString('zh-CN');
+      return new Date(dateStr).toLocaleDateString('zh-TW');
     }
 
     function bindItemEvents() {
-      // 复选框
+      // 複選框
       document.querySelectorAll('.anno-checkbox').forEach(cb => {
         cb.addEventListener('change', () => {
           const id = parseInt(cb.dataset.id);
@@ -434,7 +434,7 @@
         });
       });
 
-      // 上下文按钮
+      // 上下文按鈕
       document.querySelectorAll('.btn-context').forEach(btn => {
         btn.addEventListener('click', () => {
           const bookId = btn.dataset.book;
@@ -444,35 +444,35 @@
         });
       });
 
-      // 移除按钮
+      // 移除按鈕
       document.querySelectorAll('.btn-remove').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('确定移除此批注？')) return;
+          if (!confirm('確定移除此批註？')) return;
           const id = btn.dataset.id;
           const res = await api('PUT', `/api/admin/annotations/${id}`, { status: 'removed' });
           if (res.ok) loadAnnotations();
-          else alert('操作失败');
+          else alert('操作失敗');
         });
       });
 
-      // 恢复按钮
+      // 復原按鈕
       document.querySelectorAll('.btn-restore').forEach(btn => {
         btn.addEventListener('click', async () => {
           const id = btn.dataset.id;
           const res = await api('PUT', `/api/admin/annotations/${id}`, { status: 'normal' });
           if (res.ok) loadAnnotations();
-          else alert('操作失败');
+          else alert('操作失敗');
         });
       });
 
-      // 永久删除按钮
+      // 永久刪除按鈕
       document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('永久删除后无法恢复，确定？')) return;
+          if (!confirm('永久刪除後無法復原，確定？')) return;
           const id = btn.dataset.id;
           const res = await api('DELETE', `/api/admin/annotations/${id}`);
           if (res.ok) { loadAnnotations(); loadStats(); }
-          else alert('删除失败');
+          else alert('刪除失敗');
         });
       });
     }
@@ -484,7 +484,7 @@
       bar.classList.toggle('visible', count > 0);
     }
 
-    // 统计卡片点击
+    // 統計卡片點擊
     document.querySelectorAll('.stat-card').forEach(card => {
       card.addEventListener('click', () => {
         const filter = card.dataset.filter;
@@ -501,7 +501,7 @@
       });
     });
 
-    // 筛选
+    // 篩選
     document.getElementById('btn-search').addEventListener('click', () => {
       currentPage = 1;
       loadAnnotations();
@@ -516,7 +516,7 @@
       });
     });
 
-    // 分页
+    // 分頁
     document.getElementById('btn-prev').addEventListener('click', () => {
       if (currentPage > 1) { currentPage--; loadAnnotations(); }
     });
@@ -524,11 +524,11 @@
       if (currentPage < totalPages) { currentPage++; loadAnnotations(); }
     });
 
-    // P2修复：批量操作确认对话框
-    // 创建自定义确认对话框
+    // P2修復：批次操作確認對話框
+    // 建立自訂確認對話框
     function showConfirmDialog(title, message, confirmText, isDanger = false) {
       return new Promise((resolve) => {
-        // 创建对话框元素
+        // 建立對話框元素
         const overlay = document.createElement('div');
         overlay.className = 'confirm-overlay';
         overlay.innerHTML = `
@@ -543,7 +543,7 @@
         `;
         document.body.appendChild(overlay);
         
-        // 绑定事件
+        // 綁定事件
         const cancelBtn = overlay.querySelector('.cancel');
         const confirmBtn = overlay.querySelector('.confirm');
         
@@ -558,39 +558,39 @@
           if (e.target === overlay) close(false);
         });
         
-        // 聚焦到确认按钮
+        // 聚焦到確認按鈕
         confirmBtn.focus();
       });
     }
 
-    // 批量操作
+    // 批次操作
     document.getElementById('batch-remove').addEventListener('click', async () => {
       const count = selectedIds.size;
       const confirmed = await showConfirmDialog(
-        '批量移除确认',
-        `确定要移除选中的 <strong>${count}</strong> 条批注吗？<br><small style="color:var(--text-light)">移除后批注将不再公开显示，但可通过"恢复"功能恢复。</small>`,
-        '确认移除',
+        '批次移除確認',
+        `確定要移除選中的 <strong>${count}</strong> 條批註嗎？<br><small style="color:var(--text-light)">移除後批註將不再公開顯示，但可透過"復原"功能復原。</small>`,
+        '確認移除',
         true
       );
       if (!confirmed) return;
       
       const res = await api('POST', '/api/admin/annotations/batch', { ids: [...selectedIds], action: 'remove' });
       if (res.ok) { selectedIds.clear(); updateBatchBar(); loadAnnotations(); loadStats(); }
-      else alert('操作失败');
+      else alert('操作失敗');
     });
     document.getElementById('batch-restore').addEventListener('click', async () => {
       const count = selectedIds.size;
       const confirmed = await showConfirmDialog(
-        '批量恢复确认',
-        `确定要恢复选中的 <strong>${count}</strong> 条批注吗？`,
-        '确认恢复',
+        '批次復原確認',
+        `確定要復原選中的 <strong>${count}</strong> 條批註嗎？`,
+        '確認復原',
         false
       );
       if (!confirmed) return;
       
       const res = await api('POST', '/api/admin/annotations/batch', { ids: [...selectedIds], action: 'restore' });
       if (res.ok) { selectedIds.clear(); updateBatchBar(); loadAnnotations(); loadStats(); }
-      else alert('操作失败');
+      else alert('操作失敗');
     });
     document.getElementById('batch-cancel').addEventListener('click', () => {
       selectedIds.clear();
@@ -599,7 +599,7 @@
       updateBatchBar();
     });
 
-    // Tab 切换
+    // Tab 切換
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -613,7 +613,7 @@
       });
     });
 
-    // --- 举报管理 ---
+    // --- 檢舉管理 ---
     let reportPage = 1;
     let reportTotalPages = 1;
     let reportsLoaded = false;
@@ -626,17 +626,17 @@
       if (bookId) params.set('bookId', bookId);
 
       const list = document.getElementById('report-list');
-      list.innerHTML = '<div class="loading-state">加载中...</div>';
+      list.innerHTML = '<div class="loading-state">載入中...</div>';
 
       const res = await api('GET', `/api/admin/reports?${params}`);
-      if (!res.ok) { list.innerHTML = '<div class="empty-state">加载失败</div>'; return; }
+      if (!res.ok) { list.innerHTML = '<div class="empty-state">載入失敗</div>'; return; }
 
       const data = await res.json();
       const reports = data.reports || [];
       reportTotalPages = data.pagination?.totalPages || 1;
 
       if (reports.length === 0) {
-        list.innerHTML = '<div class="empty-state">暂无举报</div>';
+        list.innerHTML = '<div class="empty-state">暫無檢舉</div>';
         document.getElementById('report-pagination').style.display = 'none';
         return;
       }
@@ -652,9 +652,9 @@
 
     function renderReportItem(r) {
       const statusMap = {
-        'pending': '<span class="badge badge-reported">待处理</span>',
+        'pending': '<span class="badge badge-reported">待處理</span>',
         'escalated': '<span class="badge" style="background:#fef3c7;color:#92400e">投票中</span>',
-        'resolved': '<span class="badge" style="background:#dcfce7;color:#15803d">已处理</span>'
+        'resolved': '<span class="badge" style="background:#dcfce7;color:#15803d">已處理</span>'
       };
       const roleBadge = r.anno_user_role === 'super_admin' ? '<span class="badge badge-super">超管</span>' :
                         r.anno_user_role === 'admin' ? '<span class="badge badge-admin">管理</span>' :
@@ -666,21 +666,21 @@
           <div class="anno-quote">${escHtml(r.sent_text || '')}</div>
           <div class="anno-content">${escHtml(r.anno_content || '')}</div>
           <div class="anno-meta">
-            <span>批注作者: ${escHtml(r.anno_username || '未知')}</span> ${roleBadge}
+            <span>批註作者: ${escHtml(r.anno_username || '未知')}</span> ${roleBadge}
             <span>📖 ${escHtml(r.book_title || '')} / ${escHtml(r.chapter_title || '')}</span>
             ${statusMap[r.status] || ''}
-            <span>举报数: ${r.report_count || 1}</span>
+            <span>檢舉數: ${r.report_count || 1}</span>
           </div>
-          <div class="report-reason">举报理由: ${escHtml(r.reason)}</div>
+          <div class="report-reason">檢舉理由: ${escHtml(r.reason)}</div>
           <div class="anno-meta">
-            <span>举报人: ${escHtml(r.reporter_username || '游客')}</span>
+            <span>檢舉人: ${escHtml(r.reporter_username || '遊客')}</span>
             <span>🕐 ${timeAgo(r.created_at)}</span>
-            ${r.handler_action ? `<span>处理结果: ${r.handler_action === 'remove' ? '移除' : '保留'}</span>` : ''}
+            ${r.handler_action ? `<span>處理結果: ${r.handler_action === 'remove' ? '移除' : '保留'}</span>` : ''}
           </div>
           ${isPending ? `
           <div class="report-actions">
-            <button class="btn-remove" data-id="${r.id}">移除批注</button>
-            <button class="btn-keep" data-id="${r.id}">保留批注</button>
+            <button class="btn-remove" data-id="${r.id}">移除批註</button>
+            <button class="btn-keep" data-id="${r.id}">保留批註</button>
           </div>` : ''}
         </div>
       `;
@@ -689,23 +689,23 @@
     function bindReportEvents() {
       document.querySelectorAll('.report-actions .btn-remove').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('确定移除该批注？')) return;
+          if (!confirm('確定移除該批註？')) return;
           const res = await api('PATCH', `/api/admin/reports/${btn.dataset.id}`, { action: 'remove' });
           if (res.ok) { loadReports(); loadStats(); }
-          else alert('操作失败');
+          else alert('操作失敗');
         });
       });
       document.querySelectorAll('.report-actions .btn-keep').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('确定保留该批注？')) return;
+          if (!confirm('確定保留該批註？')) return;
           const res = await api('PATCH', `/api/admin/reports/${btn.dataset.id}`, { action: 'keep' });
           if (res.ok) { loadReports(); loadStats(); }
-          else alert('操作失败');
+          else alert('操作失敗');
         });
       });
     }
 
-    // 举报筛选
+    // 檢舉篩選
     ['report-filter-status', 'report-filter-book'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => { reportPage = 1; loadReports(); });
     });
@@ -721,7 +721,7 @@
       await fetchMe();
       await Promise.all([loadStats(), loadBooks()]);
       await loadAnnotations();
-      // 复制书籍选项到举报筛选
+      // 複製書籍選項到檢舉篩選
       const reportBookSelect = document.getElementById('report-filter-book');
       document.querySelectorAll('#filter-book option').forEach(opt => {
         if (opt.value) reportBookSelect.appendChild(opt.cloneNode(true));

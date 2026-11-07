@@ -25,7 +25,7 @@ export async function onRequestGet(context) {
   // 下架或待删除的书籍不可阅读
   // 下架或待删除的书籍不可阅读
   if (chapter.book_status && chapter.book_status !== 'normal') {
-    return Response.json({ error: '该书籍已下架' }, { status: 403 });
+    return Response.json({ error: '該書籍已下架' }, { status: 403 });
   }
   // 🟢-1: 不暴露内部字段
   delete chapter.book_status;

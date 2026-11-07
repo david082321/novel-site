@@ -11,25 +11,25 @@ export async function onRequestPost(context) {
 
   const auth = await checkAdmin(request, env);
   if (!auth.ok) {
-    return Response.json({ error: '请先登录' }, { status: 401 });
+    return Response.json({ error: '請先登入' }, { status: 401 });
   }
 
   // 检查封禁状态
   const userStatus = await env.DB.prepare('SELECT banned_at FROM admin_users WHERE id = ?').bind(auth.userId).first();
   if (userStatus?.banned_at) {
-    return Response.json({ error: '账号已被封禁' }, { status: 403 });
+    return Response.json({ error: '帳號已被封禁' }, { status: 403 });
   }
 
   // 检查批注是否存在
   const anno = await env.DB.prepare('SELECT id, user_id FROM annotations WHERE id = ? AND status = ?')
     .bind(annoId, 'normal').first();
   if (!anno) {
-    return Response.json({ error: '批注不存在' }, { status: 404 });
+    return Response.json({ error: '批註不存在' }, { status: 404 });
   }
 
   // 不能给自己的批注点赞
   if (anno.user_id === auth.userId) {
-    return Response.json({ error: '不能给自己的批注点赞' }, { status: 403 });
+    return Response.json({ error: '不能給自己的批註按讚' }, { status: 403 });
   }
 
   // 检查是否已点赞

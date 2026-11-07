@@ -1,12 +1,12 @@
 import { checkAdmin } from '../../_utils.js';
 
-// POST /api/admin/annotations/batch - 批量操作
+// POST /api/admin/annotations/batch - 批次操作
 export async function onRequestPost(context) {
   const { request, env } = context;
   
   const auth = await checkAdmin(request, env);
   if (!auth.ok) {
-    return Response.json({ error: '请先登录' }, { status: 401 });
+    return Response.json({ error: '請先登入' }, { status: 401 });
   }
 
   let body;
@@ -19,38 +19,38 @@ export async function onRequestPost(context) {
   const { ids, action } = body;
 
   if (!Array.isArray(ids) || ids.length === 0) {
-    return Response.json({ error: '请选择要操作的批注' }, { status: 400 });
+    return Response.json({ error: '請選擇要操作的批註' }, { status: 400 });
   }
   if (ids.length > 100) {
-    return Response.json({ error: '单次最多操作100条' }, { status: 400 });
+    return Response.json({ error: '單次最多操作100條' }, { status: 400 });
   }
   if (!['remove', 'restore'].includes(action)) {
-    return Response.json({ error: '无效的操作' }, { status: 400 });
+    return Response.json({ error: '無效的操作' }, { status: 400 });
   }
 
-  // 验证所有 ID 格式
+  // 驗證所有 ID 格式
   for (const id of ids) {
     if (!/^\d{1,18}$/.test(String(id))) {
-      return Response.json({ error: '无效的批注ID' }, { status: 400 });
+      return Response.json({ error: '無效的批註ID' }, { status: 400 });
     }
   }
 
   const newStatus = action === 'remove' ? 'removed' : 'normal';
   const placeholders = ids.map(() => '?').join(',');
 
-  // 根据权限构建过滤条件
+  // 根據權限構建過濾條件
   let permFilter = '';
   const permBinds = [];
   
   if (auth.role === 'admin') {
-    // admin 不能操作超管的批注
+    // admin 不能操作超管的批註
     permFilter = `AND a.id IN (
       SELECT a2.id FROM annotations a2
       LEFT JOIN admin_users u2 ON a2.user_id = u2.id
       WHERE u2.role != 'super_admin' OR u2.role IS NULL
     )`;
   } else if (auth.role === 'demo') {
-    // demo 只能操作自己的批注或自己书上的 demo 批注
+    // demo 只能操作自己的批註或自己書上的 demo 批註
     permFilter = `AND a.id IN (
       SELECT a2.id FROM annotations a2
       LEFT JOIN admin_users u2 ON a2.user_id = u2.id

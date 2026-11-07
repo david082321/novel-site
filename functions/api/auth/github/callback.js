@@ -153,7 +153,7 @@ export async function onRequestGet(context) {
     if (count >= demoLimit) {
       return new Response(null, {
         status: 302,
-        headers: { 'Location': '/admin.html#github_error=' + encodeURIComponent('Demo 注册名额已满（上限 ' + demoLimit + '）') }
+        headers: { 'Location': '/admin.html#github_error=' + encodeURIComponent('Demo 註冊名額已滿（上限 ' + demoLimit + '）') }
       });
     }
 

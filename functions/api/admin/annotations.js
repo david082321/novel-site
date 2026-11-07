@@ -1,27 +1,27 @@
 import { checkAdmin } from '../_utils.js';
 
-// 定义允许的状态和可见性值白名单
+// 定義允許的狀態和可見性值白名單
 const VALID_STATUSES = ['normal', 'reported', 'removed'];
 const VALID_VISIBILITIES = ['public', 'private'];
-// 定义允许的排序方式白名单
+// 定義允許的排序方式白名單
 const VALID_SORT_OPTIONS = {
   'latest': 'a.created_at DESC',
   'oldest': 'a.created_at ASC',
-  'reports': 'a.created_at DESC' // reports 排序需要子查询，暂时用 created_at
+  'reports': 'a.created_at DESC' // reports 排序需要子查詢，暫時用 created_at
 };
 
-// 权限过滤
+// 權限過濾
 function buildPermissionFilter(auth) {
   const where = [];
   const binds = [];
 
   if (auth.role === 'super_admin') {
-    // 无限制
+    // 無限制
   } else if (auth.role === 'admin') {
-    // 排除超管的批注
+    // 排除超管的批註
     where.push("u.role != 'super_admin'");
   } else {
-    // demo：自己的批注 + 自己书上的 demo 批注
+    // demo：自己的批註 + 自己書上的 demo 批註
     where.push('(a.user_id = ? OR (b.created_by = ? AND u.role = ?))');
     binds.push(auth.userId, auth.userId, 'demo');
   }
@@ -30,21 +30,21 @@ function buildPermissionFilter(auth) {
 }
 
 /**
- * 转义LIKE查询中的通配符，防止LIKE注入
- * @param {string} str - 需要转义的字符串
- * @returns {string} - 转义后的字符串
+ * 轉義LIKE查詢中的萬用字元，防止LIKE注入
+ * @param {string} str - 需要轉義的字串
+ * @returns {string} - 轉義後的字串
  */
 function escapeLikePattern(str) {
   return str.replace(/[%_\\]/g, '\\$&');
 }
 
-// GET /api/admin/annotations - 批注列表
+// GET /api/admin/annotations - 批註列表
 export async function onRequestGet(context) {
   const { request, env } = context;
   
   const auth = await checkAdmin(request, env);
   if (!auth.ok) {
-    return Response.json({ error: '请先登录' }, { status: 401 });
+    return Response.json({ error: '請先登入' }, { status: 401 });
   }
 
   const url = new URL(request.url);
@@ -58,30 +58,30 @@ export async function onRequestGet(context) {
   const search = url.searchParams.get('search');
   const sort = url.searchParams.get('sort') || 'latest'; // latest/oldest/reports
 
-  // 构建查询条件
+  // 構建查詢條件
   const { where, binds } = buildPermissionFilter(auth);
 
   if (bookId) {
-    // 验证bookId为有效数字
+    // 驗證bookId為有效數字
     const bookIdNum = parseInt(bookId, 10);
     if (isNaN(bookIdNum) || bookIdNum <= 0) {
-      return Response.json({ error: '无效的书籍ID' }, { status: 400 });
+      return Response.json({ error: '無效的書籍ID' }, { status: 400 });
     }
     where.push('a.book_id = ?');
     binds.push(bookIdNum);
   }
   if (status && status !== 'all') {
-    if (!VALID_STATUSES.includes(status)) return Response.json({ error: '无效的状态' }, { status: 400 });
+    if (!VALID_STATUSES.includes(status)) return Response.json({ error: '無效的狀態' }, { status: 400 });
     where.push('a.status = ?');
     binds.push(status);
   }
   if (visibility && visibility !== 'all') {
-    if (!VALID_VISIBILITIES.includes(visibility)) return Response.json({ error: '无效的类型' }, { status: 400 });
+    if (!VALID_VISIBILITIES.includes(visibility)) return Response.json({ error: '無效的類型' }, { status: 400 });
     where.push('a.visibility = ?');
     binds.push(visibility);
   }
   if (search) {
-    // 转义LIKE通配符，防止LIKE注入攻击
+    // 轉義LIKE萬用字元，防止LIKE注入攻擊
     const escapedSearch = escapeLikePattern(search);
     where.push('(a.content LIKE ? ESCAPE "\\\\" OR a.sent_text LIKE ? ESCAPE "\\\\")');
     binds.push(`%${escapedSearch}%`, `%${escapedSearch}%`);
@@ -89,10 +89,10 @@ export async function onRequestGet(context) {
 
   const whereClause = where.length > 0 ? 'WHERE ' + where.join(' AND ') : '';
   
-  // 使用白名单验证排序字段，防止SQL注入
+  // 使用白名單驗證排序欄位，防止SQL隱碼攻擊
   const orderBy = VALID_SORT_OPTIONS[sort] || VALID_SORT_OPTIONS['latest'];
 
-  // 查询总数
+  // 查詢總數
   const countSql = `
     SELECT COUNT(*) as total
     FROM annotations a
@@ -103,7 +103,7 @@ export async function onRequestGet(context) {
   const countResult = await env.DB.prepare(countSql).bind(...binds).first();
   const total = countResult?.total || 0;
 
-  // 查询列表
+  // 查詢列表
   const listSql = `
     SELECT a.id, a.chapter_id, a.book_id, a.user_id, a.para_idx, a.sent_idx,
            a.sent_text, a.content, a.visibility, a.status, a.created_at,
@@ -132,8 +132,8 @@ export async function onRequestGet(context) {
   });
 }
 
-// GET /api/admin/annotations/stats - 统计数据
+// GET /api/admin/annotations/stats - 統計資料
 export async function onRequestHead(context) {
-  // 用 HEAD 请求获取统计（避免与 GET 冲突）
+  // 用 HEAD 請求取得統計（避免與 GET 衝突）
   return new Response(null, { status: 405 });
 }

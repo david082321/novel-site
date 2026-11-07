@@ -37,18 +37,18 @@ export async function onRequestPost(context) {
 
   // 参数校验
   if (!annotationId || !/^\d{1,18}$/.test(String(annotationId))) {
-    return Response.json({ error: '无效的批注ID' }, { status: 400 });
+    return Response.json({ error: '無效的批註ID' }, { status: 400 });
   }
   if (!reason || typeof reason !== 'string') {
-    return Response.json({ error: '请填写举报理由' }, { status: 400 });
+    return Response.json({ error: '請填寫檢舉理由' }, { status: 400 });
   }
   // 理由长度：至少10个字符
   const trimmed = reason.trim();
   if (trimmed.length < 10) {
-    return Response.json({ error: '举报理由至少10个字' }, { status: 400 });
+    return Response.json({ error: '檢舉理由至少10個字' }, { status: 400 });
   }
   if (trimmed.length > 500) {
-    return Response.json({ error: '举报理由不能超过500字' }, { status: 400 });
+    return Response.json({ error: '檢舉理由不能超過500字' }, { status: 400 });
   }
 
   // 可选认证（游客也可举报）
@@ -67,10 +67,10 @@ export async function onRequestPost(context) {
   if (reporterId) {
     const user = await env.DB.prepare('SELECT muted_until, banned_at FROM admin_users WHERE id = ?').bind(reporterId).first();
     if (user?.banned_at) {
-      return Response.json({ error: '账号已被封禁' }, { status: 403 });
+      return Response.json({ error: '帳號已被封禁' }, { status: 403 });
     }
     if (user?.muted_until && new Date(user.muted_until) > new Date()) {
-      return Response.json({ error: '禁言期间不可举报' }, { status: 403 });
+      return Response.json({ error: '禁言期間不可檢舉' }, { status: 403 });
     }
   }
 
@@ -79,12 +79,12 @@ export async function onRequestPost(context) {
     'SELECT id, book_id, user_id, status FROM annotations WHERE id = ?'
   ).bind(annotationId).first();
   if (!anno || anno.status === 'removed') {
-    return Response.json({ error: '批注不存在或已被移除' }, { status: 404 });
+    return Response.json({ error: '批註不存在或已被移除' }, { status: 404 });
   }
 
   // 不能举报自己的批注
   if (reporterId && anno.user_id === reporterId) {
-    return Response.json({ error: '不能举报自己的批注' }, { status: 400 });
+    return Response.json({ error: '不能檢舉自己的批註' }, { status: 400 });
   }
 
   // 每人每批注最多2次举报
@@ -93,7 +93,7 @@ export async function onRequestPost(context) {
       'SELECT COUNT(*) as cnt FROM reports WHERE annotation_id = ? AND reporter_id = ?'
     ).bind(annotationId, reporterId).first();
     if (cnt && cnt.cnt >= 2) {
-      return Response.json({ error: '您已对此批注举报过2次' }, { status: 400 });
+      return Response.json({ error: '您已對此批註檢舉過2次' }, { status: 400 });
     }
     // 登录用户：每小时最多20次举报
     const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
@@ -101,7 +101,7 @@ export async function onRequestPost(context) {
       'SELECT COUNT(*) as cnt FROM reports WHERE reporter_id = ? AND created_at > ?'
     ).bind(reporterId, oneHourAgo).first();
     if (hourCnt && hourCnt.cnt >= 20) {
-      return Response.json({ error: '操作过于频繁，请稍后再试' }, { status: 429 });
+      return Response.json({ error: '操作過於頻繁，請稍後再試' }, { status: 429 });
     }
   } else {
     // 游客：同IP每批注最多2次
@@ -109,7 +109,7 @@ export async function onRequestPost(context) {
       'SELECT COUNT(*) as cnt FROM reports WHERE annotation_id = ? AND reporter_guest_hash = ?'
     ).bind(annotationId, guestHash).first();
     if (cnt && cnt.cnt >= 2) {
-      return Response.json({ error: '您已对此批注举报过2次' }, { status: 400 });
+      return Response.json({ error: '您已對此批註檢舉過2次' }, { status: 400 });
     }
     // 游客：每小时最多3次举报
     const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
@@ -117,7 +117,7 @@ export async function onRequestPost(context) {
       'SELECT COUNT(*) as cnt FROM reports WHERE reporter_guest_hash = ? AND created_at > ?'
     ).bind(guestHash, oneHourAgo).first();
     if (hourCnt && hourCnt.cnt >= 3) {
-      return Response.json({ error: '操作过于频繁，请稍后再试' }, { status: 429 });
+      return Response.json({ error: '操作過於頻繁，請稍後再試' }, { status: 429 });
     }
   }
 
@@ -127,7 +127,7 @@ export async function onRequestPost(context) {
   ).bind(annotationId).all();
   for (const r of (existing.results || [])) {
     if (jaccardSimilarity(trimmed, r.reason) >= 0.6) {
-      return Response.json({ error: '与已有举报理由过于相似，请提供不同角度的理由' }, { status: 400 });
+      return Response.json({ error: '與已有檢舉理由過於相似，請提供不同角度的理由' }, { status: 400 });
     }
   }
 

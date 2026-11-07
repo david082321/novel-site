@@ -1,15 +1,15 @@
 import { checkAdmin } from '../../_utils.js';
 
-// GET /api/admin/annotations/stats - 批注统计
+// GET /api/admin/annotations/stats - 批註統計
 export async function onRequestGet(context) {
   const { request, env } = context;
   
   const auth = await checkAdmin(request, env);
   if (!auth.ok) {
-    return Response.json({ error: '请先登录' }, { status: 401 });
+    return Response.json({ error: '請先登入' }, { status: 401 });
   }
 
-  // 根据权限构建过滤条件
+  // 根據權限構建過濾條件
   let permFilter = '';
   const binds = [];
   

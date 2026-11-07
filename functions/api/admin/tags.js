@@ -1,4 +1,4 @@
-// CRUD /api/admin/tags — 标签管理
+// CRUD /api/admin/tags — 標籤管理
 import { checkAdmin, parseJsonBody, validateId, requireMinRole } from '../_utils.js';
 
 const COLOR_RE = /^#[0-9a-fA-F]{3,6}$/;
@@ -19,7 +19,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '演示管理员不能管理全局标签' }, { status: 403 });
+  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '示範管理員不能管理全域標籤' }, { status: 403 });
 
   const body = await parseJsonBody(request);
   if (!body) return Response.json({ error: 'Invalid JSON' }, { status: 400 });
@@ -41,7 +41,7 @@ export async function onRequestPut(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '演示管理员不能管理全局标签' }, { status: 403 });
+  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '示範管理員不能管理全域標籤' }, { status: 403 });
 
   const body = await parseJsonBody(request);
   if (!body || !body.id) return Response.json({ error: 'Tag id required' }, { status: 400 });
@@ -64,7 +64,7 @@ export async function onRequestDelete(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '演示管理员不能管理全局标签' }, { status: 403 });
+  if (!requireMinRole(auth, 'admin')) return Response.json({ error: '示範管理員不能管理全域標籤' }, { status: 403 });
 
   const body = await parseJsonBody(request);
   if (!body || !body.id) return Response.json({ error: 'Tag id required' }, { status: 400 });

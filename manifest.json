@@ -1,6 +1,6 @@
 {
-  "name": "我的书架",
-  "short_name": "书架",
+  "name": "我的書架",
+  "short_name": "書架",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf8f5",

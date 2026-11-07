@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>管理后台</title>
+  <title>管理後台</title>
   
-  <!-- P3修复：DNS预解析和预连接 -->
+  <!-- P3修復：DNS預解析和預連接 -->
   <link rel="preconnect" href="https://github.com" crossorigin>
   <link rel="dns-prefetch" href="https://github.com">
   
@@ -14,145 +14,145 @@
 </head>
 <body>
   <div class="navbar">
-    <h1><a href="/">📚 我的书架</a></h1>
+    <h1><a href="/">📚 我的書架</a></h1>
     <nav>
-      <a href="/">返回书架</a>
+      <a href="/">返回書架</a>
       <span id="user-info" style="display:none;font-size:13px;color:var(--text-light)"></span>
-      <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="切換主題">🌙</button>
     </nav>
   </div>
   <div class="container">
 
-    <!-- 登录界面 -->
+    <!-- 登入介面 -->
     <div id="login-panel">
       <div class="admin-section" style="max-width:400px;margin:60px auto">
-        <h3>🔐 管理员登录</h3>
+        <h3>🔐 管理員登入</h3>
         <div class="form-group">
-          <label>用户名</label>
-          <input type="text" id="login-user" placeholder="用户名">
+          <label>用戶名</label>
+          <input type="text" id="login-user" placeholder="用戶名">
         </div>
         <div class="form-group">
-          <label>密码</label>
-          <input type="password" id="login-pass" placeholder="输入管理密码" onkeydown="if(event.key==='Enter')doLogin()">
+          <label>密碼</label>
+          <input type="password" id="login-pass" placeholder="輸入管理密碼" onkeydown="if(event.key==='Enter')doLogin()">
         </div>
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
           <input type="checkbox" id="remember-login" style="margin:0">
-          <label for="remember-login" style="font-size:13px;color:var(--text-light);cursor:pointer;user-select:none">记住登录状态</label>
+          <label for="remember-login" style="font-size:13px;color:var(--text-light);cursor:pointer;user-select:none">記住登入狀態</label>
         </div>
-        <button class="btn" onclick="doLogin()" style="width:100%">登录</button>
+        <button class="btn" onclick="doLogin()" style="width:100%">登入</button>
         <div id="login-msg" style="margin-top:8px"></div>
         <div style="margin-top:16px;text-align:center">
           <div id="github-login-section" style="display:none">
             <div style="color:var(--text-light);font-size:13px;margin-bottom:8px">— 或 —</div>
             <button class="btn" onclick="doGitHubLogin()" style="width:100%;background:#24292e;color:#fff;border:none;padding:10px;border-radius:var(--radius);cursor:pointer;font-size:14px">
               <svg style="vertical-align:middle;margin-right:6px" width="18" height="18" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              GitHub 登录（Demo 体验）
+              GitHub 登入（Demo 體驗）
             </button>
-            <div style="font-size:12px;color:var(--text-light);margin-top:4px">首次登录自动注册为演示管理员</div>
+            <div style="font-size:12px;color:var(--text-light);margin-top:4px">首次登入自動註冊為示範管理員</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 管理面板（登录后显示） -->
+    <!-- 管理面板（登入後顯示） -->
     <div id="admin-panel" style="display:none">
 
-      <!-- 数据概览 -->
+      <!-- 資料概覽 -->
       <div class="admin-section" id="stats-panel">
-        <h3>📊 数据概览</h3>
+        <h3>📊 資料概覽</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px" id="stats-grid">
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-books">-</div>
-            <div style="font-size:13px;color:var(--text-light)">书籍</div>
+            <div style="font-size:13px;color:var(--text-light)">書籍</div>
           </div>
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-chapters">-</div>
-            <div style="font-size:13px;color:var(--text-light)">章节</div>
+            <div style="font-size:13px;color:var(--text-light)">章節</div>
           </div>
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-words">-</div>
-            <div style="font-size:13px;color:var(--text-light)">总字数</div>
+            <div style="font-size:13px;color:var(--text-light)">總字數</div>
           </div>
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-pv">-</div>
-            <div style="font-size:13px;color:var(--text-light)">今日访问</div>
+            <div style="font-size:13px;color:var(--text-light)">今日訪問</div>
           </div>
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-uv">-</div>
-            <div style="font-size:13px;color:var(--text-light)">今日访客</div>
+            <div style="font-size:13px;color:var(--text-light)">今日訪客</div>
           </div>
           <div style="text-align:center;padding:16px;background:var(--bg);border-radius:var(--radius)">
             <div style="font-size:28px;font-weight:700;color:var(--accent)" id="stat-total-pv">-</div>
-            <div style="font-size:13px;color:var(--text-light)">累计访问</div>
+            <div style="font-size:13px;color:var(--text-light)">累計訪問</div>
           </div>
         </div>
-        <!-- 热门书籍 -->
+        <!-- 熱門書籍 -->
         <div id="hot-books" style="margin-top:16px"></div>
       </div>
 
-      <!-- 账号管理 -->
+      <!-- 帳號管理 -->
       <div class="admin-section">
-        <h3>👤 账号管理</h3>
+        <h3>👤 帳號管理</h3>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-          <span>当前用户：<strong id="current-user"></strong></span>
-          <a href="#" onclick="showChangePassword();return false" style="font-size:13px">修改密码</a>
-          <a href="#" onclick="doLogout();return false" style="font-size:13px;color:var(--danger,#e74c3c)">退出登录</a>
-          <a href="#" id="deactivate-account-btn" onclick="deactivateAccount();return false" style="display:none;font-size:13px;color:var(--danger,#e74c3c)">注销账号</a>
+          <span>目前用戶：<strong id="current-user"></strong></span>
+          <a href="#" onclick="showChangePassword();return false" style="font-size:13px">修改密碼</a>
+          <a href="#" onclick="doLogout();return false" style="font-size:13px;color:var(--danger,#e74c3c)">退出登入</a>
+          <a href="#" id="deactivate-account-btn" onclick="deactivateAccount();return false" style="display:none;font-size:13px;color:var(--danger,#e74c3c)">註銷帳號</a>
         </div>
         <div id="pwd-form" style="display:none">
           <div class="form-group">
-            <label>旧密码</label>
-            <input type="password" id="old-pwd" placeholder="输入当前密码">
+            <label>舊密碼</label>
+            <input type="password" id="old-pwd" placeholder="輸入目前密碼">
           </div>
           <div class="form-group">
-            <label>新密码（至少8位，需包含字母和数字）</label>
-            <input type="password" id="new-pwd" placeholder="输入新密码">
+            <label>新密碼（至少8位，需包含字母和數字）</label>
+            <input type="password" id="new-pwd" placeholder="輸入新密碼">
           </div>
           <div class="form-group">
-            <label>确认新密码</label>
-            <input type="password" id="new-pwd2" placeholder="再次输入新密码">
+            <label>確認新密碼</label>
+            <input type="password" id="new-pwd2" placeholder="再次輸入新密碼">
           </div>
-          <button class="btn" onclick="doChangePassword()">确认修改</button>
+          <button class="btn" onclick="doChangePassword()">確認修改</button>
           <button class="btn btn-sm" onclick="document.getElementById('pwd-form').style.display='none'" style="margin-left:8px">取消</button>
           <div id="pwd-msg" style="margin-top:8px"></div>
         </div>
       </div>
 
-      <!-- 站点设置 -->
+      <!-- 站點設定 -->
       <div class="admin-section super-admin-only" style="display:none">
-        <h3>⚙️ 站点设置</h3>
+        <h3>⚙️ 站點設定</h3>
         <div class="form-group">
-          <label>站点名称</label>
-          <input type="text" id="set-site-name" placeholder="如：xingzihai的书架" maxlength="100">
+          <label>站點名稱</label>
+          <input type="text" id="set-site-name" placeholder="如：xingzihai的書架" maxlength="100">
         </div>
         <div class="form-group">
-          <label>站点描述</label>
-          <input type="text" id="set-site-desc" placeholder="一句话介绍你的小说站" maxlength="200">
+          <label>站點描述</label>
+          <input type="text" id="set-site-desc" placeholder="一句話介紹你的小說站" maxlength="200">
         </div>
         <div class="form-group">
-          <label>页脚文字</label>
+          <label>頁尾文字</label>
           <input type="text" id="set-footer" placeholder="如：Powered by Cloudflare" maxlength="200">
         </div>
-        <button class="btn" onclick="saveSettings()">保存设置</button>
+        <button class="btn" onclick="saveSettings()">儲存設定</button>
         <div id="settings-msg"></div>
 
         <!-- GitHub OAuth 配置 -->
         <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
-          <h4 style="margin:0 0 12px">🐙 Demo 注册（GitHub 登录）</h4>
+          <h4 style="margin:0 0 12px">🐙 Demo 註冊（GitHub 登入）</h4>
           <div class="form-group">
             <label>
-              <input type="checkbox" id="gh-oauth-enabled" onchange="toggleGitHubConfig()"> 启用 GitHub 登录注册
+              <input type="checkbox" id="gh-oauth-enabled" onchange="toggleGitHubConfig()"> 啟用 GitHub 登入註冊
             </label>
-            <div style="font-size:12px;color:var(--text-light);margin-top:2px">开启后，登录页会显示"GitHub 登录"按钮，新用户自动注册为演示管理员</div>
+            <div style="font-size:12px;color:var(--text-light);margin-top:2px">開啟後，登入頁會顯示"GitHub 登入"按鈕，新用戶自動註冊為示範管理員</div>
           </div>
           <div id="gh-oauth-config" style="display:none">
             <div style="background:var(--bg);padding:10px;border-radius:var(--radius);margin-bottom:12px;font-size:13px;color:var(--text-light)">
-              <strong>配置步骤：</strong><br>
-              1. 打开 <a href="https://github.com/settings/developers" target="_blank" style="color:var(--primary)">GitHub Developer Settings</a><br>
-              2. 点击 OAuth Apps → New OAuth App<br>
+              <strong>配置步驟：</strong><br>
+              1. 打開 <a href="https://github.com/settings/developers" target="_blank" style="color:var(--primary)">GitHub Developer Settings</a><br>
+              2. 點擊 OAuth Apps → New OAuth App<br>
               3. Homepage URL 填：<code id="gh-homepage-url"></code><br>
               4. Callback URL 填：<code id="gh-callback-url"></code><br>
-              5. 创建后把 Client ID 和 Client Secret 填到下面
+              5. 建立後把 Client ID 和 Client Secret 填到下面
             </div>
             <div class="form-group">
               <label>Client ID</label>
@@ -160,33 +160,33 @@
             </div>
             <div class="form-group">
               <label>Client Secret <span id="gh-secret-status" style="font-size:12px"></span></label>
-              <input type="password" id="gh-client-secret" placeholder="留空则保持原值不变" maxlength="200">
+              <input type="password" id="gh-client-secret" placeholder="留空則保持原值不變" maxlength="200">
             </div>
             <div class="form-group">
-              <label>Demo 用户注册上限</label>
+              <label>Demo 用戶註冊上限</label>
               <input type="number" id="gh-demo-limit" placeholder="100" min="0" max="10000" value="100" style="width:120px">
-              <div style="font-size:12px;color:var(--text-light);margin-top:2px">通过 GitHub 注册的演示用户最大数量，设为 0 则禁止新注册</div>
+              <div style="font-size:12px;color:var(--text-light);margin-top:2px">通過 GitHub 註冊的示範用戶最大數量，設為 0 則禁止新註冊</div>
             </div>
-            <button class="btn" onclick="saveGitHubConfig()">保存 GitHub 配置</button>
+            <button class="btn" onclick="saveGitHubConfig()">儲存 GitHub 配置</button>
             <div id="gh-config-msg" style="margin-top:8px"></div>
           </div>
         </div>
       </div>
 
-      <!-- TXT导入 -->
+      <!-- TXT匯入 -->
       <div class="admin-section">
-        <h3>📥 TXT 导入</h3>
+        <h3>📥 TXT 匯入</h3>
         <div class="form-group">
-          <label>选择目标书籍 *（或先创建新书）</label>
-          <select id="import-book"><option value="">加载中...</option></select>
+          <label>選擇目標書籍 *（或先建立新書）</label>
+          <select id="import-book"><option value="">載入中...</option></select>
         </div>
         <div class="form-group">
-          <label>选择 TXT 文件（支持 UTF-8 / GBK 编码，最大 50MB）</label>
+          <label>選擇 TXT 文件（支援 UTF-8 / GBK 編碼，最大 50MB）</label>
           <input type="file" id="import-file" accept=".txt,.text" style="padding:8px 0">
         </div>
         <div id="import-preview" style="display:none">
           <div class="form-group">
-            <label>章节分割预览（可取消勾选不需要的章节）</label>
+            <label>章節分割預覽（可取消勾選不需要的章節）</label>
             <div id="import-chapters" class="admin-list" style="max-height:300px;overflow-y:auto"></div>
             <div style="font-size:13px;color:var(--text-light);margin-top:6px">
               共 <span id="import-total">0</span> 章，<span id="import-words">0</span> 字
@@ -198,17 +198,17 @@
             </div>
             <div id="import-status" style="font-size:13px;color:var(--text-light)"></div>
           </div>
-          <button class="btn" onclick="startImport()">开始导入</button>
+          <button class="btn" onclick="startImport()">開始匯入</button>
           <button class="btn btn-sm" onclick="cancelImport()" style="margin-left:8px">取消</button>
         </div>
         <div id="import-msg"></div>
       </div>
 
-      <!-- EPUB导入 -->
+      <!-- EPUB匯入 -->
       <div class="admin-section">
-        <h3>📖 EPUB 导入</h3>
+        <h3>📖 EPUB 匯入</h3>
         <div class="form-group">
-          <label>选择 EPUB 文件（最大 50MB）</label>
+          <label>選擇 EPUB 文件（最大 50MB）</label>
           <input type="file" id="epub-file" accept=".epub" style="padding:8px 0">
         </div>
         <div id="epub-parsing-msg" style="display:none;padding:12px;background:var(--bg);border-radius:var(--radius);color:var(--text-light);font-size:14px">
@@ -217,39 +217,39 @@
         <div id="epub-preview" style="display:none">
           <div style="padding:12px;background:var(--card-bg, var(--bg));border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px">
             <div class="form-group" style="margin-bottom:8px">
-              <label>书名</label>
-              <input type="text" id="epub-book-title" placeholder="书名" maxlength="200">
+              <label>書名</label>
+              <input type="text" id="epub-book-title" placeholder="書名" maxlength="200">
             </div>
             <div class="form-group" style="margin-bottom:8px">
               <label>作者</label>
               <input type="text" id="epub-book-author" placeholder="作者" maxlength="100">
             </div>
             <div class="form-group" style="margin-bottom:0">
-              <label>简介</label>
-              <textarea id="epub-book-desc" placeholder="简介" style="min-height:60px" maxlength="2000"></textarea>
+              <label>簡介</label>
+              <textarea id="epub-book-desc" placeholder="簡介" style="min-height:60px" maxlength="2000"></textarea>
             </div>
           </div>
           <div class="form-group">
-            <label>章节列表（可取消勾选不需要的章节，可编辑标题）</label>
+            <label>章節列表（可取消勾選不需要的章節，可編輯標題）</label>
             <div id="epub-chapters" class="admin-list" style="max-height:400px;overflow-y:auto"></div>
             <div style="font-size:13px;color:var(--text-light);margin-top:6px">
               共 <span id="epub-total">0</span> 章，<span id="epub-words">0</span> 字
             </div>
           </div>
           <div class="form-group">
-            <label>导入方式</label>
+            <label>匯入方式</label>
             <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
               <label style="display:flex;align-items:center;gap:4px;font-size:14px;cursor:pointer">
-                <input type="radio" name="epub-import-mode" value="new" checked> 创建新书并导入
+                <input type="radio" name="epub-import-mode" value="new" checked> 建立新書並匯入
               </label>
               <label style="display:flex;align-items:center;gap:4px;font-size:14px;cursor:pointer">
-                <input type="radio" name="epub-import-mode" value="existing"> 导入到已有书籍
+                <input type="radio" name="epub-import-mode" value="existing"> 匯入到已有書籍
               </label>
             </div>
           </div>
           <div id="epub-existing-book" style="display:none" class="form-group">
-            <label>选择目标书籍</label>
-            <select id="epub-book-select"><option value="">加载中...</option></select>
+            <label>選擇目標書籍</label>
+            <select id="epub-book-select"><option value="">載入中...</option></select>
           </div>
           <div class="import-progress" id="epub-progress" style="display:none">
             <div style="background:var(--bg-secondary,var(--border));border-radius:10px;overflow:hidden;height:20px;margin:12px 0">
@@ -258,56 +258,56 @@
             <div id="epub-status" style="font-size:13px;color:var(--text-light)"></div>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn" onclick="startEpubImport()">开始导入</button>
+            <button class="btn" onclick="startEpubImport()">開始匯入</button>
             <button class="btn btn-sm" onclick="cancelEpubImport()">取消</button>
           </div>
         </div>
         <div id="epub-msg"></div>
       </div>
 
-      <!-- 创建书籍 -->
+      <!-- 建立書籍 -->
       <div class="admin-section">
-        <h3>📖 创建新书</h3>
+        <h3>📖 建立新書</h3>
         <div class="form-group">
-          <label>书名 *</label>
-          <input type="text" id="book-title" placeholder="输入书名" maxlength="200">
+          <label>書名 *</label>
+          <input type="text" id="book-title" placeholder="輸入書名" maxlength="200">
         </div>
         <div class="form-group">
           <label>作者</label>
-          <input type="text" id="book-author" placeholder="输入作者名" maxlength="100">
+          <input type="text" id="book-author" placeholder="輸入作者名" maxlength="100">
         </div>
         <div class="form-group">
-          <label>简介</label>
-          <textarea id="book-desc" placeholder="输入书籍简介" style="min-height:80px" maxlength="2000"></textarea>
+          <label>簡介</label>
+          <textarea id="book-desc" placeholder="輸入書籍簡介" style="min-height:80px" maxlength="2000"></textarea>
         </div>
         <div class="form-group">
-          <label>标签</label>
+          <label>標籤</label>
           <div id="create-book-tags" style="display:flex;gap:6px;flex-wrap:wrap"></div>
         </div>
-        <button class="btn" onclick="createBook()">创建书籍</button>
+        <button class="btn" onclick="createBook()">建立書籍</button>
         <div id="book-msg"></div>
       </div>
 
-      <!-- 书籍管理 -->
+      <!-- 書籍管理 -->
       <div class="admin-section">
-        <h3>📚 书籍管理</h3>
-        <ul class="admin-list" id="book-list"><li class="loading">加载中...</li></ul>
+        <h3>📚 書籍管理</h3>
+        <ul class="admin-list" id="book-list"><li class="loading">載入中...</li></ul>
       </div>
 
-      <!-- 批注管理入口 -->
+      <!-- 批註管理入口 -->
       <div class="admin-section">
-        <h3>📝 批注管理</h3>
-        <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">管理读者批注、处理举报、查看统计</p>
-        <button class="btn" onclick="window.open('/annotation-admin.html', '_blank')">打开批注管理</button>
+        <h3>📝 批註管理</h3>
+        <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">管理讀者批註、處理檢舉、查看統計</p>
+        <button class="btn" onclick="window.open('/annotation-admin.html', '_blank')">打開批註管理</button>
       </div>
 
-      <!-- 书籍编辑弹窗 -->
+      <!-- 書籍編輯彈出視窗 -->
       <div class="settings-overlay" id="book-edit-overlay">
         <div class="settings-panel" style="max-width:500px;border-radius:var(--radius)">
-          <h3>编辑书籍<button class="close-btn" id="close-book-edit">✕</button></h3>
+          <h3>編輯書籍<button class="close-btn" id="close-book-edit">✕</button></h3>
           <input type="hidden" id="edit-book-id">
           <div class="form-group">
-            <label>书名</label>
+            <label>書名</label>
             <input type="text" id="edit-book-title" maxlength="200">
           </div>
           <div class="form-group">
@@ -315,98 +315,98 @@
             <input type="text" id="edit-book-author" maxlength="100">
           </div>
           <div class="form-group">
-            <label>简介</label>
+            <label>簡介</label>
             <textarea id="edit-book-desc" style="min-height:60px" maxlength="2000"></textarea>
           </div>
           <div class="form-group">
-            <label>封面图片</label>
+            <label>封面圖片</label>
             <div style="display:flex;gap:12px;align-items:center">
               <div id="edit-cover-preview" style="width:80px;height:107px;border:1px dashed var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg)">
-                <span style="color:var(--text-light);font-size:12px">无封面</span>
+                <span style="color:var(--text-light);font-size:12px">無封面</span>
               </div>
               <div>
                 <input type="file" id="edit-cover-file" accept="image/*" style="font-size:13px;margin-bottom:6px">
-                <div><button class="btn btn-sm btn-danger" id="remove-cover-btn" style="display:none">删除封面</button></div>
+                <div><button class="btn btn-sm btn-danger" id="remove-cover-btn" style="display:none">刪除封面</button></div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label>标签</label>
+            <label>標籤</label>
             <div id="edit-book-tags" style="display:flex;gap:6px;flex-wrap:wrap"></div>
             <div id="edit-tag-actions" style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-              <input type="text" id="inline-tag-name" placeholder="新标签名" maxlength="30" style="width:100px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:13px">
+              <input type="text" id="inline-tag-name" placeholder="新標籤名" maxlength="30" style="width:100px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:13px">
               <input type="color" id="inline-tag-color" value="#3498db" style="width:30px;height:26px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;padding:1px">
-              <button class="btn btn-sm" id="inline-create-tag-btn">+ 新标签</button>
+              <button class="btn btn-sm" id="inline-create-tag-btn">+ 新標籤</button>
             </div>
           </div>
           <div class="form-group">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
               <input type="checkbox" id="edit-annotation-enabled" style="width:auto;margin:0">
-              允许读者批注
+              允許讀者批註
             </label>
           </div>
-          <button class="btn" id="save-book-edit-btn">保存</button>
+          <button class="btn" id="save-book-edit-btn">儲存</button>
         </div>
       </div>
 
-      <!-- 添加章节 -->
+      <!-- 新增章節 -->
       <div class="admin-section">
-        <h3>📝 添加章节</h3>
+        <h3>📝 新增章節</h3>
         <div class="form-group">
-          <label>选择书籍 *</label>
-          <select id="chapter-book"><option value="">加载中...</option></select>
+          <label>選擇書籍 *</label>
+          <select id="chapter-book"><option value="">載入中...</option></select>
         </div>
         <div class="form-group">
-          <label>章节标题 *</label>
+          <label>章節標題 *</label>
           <input type="text" id="chapter-title" placeholder="如：第一章 初入江湖" maxlength="200">
         </div>
         <div class="form-group">
-          <label>章节内容 *</label>
-          <textarea id="chapter-content" placeholder="在此输入章节正文..."></textarea>
-          <div style="font-size:12px;color:var(--text-light);margin-top:4px">字数：<span id="word-count">0</span></div>
+          <label>章節內容 *</label>
+          <textarea id="chapter-content" placeholder="在此輸入章節正文..."></textarea>
+          <div style="font-size:12px;color:var(--text-light);margin-top:4px">字數：<span id="word-count">0</span></div>
         </div>
-        <button class="btn" onclick="createChapter()">发布章节</button>
+        <button class="btn" onclick="createChapter()">發布章節</button>
         <div id="chapter-msg"></div>
       </div>
 
-      <!-- 章节管理 -->
+      <!-- 章節管理 -->
       <div class="admin-section">
-        <h3>📄 章节管理</h3>
+        <h3>📄 章節管理</h3>
         <div class="form-group">
-          <label>选择书籍</label>
-          <select id="manage-book"><option value="">选择书籍...</option></select>
+          <label>選擇書籍</label>
+          <select id="manage-book"><option value="">選擇書籍...</option></select>
         </div>
         <div id="batch-bar" style="display:none;margin-bottom:12px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;gap:12px">
-          <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" id="select-all">全选</label>
-          <span style="font-size:13px;color:var(--text-light)" id="selected-count">已选 0 章</span>
-          <button class="btn btn-danger btn-sm" onclick="batchDelete()">批量删除</button>
+          <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" id="select-all">全選</label>
+          <span style="font-size:13px;color:var(--text-light)" id="selected-count">已選 0 章</span>
+          <button class="btn btn-danger btn-sm" onclick="batchDelete()">批次刪除</button>
         </div>
         <ul class="admin-list" id="chapter-list"></ul>
         <div style="margin-top:8px" id="export-area"></div>
         <div id="manage-msg"></div>
       </div>
 
-      <!-- 自定义字体管理 -->
+      <!-- 自訂字體管理 -->
       <div class="admin-section super-admin-only" style="display:none">
-        <h3>🔤 自定义字体</h3>
+        <h3>🔤 自訂字體</h3>
         <div class="form-group">
-          <label>上传 .woff2 字体文件（最大10MB）</label>
+          <label>上傳 .woff2 字體檔案（最大10MB）</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input type="file" id="font-file" accept=".woff2" style="padding:8px 0;flex:1">
-            <button class="btn" onclick="uploadFont()">上传</button>
+            <button class="btn" onclick="uploadFont()">上傳</button>
           </div>
         </div>
-        <ul class="admin-list" id="font-list"><li style="color:var(--text-light)">加载中...</li></ul>
+        <ul class="admin-list" id="font-list"><li style="color:var(--text-light)">載入中...</li></ul>
         <div id="font-msg"></div>
       </div>
 
-      <!-- 数据备份与恢复 -->
+      <!-- 資料備份與復原 -->
       <div class="admin-section super-admin-only" style="display:none">
-        <h3>💾 数据备份与恢复</h3>
-        <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">导出全站数据（书籍+章节正文+设置）为 JSON 文件，或从备份文件恢复。</p>
-        <button class="btn" id="backup-btn" onclick="exportBackup()">导出备份</button>
+        <h3>💾 資料備份與復原</h3>
+        <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">匯出全站資料（書籍+章節正文+設定）為 JSON 文件，或從備份文件復原。</p>
+        <button class="btn" id="backup-btn" onclick="exportBackup()">匯出備份</button>
         <label class="btn" style="cursor:pointer;background:var(--accent-dark)">
-          导入恢复
+          匯入復原
           <input type="file" id="restore-file" accept=".json" style="display:none">
         </label>
         <div id="backup-progress" style="display:none;margin-top:12px">
@@ -418,34 +418,34 @@
         <div id="backup-msg"></div>
       </div>
 
-      <!-- 管理员管理（仅超管可见） -->
+      <!-- 管理員管理（僅超管可見） -->
       <div class="admin-section super-admin-only" style="display:none">
-        <h3>👥 管理员管理</h3>
+        <h3>👥 管理員管理</h3>
         <div id="admin-users-list" style="margin-bottom:12px"></div>
         <details style="margin-top:8px">
-          <summary style="cursor:pointer;font-size:14px;color:var(--accent)">+ 添加管理员</summary>
+          <summary style="cursor:pointer;font-size:14px;color:var(--accent)">+ 新增管理員</summary>
           <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-top:8px;align-items:end">
             <div>
-              <label style="font-size:12px;color:var(--text-light)">用户名</label>
-              <input type="text" id="new-admin-user" placeholder="字母数字下划线" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text)">
+              <label style="font-size:12px;color:var(--text-light)">用戶名</label>
+              <input type="text" id="new-admin-user" placeholder="字母數字底線" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text)">
             </div>
             <div>
-              <label style="font-size:12px;color:var(--text-light)">密码</label>
+              <label style="font-size:12px;color:var(--text-light)">密碼</label>
               <input type="password" id="new-admin-pass" placeholder="至少8位" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text)">
             </div>
-            <button class="btn" onclick="createAdmin()">创建</button>
+            <button class="btn" onclick="createAdmin()">建立</button>
           </div>
           <div style="margin-top:4px">
             <label style="font-size:12px;color:var(--text-light)">角色：</label>
             <select id="new-admin-role" style="padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:13px">
-              <option value="demo">演示管理员</option>
-              <option value="admin">管理员</option>
-              <option value="super_admin">超级管理员</option>
+              <option value="demo">示範管理員</option>
+              <option value="admin">管理員</option>
+              <option value="super_admin">超級管理員</option>
             </select>
           </div>
           <div style="margin-top:4px">
             <label style="font-size:12px;color:var(--text-light)">
-              <input type="checkbox" id="new-admin-pwd-lock"> 禁止修改密码
+              <input type="checkbox" id="new-admin-pwd-lock"> 禁止修改密碼
             </label>
           </div>
           <div id="admin-user-msg"></div>
@@ -456,7 +456,7 @@
   </div>
 
   <script>
-    // ===== 主题 =====
+    // ===== 主題 =====
     const THEMES = ['light','dark','green','sepia','blue'];
     const THEME_ICONS = {'light':'🌙','dark':'☀️','green':'🍃','sepia':'📜','blue':'💧'};
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -476,12 +476,12 @@
       btn.textContent = THEME_ICONS[t] || '🌙';
     }
 
-    // ===== 认证 =====
-    let authToken = ''; // token不再存localStorage，由cookie自动携带
+    // ===== 認證 =====
+    let authToken = ''; // token不再存localStorage，由cookie自動攜帶
     let currentRole = localStorage.getItem('auth_role') || sessionStorage.getItem('auth_role') || '';
     let currentUserId = Number(localStorage.getItem('auth_uid') || sessionStorage.getItem('auth_uid')) || 0;
     let currentPasswordLocked = false;
-    // 记住登录偏好
+    // 記住登入偏好
     let rememberLogin = localStorage.getItem('remember_login') === 'true';
 
     function saveAuth(token, role, uid) {
@@ -489,10 +489,10 @@
       const store = rememberLogin ? localStorage : sessionStorage;
       store.setItem('auth_role', role);
       store.setItem('auth_uid', uid);
-      // 清理另一个存储
+      // 清理另一個儲存
       const other = rememberLogin ? sessionStorage : localStorage;
       other.removeItem('auth_role'); other.removeItem('auth_uid');
-      // 清理旧的token存储
+      // 清理舊的token儲存
       localStorage.removeItem('auth_token'); sessionStorage.removeItem('auth_token');
     }
     function clearAuth() {
@@ -504,11 +504,11 @@
 
     // ===== GitHub OAuth =====
     function doGitHubLogin() {
-      // 跳转到后端发起 OAuth（后端设置签名 cookie + 302 到 GitHub）
+      // 跳轉到後端發起 OAuth（後端設定簽名 cookie + 302 到 GitHub）
       location.href = '/api/auth?action=github-login';
     }
 
-    // 初始化登录表单
+    // 初始化登入表單
     (function initLoginForm() {
       const rememberCb = document.getElementById('remember-login');
       rememberCb.checked = rememberLogin;
@@ -516,16 +516,16 @@
         rememberLogin = rememberCb.checked;
         localStorage.setItem('remember_login', rememberLogin);
       });
-      // 恢复上次用户名
+      // 復原上次用戶名
       const lastUser = localStorage.getItem('last_username');
       if (lastUser) document.getElementById('login-user').value = lastUser;
     })();
 
-    // 页面加载时检查 GitHub OAuth 回调 + 检查是否启用
+    // 頁面載入時檢查 GitHub OAuth 回調 + 檢查是否啟用
     (function handleGitHubCallback() {
       const hash = location.hash;
       if (hash.startsWith('#github_login=success')) {
-        // GitHub OAuth 成功，token已通过HttpOnly Cookie设置
+        // GitHub OAuth 成功，token已透過HttpOnly Cookie設定
         rememberLogin = true;
         localStorage.setItem('remember_login', 'true');
         history.replaceState(null, '', location.pathname);
@@ -533,9 +533,9 @@
       } else if (hash.startsWith('#github_error=')) {
         const error = decodeURIComponent(hash.slice('#github_error='.length));
         history.replaceState(null, '', location.pathname);
-        setTimeout(() => showMsg('login-msg', 'GitHub 登录失败：' + error, 'error'), 100);
+        setTimeout(() => showMsg('login-msg', 'GitHub 登入失敗：' + error, 'error'), 100);
       }
-      // 检查是否启用 GitHub 登录
+      // 檢查是否啟用 GitHub 登入
       fetch('/api/settings?check=github').then(r => r.json()).then(d => {
         if (d.githubLoginEnabled) {
           const el = document.getElementById('github-login-section');
@@ -547,7 +547,7 @@
     async function doLogin() {
       const username = document.getElementById('login-user').value.trim();
       const password = document.getElementById('login-pass').value;
-      if (!username || !password) return showMsg('login-msg','请输入用户名和密码','error');
+      if (!username || !password) return showMsg('login-msg','請輸入用戶名和密碼','error');
       try {
         const res = await fetch('/api/auth?action=login', {
           method:'POST', headers:{'Content-Type':'application/json'},
@@ -582,15 +582,15 @@
       document.getElementById('login-panel').style.display = 'none';
       document.getElementById('admin-panel').style.display = 'block';
       document.getElementById('current-user').textContent = username;
-      document.getElementById('user-info').textContent = username + (role === 'super_admin' ? ' (超管)' : role === 'admin' ? ' (管理)' : ' (演示)');
+      document.getElementById('user-info').textContent = username + (role === 'super_admin' ? ' (超管)' : role === 'admin' ? ' (管理)' : ' (示範)');
       document.getElementById('user-info').style.display = 'inline';
-      // 密码锁定或demo角色：隐藏修改密码链接
+      // 密碼鎖定或demo角色：隱藏修改密碼連結
       const pwdLink = document.querySelector('a[onclick*="showChangePassword"]');
       if (pwdLink) pwdLink.style.display = (currentPasswordLocked || role === 'demo') ? 'none' : '';
-      // super_admin专属功能
+      // super_admin專屬功能
       const saEls = document.querySelectorAll('.super-admin-only');
       saEls.forEach(el => el.style.display = role === 'super_admin' ? '' : 'none');
-      // demo用户显示注销按钮
+      // demo用戶顯示註銷按鈕
       const deactivateBtn = document.getElementById('deactivate-account-btn');
       if (deactivateBtn) deactivateBtn.style.display = role === 'demo' ? '' : 'none';
       refreshAllBooks(); loadSettings(); loadStats(); loadFontList();
@@ -607,19 +607,19 @@
     }
 
     async function deactivateAccount() {
-      if (!confirm('⚠️ 确定要注销账号吗？\n\n• 您创建的书籍和章节将转交给管理员保管\n• 此操作不可恢复！')) return;
-      if (!confirm('再次确认：注销后无法恢复，确定继续？')) return;
+      if (!confirm('⚠️ 確定要註銷帳號嗎？\n\n• 您建立的書籍和章節將轉交給管理員保管\n• 此操作不可復原！')) return;
+      if (!confirm('再次確認：註銷後無法復原，確定繼續？')) return;
       try {
         const res = await fetch('/api/admin/account', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        alert('账号已注销。感谢使用！');
+        alert('帳號已註銷。感謝使用！');
         doLogout();
-      } catch (e) { alert('注销失败：' + e.message); }
+      } catch (e) { alert('註銷失敗：' + e.message); }
     }
 
     function showChangePassword() {
-      if (currentPasswordLocked) { alert('该账号不允许修改密码'); return; }
+      if (currentPasswordLocked) { alert('該帳號不允許修改密碼'); return; }
       document.getElementById('pwd-form').style.display = 'block';
     }
 
@@ -627,16 +627,16 @@
       const oldPwd = document.getElementById('old-pwd').value;
       const newPwd = document.getElementById('new-pwd').value;
       const newPwd2 = document.getElementById('new-pwd2').value;
-      if (!oldPwd || !newPwd) return showMsg('pwd-msg','请填写所有字段','error');
-      if (newPwd !== newPwd2) return showMsg('pwd-msg','两次输入的新密码不一致','error');
-      if (newPwd.length < 8) return showMsg('pwd-msg','新密码至少8位','error');
-      if (!/[a-zA-Z]/.test(newPwd)||!/\d/.test(newPwd)) return showMsg('pwd-msg','新密码需包含字母和数字','error');
+      if (!oldPwd || !newPwd) return showMsg('pwd-msg','請填寫所有欄位','error');
+      if (newPwd !== newPwd2) return showMsg('pwd-msg','兩次輸入的新密碼不一致','error');
+      if (newPwd.length < 8) return showMsg('pwd-msg','新密碼至少8位','error');
+      if (!/[a-zA-Z]/.test(newPwd)||!/\d/.test(newPwd)) return showMsg('pwd-msg','新密碼需包含字母和數字','error');
       try {
         const res = await api('POST','/api/auth?action=password',{oldPassword:oldPwd,newPassword:newPwd});
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        showMsg('pwd-msg','密码已修改，请重新登录','success');
-        // 清除所有认证状态并跳转到登录页
+        showMsg('pwd-msg','密碼已修改，請重新登入','success');
+        // 清除所有認證狀態並跳轉到登入頁
         setTimeout(() => {
           clearAuth();
           sessionStorage.clear();
@@ -647,10 +647,10 @@
       } catch(e) { showMsg('pwd-msg',e.message,'error'); }
     }
 
-    // 页面加载时检查session
+    // 頁面載入時檢查session
     checkSession();
 
-    // ===== 站点设置 =====
+    // ===== 站點設定 =====
     async function loadSettings() {
       try {
         const res = await fetch('/api/settings');
@@ -672,8 +672,8 @@
         const res = await api('PUT','/api/admin/settings',{settings});
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        showMsg('settings-msg','设置已保存','success');
-        document.querySelector('.navbar h1 a').textContent = '📚 ' + (settings.site_name || '我的书架');
+        showMsg('settings-msg','設定已儲存','success');
+        document.querySelector('.navbar h1 a').textContent = '📚 ' + (settings.site_name || '我的書架');
       } catch(e) { showMsg('settings-msg',e.message,'error'); }
     }
 
@@ -706,7 +706,7 @@
       const demoLimit = Number(document.getElementById('gh-demo-limit').value) || 0;
 
       if (enabled && !clientId) {
-        return showMsg('gh-config-msg', '请填写 Client ID', 'error');
+        return showMsg('gh-config-msg', '請填寫 Client ID', 'error');
       }
 
       try {
@@ -715,15 +715,15 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        showMsg('gh-config-msg', '配置已保存', 'success');
+        showMsg('gh-config-msg', '配置已儲存', 'success');
         document.getElementById('gh-client-secret').value = '';
         loadGitHubConfig();
       } catch(e) { showMsg('gh-config-msg', e.message, 'error'); }
     }
 
-    // ===== TXT导入 =====
-    // 章节正则v3：修复上中下篇误匹配、Part罗马数字过宽、连续标题丢弃、前言丢失
-    const CHAPTER_REGEX = /^[^\S\n\r]*(?:(?:正文|上卷|下卷|[上中下]册|卷[零〇一二三四五六七八九十百千\d]+)\s+)?(?:[【\[「]?第[零〇一二三四五六七八九十百千万壹贰叁肆伍陆柒捌玖拾佰仟\d]+[章节回卷集部篇幕话][】\]」]?(?=[\s:：\-—,，.。!！?？、）)\]】」}\d~～·]|$)|(?:chapter|CHAPTER|Chapter)\s+\d+|Part\s+(?:\d+|[IVXLCDM]+|[ivxlcdm]+)|[上中下]篇(?=[\s:：\-—]|$)|(?:序[章言幕]|楔子|尾声|番外(?:[篇：: \d一二三四五六七八九十]*)|后记|前言|引[子言]|附录|终章|大结局)(?=[\s:：\-—]|$)(?![\u4e00-\u9fff]))[^\S\n\r]*[:：\-—~～·|｜]*[^\S\n\r]*[^\n\r]{0,100}$/gm;
+    // ===== TXT匯入 =====
+    // 章節正則v3：修復上中下篇誤匹配、Part羅馬數字過寬、連續標題丟棄、前言遺失
+    const CHAPTER_REGEX = /^[^\S\n\r]*(?:(?:正文|上卷|下卷|[上中下]冊|卷[零〇一二三四五六七八九十百千\d]+)\s+)?(?:[【\[「]?第[零〇一二三四五六七八九十百千萬壹貳叄肆伍陸柒捌玖拾佰仟\d]+[章節回卷集部篇幕話][】\]」]?(?=[\s:：\-—,，.。!！?？、）)\]】」}\d~～·]|$)|(?:chapter|CHAPTER|Chapter)\s+\d+|Part\s+(?:\d+|[IVXLCDM]+|[ivxlcdm]+)|[上中下]篇(?=[\s:：\-—]|$)|(?:序[章言幕]|楔子|尾聲|番外(?:[篇：: \d一二三四五六七八九十]*)|後記|前言|引[子言]|附錄|終章|大結局)(?=[\s:：\-—]|$)(?![\u4e00-\u9fff]))[^\S\n\r]*[:：\-—~～·|｜]*[^\S\n\r]*[^\n\r]{0,100}$/gm;
     let parsedChapters = [];
 
     function decodeText(buffer) {
@@ -762,7 +762,7 @@
           preContent.push(line);
         }
       }
-      // 最后一章（即使无正文也保留）
+      // 最後一章（即使無正文也保留）
       if (curTitle !== null) {
         const content = curContent.join('\n').trim();
         chapters.push({title:curTitle, content, checked:true});
@@ -787,14 +787,14 @@
     }
     document.getElementById('import-file').addEventListener('change',async function(){
       const file=this.files[0]; if(!file) return;
-      if (file.size>50*1024*1024) return showMsg('import-msg','文件超过50MB限制','error');
+      if (file.size>50*1024*1024) return showMsg('import-msg','文件超過50MB限制','error');
       showMsg('import-msg','正在解析文件...','');
       try {
         const buffer=await file.arrayBuffer();
         const text=decodeText(buffer);
         parsedChapters=splitChapters(text);
         if (!parsedChapters) {
-          if (confirm('未检测到章节标记，是否按每5000字自动分割？')) {
+          if (confirm('未檢測到章節標記，是否按每5000字自動分割？')) {
             parsedChapters=splitBySize(text);
           } else {
             parsedChapters=[{title:file.name.replace(/\.txt$/i,''),content:text.trim(),checked:true}];
@@ -802,7 +802,7 @@
         }
         renderImportPreview();
         showMsg('import-msg','','');
-      } catch(e) { showMsg('import-msg','文件解析失败：'+e.message,'error'); }
+      } catch(e) { showMsg('import-msg','文件解析失敗：'+e.message,'error'); }
     });
     function renderImportPreview() {
       const el=document.getElementById('import-chapters');
@@ -819,7 +819,7 @@
           <div style="font-size:12px;color:var(--text-light);margin-top:4px;padding-left:28px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.content.slice(0,120))}</div>
         </div>
       `).join('');
-      // 事件委托
+      // 事件委託
       el.addEventListener('change', (e) => {
         if (e.target.classList.contains('import-check')) {
           parsedChapters[e.target.dataset.idx].checked = e.target.checked;
@@ -840,13 +840,13 @@
     }
     async function startImport() {
       const bookId=document.getElementById('import-book').value;
-      if (!bookId) return showMsg('import-msg','请选择目标书籍','error');
+      if (!bookId) return showMsg('import-msg','請選擇目標書籍','error');
       const chapters=parsedChapters.filter(c=>c.checked);
-      if (chapters.length===0) return showMsg('import-msg','没有选中任何章节','error');
+      if (chapters.length===0) return showMsg('import-msg','沒有選中任何章節','error');
       const bar=document.getElementById('import-bar');
       const status=document.getElementById('import-status');
       document.querySelector('.import-progress').style.display='block';
-      // 获取已有章节的最大sort_order作为基准
+      // 取得已有章節的最大sort_order作為基準
       let baseOrder = 0;
       try {
         const bRes = await fetch(`/api/books/${bookId}`);
@@ -869,16 +869,16 @@
         }
         errors.push(ch.title+': '+lastErr);
       });
-      // 进度追踪包装
+      // 進度追蹤包裝
       const tracked = tasks.map(fn => async () => { try { await fn(); } finally { uploaded++; const pct=Math.round(uploaded/chapters.length*100); bar.style.width=pct+'%'; status.textContent=`${uploaded}/${chapters.length} 章（${pct}%）`; } });
       await concurrentUpload(tracked, 3);
       if (errors.length>0) {
-        showMsg('import-msg',`导入完成，${errors.length} 章失败：${errors.slice(0,3).join('；')}`,'error');
-      } else { showMsg('import-msg',`成功导入 ${uploaded} 章`,'success'); }
+        showMsg('import-msg',`匯入完成，${errors.length} 章失敗：${errors.slice(0,3).join('；')}`,'error');
+      } else { showMsg('import-msg',`成功匯入 ${uploaded} 章`,'success'); }
       cancelImport(); refreshAllBooks();
     }
 
-    // ===== TXT导出 =====
+    // ===== TXT匯出 =====
     function downloadTxt(text,filename) {
       const BOM='\uFEFF';
       const blob=new Blob([BOM+text],{type:'text/plain;charset=utf-8'});
@@ -888,12 +888,12 @@
       URL.revokeObjectURL(url);
     }
     async function exportBook(bookId) {
-      showMsg('manage-msg','正在导出...','');
+      showMsg('manage-msg','正在匯出...','');
       try {
         const res=await fetch(`/api/books/${bookId}`);
         const data=await res.json();
         const book=data.book; const chapters=data.chapters||[];
-        if (chapters.length===0) return showMsg('manage-msg','没有章节可导出','error');
+        if (chapters.length===0) return showMsg('manage-msg','沒有章節可匯出','error');
         const parts=[];
         for (const ch of chapters) {
           const r=await fetch(`/api/chapters/${ch.id}`);
@@ -903,24 +903,24 @@
         const sep='\n\n'+'='.repeat(40)+'\n\n';
         const header=`《${book.title}》\n${book.author?'作者：'+book.author+'\n':''}\n`;
         downloadTxt(header+parts.join(sep),(book.title+(book.author?'_'+book.author:'')+'.txt').replace(/[<>:"/\\|?*]/g,'_'));
-        showMsg('manage-msg','导出成功','success');
-      } catch(e) { showMsg('manage-msg','导出失败：'+e.message,'error'); }
+        showMsg('manage-msg','匯出成功','success');
+      } catch(e) { showMsg('manage-msg','匯出失敗：'+e.message,'error'); }
     }
     async function exportChapter(chapterId,title) {
       try {
         const res=await fetch(`/api/chapters/${chapterId}`);
         const data=await res.json();
         downloadTxt(data.content,(title+'.txt').replace(/[<>:"/\\|?*]/g,'_'));
-      } catch(e) { alert('导出失败：'+e.message); }
+      } catch(e) { alert('匯出失敗：'+e.message); }
     }
 
-    // ===== 书籍 =====
-    // 缓存书籍数据用于事件委托
+    // ===== 書籍 =====
+    // 快取書籍資料用於事件委託
     let _booksCache = [];
     let _chaptersCache = [];
 
-    // 共享 fetchBooks：合并 loadBookList 和 loadBookSelects 的 API 调用
-    // 必须带 Authorization header，否则后端不返回 created_by，demo 无法判断所有权
+    // 共享 fetchBooks：合併 loadBookList 和 loadBookSelects 的 API 呼叫
+    // 必須帶 Authorization header，否則後端不返回 created_by，demo 無法判斷所有權
     let _booksPromise = null;
     function fetchBooks() {
       if (!_booksPromise) {
@@ -932,7 +932,7 @@
       return _booksPromise;
     }
 
-    // 统一刷新书籍列表+下拉框（只发一次请求）
+    // 統一重新整理書籍列表+下拉框（只發一次請求）
     async function refreshAllBooks() {
       const data = await fetchBooks();
       renderBookList(data);
@@ -948,7 +948,7 @@
       const el=document.getElementById('book-list');
       try {
         if (!data.books||data.books.length===0) {
-          el.innerHTML='<li style="padding:12px 0;color:var(--text-light)">暂无书籍</li>'; _booksCache=[]; return;
+          el.innerHTML='<li style="padding:12px 0;color:var(--text-light)">暫無書籍</li>'; _booksCache=[]; return;
         }
         _booksCache = data.books;
         el.innerHTML=data.books.map(b=>{
@@ -958,27 +958,27 @@
           const isUnlisted = status === 'unlisted';
           const dimmed = !isOwner || isDeleted;
 
-          // 状态标签
+          // 狀態標籤
           let statusBadge = '';
           if (isDeleted && b.delete_at) {
             const days = Math.max(0, Math.ceil((new Date(b.delete_at) - Date.now()) / 86400000));
-            statusBadge = `<span style="font-size:11px;color:#e74c3c;background:#fde8e8;padding:1px 6px;border-radius:3px;margin-left:6px">🗑️ ${days}天后删除</span>`;
+            statusBadge = `<span style="font-size:11px;color:#e74c3c;background:#fde8e8;padding:1px 6px;border-radius:3px;margin-left:6px">🗑️ ${days}天後刪除</span>`;
           } else if (isUnlisted) {
             statusBadge = '<span style="font-size:11px;color:#e67e22;background:#fef3e2;padding:1px 6px;border-radius:3px;margin-left:6px">已下架</span>';
           }
 
-          // 操作按钮
+          // 操作按鈕
           let actions = '';
           if (isOwner) {
-            actions += '<button class="btn btn-sm btn-edit-book">编辑</button>';
+            actions += '<button class="btn btn-sm btn-edit-book">編輯</button>';
             if (isDeleted) {
-              actions += ' <button class="btn btn-sm btn-restore-book" style="background:#27ae60;color:#fff">恢复</button>';
+              actions += ' <button class="btn btn-sm btn-restore-book" style="background:#27ae60;color:#fff">復原</button>';
             } else if (isUnlisted) {
               actions += ' <button class="btn btn-sm btn-restore-book" style="background:#27ae60;color:#fff">上架</button>';
-              actions += ' <button class="btn btn-sm btn-danger btn-delete-book">删除</button>';
+              actions += ' <button class="btn btn-sm btn-danger btn-delete-book">刪除</button>';
             } else {
               actions += ' <button class="btn btn-sm btn-unlist-book" style="background:#e67e22;color:#fff">下架</button>';
-              actions += ' <button class="btn btn-sm btn-danger btn-delete-book">删除</button>';
+              actions += ' <button class="btn btn-sm btn-danger btn-delete-book">刪除</button>';
             }
           }
 
@@ -997,7 +997,7 @@
       }
     }
 
-    // 书籍列表事件委托
+    // 書籍列表事件委託
     document.getElementById('book-list').addEventListener('click', function(e) {
       const li = e.target.closest('li[data-id]');
       if (!li) return;
@@ -1010,28 +1010,28 @@
         const btn = e.target;
         const isAlreadyDeleted = (book.status || 'normal') === 'deleted';
         if (isAlreadyDeleted) return; // 已在回收站
-        if (!confirm(`确定删除「${book.title}」？\n\n书籍将移入回收站，30天后自动永久删除。\n期间可随时恢复。`)) return;
+        if (!confirm(`確定刪除「${book.title}」？\n\n書籍將移入回收站，30天後自動永久刪除。\n期間可隨時復原。`)) return;
         btn.disabled = true;
-        btn.textContent = '删除中...';
+        btn.textContent = '刪除中...';
         btn.style.opacity = '0.6';
         api('DELETE',`/api/admin/books/${id}`).then(r=>r.json()).then(d=>{
           if (!d.success&&d.error) throw new Error(d.error);
           refreshAllBooks(); loadChapters();
         }).catch(err=>{
-          alert('删除失败：'+err.message);
+          alert('刪除失敗：'+err.message);
           btn.disabled = false;
-          btn.textContent = '删除';
+          btn.textContent = '刪除';
           btn.style.opacity = '';
         });
       } else if (e.target.classList.contains('btn-unlist-book')) {
         const btn = e.target;
-        if (!confirm(`确定下架「${book.title}」？\n\n下架后首页不再显示，读者无法阅读。`)) return;
+        if (!confirm(`確定下架「${book.title}」？\n\n下架後首頁不再顯示，讀者無法閱讀。`)) return;
         btn.disabled = true;
         api('POST',`/api/admin/books/${id}`,{action:'unlist'}).then(r=>r.json()).then(d=>{
           if (!d.success&&d.error) throw new Error(d.error);
           refreshAllBooks();
         }).catch(err=>{
-          alert('下架失败：'+err.message);
+          alert('下架失敗：'+err.message);
           btn.disabled = false;
         });
       } else if (e.target.classList.contains('btn-restore-book')) {
@@ -1041,7 +1041,7 @@
           if (!d.success&&d.error) throw new Error(d.error);
           refreshAllBooks();
         }).catch(err=>{
-          alert('恢复失败：'+err.message);
+          alert('復原失敗：'+err.message);
           btn.disabled = false;
         });
       }
@@ -1054,30 +1054,30 @@
     function renderBookSelects(data) {
       try {
         const allBooks = data.books || [];
-        // demo用户只能在添加章节/章节管理/导入中选自己的书
+        // demo用戶只能在新增章節/章節管理/匯入中選自己的書
         const myBooks = currentRole === 'demo' ? allBooks.filter(b => b.created_by === currentUserId) : allBooks;
         const opts = myBooks.length === 0
-          ? '<option value="">请先创建一本书</option>'
+          ? '<option value="">請先建立一本書</option>'
           : myBooks.map(b => `<option value="${b.id}">${esc(b.title)}</option>`).join('');
         document.getElementById('chapter-book').innerHTML=opts;
         document.getElementById('import-book').innerHTML=opts;
-        document.getElementById('manage-book').innerHTML='<option value="">选择书籍...</option>'+opts;
+        document.getElementById('manage-book').innerHTML='<option value="">選擇書籍...</option>'+opts;
       } catch{}
     }
     async function createBook() {
       const title=document.getElementById('book-title').value.trim();
       const author=document.getElementById('book-author').value.trim();
       const description=document.getElementById('book-desc').value.trim();
-      if (!title) return showMsg('book-msg','请输入书名','error');
+      if (!title) return showMsg('book-msg','請輸入書名','error');
       try {
         const res=await api('POST','/api/admin/books',{title,author,description});
         const data=await res.json();
         if (!res.ok) throw new Error(data.error);
-        // 保存标签
+        // 儲存標籤
         if (_createBookTags.length > 0 && data.book && data.book.id) {
           await api('PUT', '/api/admin/book-tags', { book_id: data.book.id, tag_ids: _createBookTags }).catch(() => {});
         }
-        showMsg('book-msg',`创建成功：${esc(data.book.title)}`,'success');
+        showMsg('book-msg',`建立成功：${esc(data.book.title)}`,'success');
         document.getElementById('book-title').value='';
         document.getElementById('book-author').value='';
         document.getElementById('book-desc').value='';
@@ -1087,27 +1087,27 @@
       } catch(e) { showMsg('book-msg',e.message,'error'); }
     }
     function editBook(id,title,author,desc) {
-      const newTitle=prompt('书名：',title);
+      const newTitle=prompt('書名：',title);
       if (newTitle===null) return;
       const newAuthor=prompt('作者：',author);
-      const newDesc=prompt('简介：',desc);
+      const newDesc=prompt('簡介：',desc);
       api('PUT',`/api/admin/books/${id}`,{title:newTitle||title,author:newAuthor||'',description:newDesc||''})
         .then(r=>r.json()).then(d=>{if(d.error)throw new Error(d.error);refreshAllBooks();})
-        .catch(e=>alert('编辑失败：'+e.message));
+        .catch(e=>alert('編輯失敗：'+e.message));
     }
-    // ===== 章节 =====
+    // ===== 章節 =====
     async function createChapter() {
       const book_id=document.getElementById('chapter-book').value;
       const title=document.getElementById('chapter-title').value.trim();
       const content=document.getElementById('chapter-content').value.trim();
-      if (!book_id) return showMsg('chapter-msg','请选择书籍','error');
-      if (!title) return showMsg('chapter-msg','请输入章节标题','error');
-      if (!content) return showMsg('chapter-msg','请输入章节内容','error');
+      if (!book_id) return showMsg('chapter-msg','請選擇書籍','error');
+      if (!title) return showMsg('chapter-msg','請輸入章節標題','error');
+      if (!content) return showMsg('chapter-msg','請輸入章節內容','error');
       try {
         const res=await api('POST','/api/admin/chapters',{book_id:Number(book_id),title,content});
         const data=await res.json();
         if (!res.ok) throw new Error(data.error);
-        showMsg('chapter-msg',`发布成功：${esc(data.chapter.title)}（${data.chapter.word_count} 字）`,'success');
+        showMsg('chapter-msg',`發布成功：${esc(data.chapter.title)}（${data.chapter.word_count} 字）`,'success');
         document.getElementById('chapter-title').value='';
         document.getElementById('chapter-content').value='';
         document.getElementById('word-count').textContent='0';
@@ -1125,7 +1125,7 @@
         const chapters=data.chapters||[];
         _chaptersCache = chapters;
         if (chapters.length===0) {
-          el.innerHTML='<li style="padding:12px 0;color:var(--text-light)">暂无章节</li>';
+          el.innerHTML='<li style="padding:12px 0;color:var(--text-light)">暫無章節</li>';
           exportArea.innerHTML=''; return;
         }
         el.innerHTML=chapters.map((c,i)=>`
@@ -1140,21 +1140,21 @@
             <div class="item-actions">
               ${i>0?`<button class="btn btn-sm btn-move-up">↑</button>`:''}
               ${i<chapters.length-1?`<button class="btn btn-sm btn-move-down">↓</button>`:''}
-              <button class="btn btn-sm btn-export-ch">导出</button>
-              <button class="btn btn-sm btn-edit-ch">编辑</button>
-              <button class="btn btn-sm btn-danger btn-delete-ch">删除</button>
+              <button class="btn btn-sm btn-export-ch">匯出</button>
+              <button class="btn btn-sm btn-edit-ch">編輯</button>
+              <button class="btn btn-sm btn-danger btn-delete-ch">刪除</button>
             </div>
           </li>
         `).join('');
         document.getElementById('batch-bar').style.display='flex';
         document.getElementById('select-all').checked=false;
         updateSelectedCount();
-        exportArea.innerHTML=`<a href="#" id="export-book-link" style="font-size:13px;color:var(--text-light);text-decoration:none;border-bottom:1px dashed var(--text-light)">导出全书 TXT</a>`;
+        exportArea.innerHTML=`<a href="#" id="export-book-link" style="font-size:13px;color:var(--text-light);text-decoration:none;border-bottom:1px dashed var(--text-light)">匯出全書 TXT</a>`;
         document.getElementById('export-book-link').addEventListener('click',function(e){e.preventDefault();exportBook(bookId);});
       } catch(e) { el.innerHTML=`<li class="msg msg-error">${esc(e.message)}</li>`; }
     }
 
-    // manage-book / select-all / ch-select 事件绑定（替代内联 onchange）
+    // manage-book / select-all / ch-select 事件綁定（替代行內 onchange）
     document.getElementById('manage-book').addEventListener('change', loadChapters);
     document.getElementById('select-all').addEventListener('change', function() {
       toggleSelectAll(this.checked);
@@ -1163,7 +1163,7 @@
       if (e.target.classList.contains('ch-select')) updateSelectedCount();
     });
 
-    // 章节列表事件委托
+    // 章節列表事件委託
     document.getElementById('chapter-list').addEventListener('click', async function(e) {
       const li = e.target.closest('li[data-id]');
       if (!li) return;
@@ -1178,42 +1178,42 @@
           const res=await api('POST','/api/admin/chapters/swap',{id1:id,id2:prev.id});
           const d=await res.json(); if(!res.ok) throw new Error(d.error);
           loadChapters();
-        } catch(e) { showMsg('manage-msg','排序失败：'+e.message,'error'); }
+        } catch(e) { showMsg('manage-msg','排序失敗：'+e.message,'error'); }
       } else if (e.target.classList.contains('btn-move-down') && idx < _chaptersCache.length-1) {
         const next = _chaptersCache[idx+1];
         try {
           const res=await api('POST','/api/admin/chapters/swap',{id1:next.id,id2:id});
           const d=await res.json(); if(!res.ok) throw new Error(d.error);
           loadChapters();
-        } catch(e) { showMsg('manage-msg','排序失败：'+e.message,'error'); }
+        } catch(e) { showMsg('manage-msg','排序失敗：'+e.message,'error'); }
       } else if (e.target.classList.contains('btn-export-ch')) {
         try {
           const res=await fetch(`/api/chapters/${id}`);
           const data=await res.json();
           downloadTxt(data.content,(ch.title+'.txt').replace(/[<>:"/\\|?*]/g,'_'));
-        } catch(e) { alert('导出失败：'+e.message); }
+        } catch(e) { alert('匯出失敗：'+e.message); }
       } else if (e.target.classList.contains('btn-edit-ch')) {
-        const newTitle=prompt('章节标题：');
+        const newTitle=prompt('章節標題：');
         if (newTitle===null) return;
-        const editContent=confirm('是否修改正文内容？');
+        const editContent=confirm('是否修改正文內容？');
         let body={};
         if (newTitle) body.title=newTitle;
-        if (editContent) { const c=prompt('输入新的正文内容（会完全替换原内容）：'); if(c) body.content=c; }
+        if (editContent) { const c=prompt('輸入新的正文內容（會完全取代原內容）：'); if(c) body.content=c; }
         if (!body.title&&!body.content) return;
         try {
           const res=await api('PUT',`/api/admin/chapters/${id}`,body);
           const d=await res.json(); if(!res.ok) throw new Error(d.error);
           if (d.warning) { alert('⚠️ ' + d.warning); }
-          showMsg('manage-msg','编辑成功','success');
+          showMsg('manage-msg','編輯成功','success');
           loadChapters(); refreshAllBooks();
-        } catch(e) { showMsg('manage-msg','编辑失败：'+e.message,'error'); }
+        } catch(e) { showMsg('manage-msg','編輯失敗：'+e.message,'error'); }
       } else if (e.target.classList.contains('btn-delete-ch')) {
-        if (!confirm(`确定删除章节「${ch.title}」？`)) return;
+        if (!confirm(`確定刪除章節「${ch.title}」？`)) return;
         try {
           const res=await api('DELETE',`/api/admin/chapters/${id}`);
           const d=await res.json(); if(!res.ok) throw new Error(d.error);
           loadChapters(); refreshAllBooks();
-        } catch(e) { showMsg('manage-msg','删除失败：'+e.message,'error'); }
+        } catch(e) { showMsg('manage-msg','刪除失敗：'+e.message,'error'); }
       }
     });
 
@@ -1224,7 +1224,7 @@
       return fetch(url,opts);
     }
 
-    // 并发上传控制器
+    // 並發上傳控制器
     async function concurrentUpload(tasks, concurrency = 3) {
       let idx = 0;
       const results = [];
@@ -1245,7 +1245,7 @@
     }
     function esc(s) { const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML.replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
-    // DRM检测函数：扩展检测多种DRM加密类型
+    // DRM檢測函式：擴展檢測多種DRM加密類型
     async function checkEPUBDRM(zip) {
       try {
         const encryptionXml = await zip.file('META-INF/encryption.xml')?.async('text').catch(() => null);
@@ -1256,7 +1256,7 @@
 
         const encDoc = new DOMParser().parseFromString(encryptionXml, 'application/xml');
         
-        // 检查多种DRM标识元素
+        // 檢查多種DRM標識元素
         const drmIndicators = [
           'EncryptedData',
           'EncryptedKey',
@@ -1271,15 +1271,15 @@
             if (encDoc.querySelectorAll(indicator).length > 0) {
               return {
                 hasDRM: true,
-                reason: `检测到加密元素: ${indicator.replace(/\\/g, '')}`
+                reason: `檢測到加密元素: ${indicator.replace(/\\/g, '')}`
               };
             }
           } catch (e) {
-            // 选择器可能无效，继续尝试下一个
+            // 選擇器可能無效，繼續嘗試下一個
           }
         }
         
-        // 检查特定的DRM命名空间
+        // 檢查特定的DRM命名空間
         const drmNamespaces = [
           'urn:uuid:6b3d3c40-ebc3-11d9-8e3a-0002b3ae9c49', // Adobe Adept
           'http://www.w3.org/2001/04/xmlenc#', // XML Encryption
@@ -1293,12 +1293,12 @@
           if (xmlns.includes(ns)) {
             return {
               hasDRM: true,
-              reason: '检测到DRM命名空间'
+              reason: '檢測到DRM命名空間'
             };
           }
         }
         
-        // 检查所有元素的属性中是否包含DRM相关关键词
+        // 檢查所有元素的屬性中是否包含DRM相關關鍵字
         const allElements = encDoc.querySelectorAll('*');
         for (const el of allElements) {
           const attrs = el.attributes;
@@ -1307,7 +1307,7 @@
             if (attrValue.includes('encryption') || attrValue.includes('adept') || attrValue.includes('drm')) {
               return {
                 hasDRM: true,
-                reason: '检测到加密相关属性'
+                reason: '檢測到加密相關屬性'
               };
             }
           }
@@ -1315,8 +1315,8 @@
         
         return { hasDRM: false };
       } catch (e) {
-        console.error('DRM检测出错:', e);
-        // 检测出错时保守处理，返回无DRM但记录警告
+        console.error('DRM檢測出錯:', e);
+        // 檢測出錯時保守處理，返回無DRM但記錄警告
         return { hasDRM: false };
       }
     }
@@ -1325,7 +1325,7 @@
       document.getElementById('word-count').textContent=this.value.trim().length;
     });
 
-    // ===== 数据概览 =====
+    // ===== 資料概覽 =====
     async function loadStats() {
       try {
         const res = await api('GET', '/api/books');
@@ -1336,10 +1336,10 @@
         document.getElementById('stat-books').textContent = books.length;
         document.getElementById('stat-chapters').textContent = totalChapters;
         document.getElementById('stat-words').textContent = totalWords >= 10000
-          ? (totalWords / 10000).toFixed(1) + ' 万'
+          ? (totalWords / 10000).toFixed(1) + ' 萬'
           : totalWords.toLocaleString();
       } catch {}
-      // 加载访问统计
+      // 載入訪問統計
       try {
         const res = await api('GET', '/api/admin/stats');
         const data = await res.json();
@@ -1347,11 +1347,11 @@
         document.getElementById('stat-uv').textContent = (data.today?.uv || 0).toLocaleString();
         const totalPv = data.totals?.total_pv || 0;
         document.getElementById('stat-total-pv').textContent = totalPv >= 10000
-          ? (totalPv / 10000).toFixed(1) + ' 万' : totalPv.toLocaleString();
-        // 热门书籍
+          ? (totalPv / 10000).toFixed(1) + ' 萬' : totalPv.toLocaleString();
+        // 熱門書籍
         const el = document.getElementById('hot-books');
         if (data.hotBooks && data.hotBooks.length > 0) {
-          el.innerHTML = '<h4 style="margin:0 0 8px;font-size:14px;color:var(--text-light)">📈 近30天热门书籍</h4>' +
+          el.innerHTML = '<h4 style="margin:0 0 8px;font-size:14px;color:var(--text-light)">📈 近30天熱門書籍</h4>' +
             '<ul style="list-style:none;padding:0;margin:0">' +
             data.hotBooks.map((b, i) => `<li style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:14px"><span>${i+1}. ${esc(b.title)}</span><span style="color:var(--text-light)">${b.total_views} 次</span></li>`).join('') +
             '</ul>';
@@ -1361,7 +1361,7 @@
       } catch {}
     }
 
-    // ===== 管理员管理 =====
+    // ===== 管理員管理 =====
     let _adminsCache = [];
     async function loadAdminUsers() {
       try {
@@ -1370,20 +1370,20 @@
         const admins = data.admins || [];
         _adminsCache = admins;
         const el = document.getElementById('admin-users-list');
-        if (admins.length === 0) { el.innerHTML = '<p style="color:var(--text-light);font-size:13px">暂无管理员</p>'; return; }
-        el.innerHTML = '<table style="width:100%;font-size:14px;border-collapse:collapse"><thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:6px">用户名</th><th style="text-align:left;padding:6px">角色</th><th style="text-align:left;padding:6px">来源</th><th style="text-align:left;padding:6px">书籍</th><th style="text-align:left;padding:6px">密码</th><th style="text-align:left;padding:6px">创建时间</th><th style="text-align:right;padding:6px">操作</th></tr></thead><tbody>' +
+        if (admins.length === 0) { el.innerHTML = '<p style="color:var(--text-light);font-size:13px">暫無管理員</p>'; return; }
+        el.innerHTML = '<table style="width:100%;font-size:14px;border-collapse:collapse"><thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:6px">用戶名</th><th style="text-align:left;padding:6px">角色</th><th style="text-align:left;padding:6px">來源</th><th style="text-align:left;padding:6px">書籍</th><th style="text-align:left;padding:6px">密碼</th><th style="text-align:left;padding:6px">建立時間</th><th style="text-align:right;padding:6px">操作</th></tr></thead><tbody>' +
           admins.map(a => {
             const isGH = !!a.github_id;
-            const ghInfo = isGH ? `<span title="GitHub: ${esc(a.github_login || '')}">${a.avatar_url ? '<img src="'+esc(a.avatar_url)+'" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:3px">' : ''}🐙 ${esc(a.github_login || '')}</span>` : '<span style="color:var(--text-light)">本地</span>';
+            const ghInfo = isGH ? `<span title="GitHub: ${esc(a.github_login || '')}">${a.avatar_url ? '<img src="'+esc(a.avatar_url)+'" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:3px">' : ''}🐙 ${esc(a.github_login || '')}</span>` : '<span style="color:var(--text-light)">本機</span>';
             const bookCount = a.book_count || 0;
-            const bookInfo = bookCount > 0 ? `<span style="cursor:pointer;color:var(--primary)" class="btn-view-user-books" title="查看书籍">${bookCount} 本</span>` : '<span style="color:var(--text-light)">0</span>';
-            return `<tr data-id="${a.id}" data-name="${esc(a.username)}" data-lock="${a.password_locked ? 1 : 0}" style="border-bottom:1px solid var(--border)"><td style="padding:6px">${esc(a.username)}</td><td style="padding:6px"><select class="admin-role-select" data-id="${a.id}" style="padding:2px 4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:13px"><option value="super_admin"${a.role==='super_admin'?' selected':''}>超级管理员</option><option value="admin"${a.role==='admin'?' selected':''}>管理员</option><option value="demo"${a.role==='demo'?' selected':''}>演示</option></select></td><td style="padding:6px;font-size:12px">${ghInfo}</td><td style="padding:6px;font-size:13px">${bookInfo}</td><td style="padding:6px"><span title="${a.password_locked ? '密码已锁定' : '密码可修改'}">${a.password_locked ? '🔒' : '🔓'}</span> <button class="btn btn-sm btn-toggle-pwd-lock" data-action="toggle-pwd-lock" style="font-size:11px;padding:1px 6px">${a.password_locked ? '解锁' : '锁定'}</button></td><td style="padding:6px;color:var(--text-light);font-size:12px">${a.created_at ? a.created_at.slice(0,10) : '-'}</td><td style="padding:6px;text-align:right"><button class="btn btn-sm btn-danger btn-delete-admin" data-action="delete-admin">删除</button></td></tr>`;
+            const bookInfo = bookCount > 0 ? `<span style="cursor:pointer;color:var(--primary)" class="btn-view-user-books" title="查看書籍">${bookCount} 本</span>` : '<span style="color:var(--text-light)">0</span>';
+            return `<tr data-id="${a.id}" data-name="${esc(a.username)}" data-lock="${a.password_locked ? 1 : 0}" style="border-bottom:1px solid var(--border)"><td style="padding:6px">${esc(a.username)}</td><td style="padding:6px"><select class="admin-role-select" data-id="${a.id}" style="padding:2px 4px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:13px"><option value="super_admin"${a.role==='super_admin'?' selected':''}>超級管理員</option><option value="admin"${a.role==='admin'?' selected':''}>管理員</option><option value="demo"${a.role==='demo'?' selected':''}>示範</option></select></td><td style="padding:6px;font-size:12px">${ghInfo}</td><td style="padding:6px;font-size:13px">${bookInfo}</td><td style="padding:6px"><span title="${a.password_locked ? '密碼已鎖定' : '密碼可修改'}">${a.password_locked ? '🔒' : '🔓'}</span> <button class="btn btn-sm btn-toggle-pwd-lock" data-action="toggle-pwd-lock" style="font-size:11px;padding:1px 6px">${a.password_locked ? '解鎖' : '鎖定'}</button></td><td style="padding:6px;color:var(--text-light);font-size:12px">${a.created_at ? a.created_at.slice(0,10) : '-'}</td><td style="padding:6px;text-align:right"><button class="btn btn-sm btn-danger btn-delete-admin" data-action="delete-admin">刪除</button></td></tr>`;
           }).join('') +
           '</tbody></table>';
       } catch {}
     }
 
-    // 管理员列表事件委托：click + change
+    // 管理員列表事件委託：click + change
     document.getElementById('admin-users-list').addEventListener('click', function(e) {
       const tr = e.target.closest('tr[data-id]');
       if (!tr) return;
@@ -1410,7 +1410,7 @@
       const password = document.getElementById('new-admin-pass').value;
       const role = document.getElementById('new-admin-role').value;
       const pwdLock = document.getElementById('new-admin-pwd-lock').checked;
-      if (!username || !password) return showMsg('admin-user-msg', '请填写用户名和密码', 'error');
+      if (!username || !password) return showMsg('admin-user-msg', '請填寫用戶名和密碼', 'error');
       try {
         const res = await api('POST', '/api/admin/users', { username, password, role, password_locked: pwdLock ? 1 : 0 });
         const data = await res.json();
@@ -1426,17 +1426,17 @@
 
     function showUserBooks(userId, username) {
       const books = _booksCache.filter(b => b.created_by === userId);
-      if (books.length === 0) { alert(`${username} 没有创建任何书籍`); return; }
-      const statusLabel = s => s === 'deleted' ? '🗑️待删除' : s === 'unlisted' ? '⚠️已下架' : '';
+      if (books.length === 0) { alert(`${username} 沒有建立任何書籍`); return; }
+      const statusLabel = s => s === 'deleted' ? '🗑️待刪除' : s === 'unlisted' ? '⚠️已下架' : '';
       const list = books.map(b => {
         const sl = statusLabel(b.status);
         return `• ${b.title}（${b.chapter_count}章 / ${b.total_words}字）${sl ? ' ' + sl : ''}`;
       }).join('\n');
-      alert(`${username} 的书籍（${books.length}本）：\n\n${list}`);
+      alert(`${username} 的書籍（${books.length}本）：\n\n${list}`);
     }
 
     async function deleteAdmin(id, username) {
-      if (!confirm(`确定删除管理员 ${username}？`)) return;
+      if (!confirm(`確定刪除管理員 ${username}？`)) return;
       try {
         const res = await api('DELETE', '/api/admin/users', { id });
         const data = await res.json();
@@ -1450,7 +1450,7 @@
         const res = await api('PUT', '/api/admin/users', { id, role });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        // 如果修改的是当前用户自己的角色，需要重新检查会话
+        // 如果修改的是目前用戶自己的角色，需要重新檢查工作階段
         if (id === currentUserId) {
           await checkSession();
         }
@@ -1467,7 +1467,7 @@
       } catch(e) { alert(e.message); loadAdminUsers(); }
     }
 
-    // ===== 批量操作 =====
+    // ===== 批次操作 =====
     function toggleSelectAll(checked) {
       document.querySelectorAll('.ch-select').forEach(cb => cb.checked = checked);
       updateSelectedCount();
@@ -1475,44 +1475,44 @@
     function updateSelectedCount() {
       const count = document.querySelectorAll('.ch-select:checked').length;
       const el = document.getElementById('selected-count');
-      if (el) el.textContent = `已选 ${count} 章`;
+      if (el) el.textContent = `已選 ${count} 章`;
     }
     async function batchDelete() {
       const ids = [...document.querySelectorAll('.ch-select:checked')].map(cb => Number(cb.dataset.id));
-      if (ids.length === 0) return showMsg('manage-msg', '请先勾选要删除的章节', 'error');
-      if (!confirm(`确定删除选中的 ${ids.length} 个章节？此操作不可恢复！`)) return;
+      if (ids.length === 0) return showMsg('manage-msg', '請先勾選要刪除的章節', 'error');
+      if (!confirm(`確定刪除選中的 ${ids.length} 個章節？此操作不可復原！`)) return;
       let deleted = 0, errors = [];
-      showMsg('manage-msg', `正在删除 0/${ids.length} ...`, '');
+      showMsg('manage-msg', `正在刪除 0/${ids.length} ...`, '');
       for (const id of ids) {
         try {
           const res = await api('DELETE', `/api/admin/chapters/${id}`);
           if (!res.ok) { const d = await res.json(); errors.push(d.error); }
           else deleted++;
         } catch (e) { errors.push(e.message); }
-        showMsg('manage-msg', `正在删除 ${deleted + errors.length}/${ids.length} ...`, '');
+        showMsg('manage-msg', `正在刪除 ${deleted + errors.length}/${ids.length} ...`, '');
       }
       if (errors.length > 0) {
-        showMsg('manage-msg', `删除 ${deleted} 章，${errors.length} 章失败`, 'error');
+        showMsg('manage-msg', `刪除 ${deleted} 章，${errors.length} 章失敗`, 'error');
       } else {
-        showMsg('manage-msg', `成功删除 ${deleted} 章`, 'success');
+        showMsg('manage-msg', `成功刪除 ${deleted} 章`, 'success');
       }
       loadChapters(); refreshAllBooks();
     }
 
-    // ===== 数据备份与恢复 =====
+    // ===== 資料備份與復原 =====
     async function exportBackup() {
       const btn=document.getElementById('backup-btn');
       const bar=document.getElementById('backup-bar');
       const status=document.getElementById('backup-status');
       const progress=document.getElementById('backup-progress');
-      btn.disabled=true; btn.textContent='导出中...';
+      btn.disabled=true; btn.textContent='匯出中...';
       progress.style.display='block';
       try {
-        // 获取所有书籍
+        // 取得所有書籍
         const booksRes=await api('GET','/api/books');
         const booksData=await booksRes.json();
         const books=booksData.books||[];
-        // 获取设置
+        // 取得設定
         const settingsRes=await fetch('/api/settings');
         const settingsData=await settingsRes.json();
         const backup={version:1,exportedAt:new Date().toISOString(),settings:settingsData.settings||{},books:[]};
@@ -1531,7 +1531,7 @@
           done++;
           const pct=Math.round(done/books.length*100);
           bar.style.width=pct+'%';
-          status.textContent=`${done}/${books.length} 本书`;
+          status.textContent=`${done}/${books.length} 本書`;
         }
         const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
         const url=URL.createObjectURL(blob);
@@ -1540,13 +1540,13 @@
         a.download=`novel-site-backup-${new Date().toISOString().slice(0,10)}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        showMsg('backup-msg',`备份成功：${books.length} 本书`,'success');
-      } catch(e) { showMsg('backup-msg','备份失败：'+e.message,'error'); }
-      btn.disabled=false; btn.textContent='导出备份';
+        showMsg('backup-msg',`備份成功：${books.length} 本書`,'success');
+      } catch(e) { showMsg('backup-msg','備份失敗：'+e.message,'error'); }
+      btn.disabled=false; btn.textContent='匯出備份';
       setTimeout(()=>{progress.style.display='none';},2000);
     }
 
-    // ===== 自定义字体管理 =====
+    // ===== 自訂字體管理 =====
     async function loadFontList() {
       const el = document.getElementById('font-list');
       try {
@@ -1554,20 +1554,20 @@
         const data = await res.json();
         const fonts = data.fonts || [];
         if (fonts.length === 0) {
-          el.innerHTML = '<li style="color:var(--text-light)">暂无自定义字体</li>';
+          el.innerHTML = '<li style="color:var(--text-light)">暫無自訂字體</li>';
           return;
         }
         el.innerHTML = fonts.map(f => `
           <li data-font="${esc(f)}">
             <span style="font-size:14px">${esc(f)}</span>
-            <button class="btn btn-sm btn-danger btn-delete-font">删除</button>
+            <button class="btn btn-sm btn-danger btn-delete-font">刪除</button>
           </li>
         `).join('');
       } catch {
-        el.innerHTML = '<li style="color:var(--text-light)">加载失败</li>';
+        el.innerHTML = '<li style="color:var(--text-light)">載入失敗</li>';
       }
     }
-    // 字体列表事件委托
+    // 字體列表事件委託
     document.getElementById('font-list').addEventListener('click', function(e) {
       if (e.target.classList.contains('btn-delete-font')) {
         const li = e.target.closest('li[data-font]');
@@ -1577,10 +1577,10 @@
     async function uploadFont() {
       const fileInput = document.getElementById('font-file');
       const file = fileInput.files[0];
-      if (!file) return showMsg('font-msg', '请选择字体文件', 'error');
-      if (!/\.woff2$/i.test(file.name)) return showMsg('font-msg', '只支持 .woff2 格式', 'error');
-      if (file.size > 10 * 1024 * 1024) return showMsg('font-msg', '文件不能超过10MB', 'error');
-      showMsg('font-msg', '上传中...', '');
+      if (!file) return showMsg('font-msg', '請選擇字體檔案', 'error');
+      if (!/\.woff2$/i.test(file.name)) return showMsg('font-msg', '只支援 .woff2 格式', 'error');
+      if (file.size > 10 * 1024 * 1024) return showMsg('font-msg', '文件不能超過10MB', 'error');
+      showMsg('font-msg', '上傳中...', '');
       try {
         const formData = new FormData();
         formData.append('file', file);
@@ -1591,7 +1591,7 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
-        showMsg('font-msg', '上传成功', 'success');
+        showMsg('font-msg', '上傳成功', 'success');
         fileInput.value = '';
         loadFontList();
       } catch (e) {
@@ -1599,21 +1599,21 @@
       }
     }
     async function deleteFont(filename) {
-      if (!confirm(`确定删除字体「${filename}」？`)) return;
+      if (!confirm(`確定刪除字體「${filename}」？`)) return;
       try {
         const res = await api('DELETE', '/api/admin/fonts', { filename });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
         loadFontList();
       } catch (e) {
-        alert('删除失败：' + e.message);
+        alert('刪除失敗：' + e.message);
       }
     }
 
     document.getElementById('restore-file').addEventListener('change',async(e)=>{
       const file=e.target.files[0];
       if (!file) return;
-      if (!confirm('恢复备份会添加数据（不会删除现有数据）。确定继续？')) { e.target.value=''; return; }
+      if (!confirm('復原備份會新增資料（不會刪除現有資料）。確定繼續？')) { e.target.value=''; return; }
       const bar=document.getElementById('backup-bar');
       const status=document.getElementById('backup-status');
       const progress=document.getElementById('backup-progress');
@@ -1621,17 +1621,17 @@
       try {
         const text=await file.text();
         const backup=JSON.parse(text);
-        if (!backup.version || !backup.books) throw new Error('无效的备份文件');
+        if (!backup.version || !backup.books) throw new Error('無效的備份文件');
         const books=backup.books;
         let done=0,errors=[];
         for (const book of books) {
           try {
-            // 创建书籍
+            // 建立書籍
             const res=await api('POST','/api/admin/books',{title:book.title,author:book.author,description:book.description});
             const d=await res.json();
             if (!res.ok) throw new Error(d.error);
             const bookId=d.book.id;
-            // 导入章节
+            // 匯入章節
             for (const ch of (book.chapters||[])) {
               await api('POST','/api/admin/chapters',{book_id:bookId,title:ch.title,content:ch.content});
             }
@@ -1639,21 +1639,21 @@
           done++;
           const pct=Math.round(done/books.length*100);
           bar.style.width=pct+'%';
-          status.textContent=`${done}/${books.length} 本书`;
+          status.textContent=`${done}/${books.length} 本書`;
         }
         if (errors.length>0) {
-          showMsg('backup-msg',`恢复完成，${errors.length} 本失败：${errors.slice(0,3).join('；')}`,'error');
-        } else { showMsg('backup-msg',`成功恢复 ${books.length} 本书`,'success'); }
+          showMsg('backup-msg',`復原完成，${errors.length} 本失敗：${errors.slice(0,3).join('；')}`,'error');
+        } else { showMsg('backup-msg',`成功復原 ${books.length} 本書`,'success'); }
         refreshAllBooks();
-      } catch(err) { showMsg('backup-msg','恢复失败：'+err.message,'error'); }
+      } catch(err) { showMsg('backup-msg','復原失敗：'+err.message,'error'); }
       e.target.value='';
       setTimeout(()=>{progress.style.display='none';},2000);
     });
 
-    // ===== EPUB导入 =====
+    // ===== EPUB匯入 =====
     let epubChapters = [];
 
-    // 导入方式切换
+    // 匯入方式切換
     document.querySelectorAll('input[name="epub-import-mode"]').forEach(radio => {
       radio.addEventListener('change', function() {
         document.getElementById('epub-existing-book').style.display = this.value === 'existing' ? '' : 'none';
@@ -1669,7 +1669,7 @@
         const allBooks = data.books || [];
         const myBooks = currentRole === 'demo' ? allBooks.filter(b => b.created_by === currentUserId) : allBooks;
         if (myBooks.length === 0) {
-          sel.innerHTML = '<option value="">请先创建一本书</option>';
+          sel.innerHTML = '<option value="">請先建立一本書</option>';
         } else {
           sel.innerHTML = myBooks.map(b => `<option value="${b.id}">${esc(b.title)}</option>`).join('');
         }
@@ -1679,46 +1679,46 @@
     document.getElementById('epub-file').addEventListener('change', async function() {
       const file = this.files[0];
       if (!file) return;
-      if (file.size > 50 * 1024 * 1024) return showMsg('epub-msg', '文件超过 50MB 限制', 'error');
-      if (!file.name.toLowerCase().endsWith('.epub')) return showMsg('epub-msg', '请选择 .epub 文件', 'error');
+      if (file.size > 50 * 1024 * 1024) return showMsg('epub-msg', '文件超過 50MB 限制', 'error');
+      if (!file.name.toLowerCase().endsWith('.epub')) return showMsg('epub-msg', '請選擇 .epub 文件', 'error');
 
       document.getElementById('epub-preview').style.display = 'none';
       document.getElementById('epub-parsing-msg').style.display = '';
       showMsg('epub-msg', '', '');
 
       try {
-        if (typeof JSZip === 'undefined') throw new Error('JSZip 库加载失败，请刷新页面重试');
+        if (typeof JSZip === 'undefined') throw new Error('JSZip 庫載入失敗，請重新整理頁面重試');
         const arrayBuffer = await file.arrayBuffer();
         const zip = await JSZip.loadAsync(arrayBuffer);
 
-        // 1. 读取 container.xml 找到 OPF 路径
+        // 1. 讀取 container.xml 找到 OPF 路徑
         const containerXml = await zip.file('META-INF/container.xml')?.async('text');
-        if (!containerXml) throw new Error('无效的 EPUB 文件：缺少 META-INF/container.xml');
+        if (!containerXml) throw new Error('無效的 EPUB 文件：缺少 META-INF/container.xml');
 
-        // 🟢-3: DRM 加密检测（扩展检测逻辑）
+        // 🟢-3: DRM 加密檢測（擴展檢測邏輯）
         const drmCheckResult = await checkEPUBDRM(zip);
         if (drmCheckResult.hasDRM) {
-          throw new Error(`此 EPUB 文件包含 DRM 加密（${drmCheckResult.reason}），无法导入。请使用未加密的 EPUB 文件。`);
+          throw new Error(`此 EPUB 文件包含 DRM 加密（${drmCheckResult.reason}），無法匯入。請使用未加密的 EPUB 文件。`);
         }
 
         const containerDoc = new DOMParser().parseFromString(containerXml, 'application/xml');
         const rootfileEl = containerDoc.querySelector('rootfile[full-path]');
-        if (!rootfileEl) throw new Error('无效的 EPUB 文件：找不到 OPF 路径');
+        if (!rootfileEl) throw new Error('無效的 EPUB 文件：找不到 OPF 路徑');
         const opfPath = rootfileEl.getAttribute('full-path');
         const opfDir = opfPath.includes('/') ? opfPath.substring(0, opfPath.lastIndexOf('/') + 1) : '';
 
         // 2. 解析 OPF 文件
         const opfXml = await zip.file(opfPath)?.async('text');
-        if (!opfXml) throw new Error('无效的 EPUB 文件：找不到 OPF 文件 ' + opfPath);
+        if (!opfXml) throw new Error('無效的 EPUB 文件：找不到 OPF 文件 ' + opfPath);
         const opfDoc = new DOMParser().parseFromString(opfXml, 'application/xml');
 
-        // 提取 metadata（🟡-5 修复：优先用 getElementsByTagNameNS，避免 CSS 选择器命名空间问题）
+        // 提取 metadata（🟡-5 修復：優先用 getElementsByTagNameNS，避免 CSS 選擇器命名空間問題）
         const getMeta = (localName) => {
           const el = opfDoc.getElementsByTagNameNS('http://purl.org/dc/elements/1.1/', localName)[0]
             || opfDoc.querySelector('metadata ' + localName);
           if (!el) return '';
-          // OPF是XML，description中的HTML可能被实体转义（&lt;p&gt;）
-          // textContent会解码实体，得到原始HTML字符串
+          // OPF是XML，description中的HTML可能被實體轉義（&lt;p&gt;）
+          // textContent會解碼實體，得到原始HTML字串
           const raw = el.textContent || '';
           if (/<[a-z][\s\S]*>/i.test(raw)) {
             const tmp = new DOMParser().parseFromString('<body>' + raw + '</body>', 'text/html').body;
@@ -1728,7 +1728,7 @@
               if (t) parts.push(t);
             });
             if (parts.length > 0) return parts.join('\n').trim();
-            // fallback: 没有块级元素但有标签（如纯<span>），取纯文本
+            // fallback: 沒有塊級元素但有標籤（如純<span>），取純文字
             return tmp.textContent.trim();
           }
           return raw.trim();
@@ -1737,7 +1737,7 @@
         const bookAuthor = getMeta('creator') || '';
         const bookDesc = getMeta('description') || '';
 
-        // 构建 manifest 映射: id -> href
+        // 構建 manifest 映射: id -> href
         const manifest = {};
         opfDoc.querySelectorAll('manifest item').forEach(item => {
           manifest[item.getAttribute('id')] = {
@@ -1746,26 +1746,26 @@
           };
         });
 
-        // 获取 spine 顺序
+        // 取得 spine 順序
         const spineRefs = [];
         opfDoc.querySelectorAll('spine itemref').forEach(ref => {
           spineRefs.push(ref.getAttribute('idref'));
         });
 
-        if (spineRefs.length === 0) throw new Error('EPUB 文件中没有找到章节（spine 为空）');
+        if (spineRefs.length === 0) throw new Error('EPUB 文件中沒有找到章節（spine 為空）');
 
-        // 3. 按 spine 顺序读取章节
+        // 3. 按 spine 順序讀取章節
         const chapters = [];
         let totalExtracted = 0;
-        const MAX_EXTRACTED = 50 * 1024 * 1024; // 50MB（字节数，非字符数）
+        const MAX_EXTRACTED = 50 * 1024 * 1024; // 50MB（位元組數，非字元數）
         for (const idref of spineRefs) {
           const item = manifest[idref];
           if (!item) continue;
-          // 只处理 XHTML/HTML 类型
+          // 只處理 XHTML/HTML 類型
           if (!item.mediaType.includes('html') && !item.mediaType.includes('xml')) continue;
 
-          // 🔴-2 修复：尝试原始路径、解码路径、编码路径（兼容中文文件名EPUB）
-          // 🟡-6 修复：规范化路径，移除 ../ 防止路径遍历
+          // 🔴-2 修復：嘗試原始路徑、解碼路徑、編碼路徑（相容中文件案名EPUB）
+          // 🟡-6 修復：規範化路徑，移除 ../ 防止路徑遍歷
           const normalizePath = (p) => p.split('/').reduce((acc, part) => {
             if (part === '..') acc.pop(); else if (part !== '.' && part !== '') acc.push(part); return acc;
           }, []).join('/');
@@ -1776,14 +1776,14 @@
           const content = await zipEntry?.async('text');
           if (!content) continue;
 
-          // 🔴-4 修复：zip bomb 防护用字节数而非字符数
+          // 🔴-4 修復：zip bomb 防護用位元組數而非字元數
           totalExtracted += new TextEncoder().encode(content).byteLength;
-          if (totalExtracted > MAX_EXTRACTED) throw new Error('EPUB 解压后内容过大（超过50MB），可能是异常文件');
+          if (totalExtracted > MAX_EXTRACTED) throw new Error('EPUB 解壓後內容過大（超過50MB），可能是異常文件');
 
-          // 🟡-1 修复：直接用 text/html 解析（更宽容，纯文本提取不需要XHTML严格性）
+          // 🟡-1 修復：直接用 text/html 解析（更寬容，純文字提取不需要XHTML嚴格性）
           const docToUse = new DOMParser().parseFromString(content, 'text/html');
 
-          // 提取章节标题：优先 h1 > h2 > h3 > title > 文件名
+          // 提取章節標題：優先 h1 > h2 > h3 > title > 檔案名
           let title = '';
           const h1 = docToUse.querySelector('h1');
           const h2 = docToUse.querySelector('h2');
@@ -1794,13 +1794,13 @@
           else if (h3 && h3.textContent.trim()) title = h3.textContent.trim();
           else if (titleEl && titleEl.textContent.trim()) title = titleEl.textContent.trim();
           else {
-            // 用文件名
+            // 用檔案名
             const fname = item.href.split('/').pop().replace(/\.\w+$/, '');
             title = decodeURIComponent(fname);
           }
           title = title.substring(0, 200);
 
-          // 提取纯文本内容，保留段落换行
+          // 提取純文字內容，保留段落換行
           const body = docToUse.body || docToUse.documentElement;
           let textContent = '';
           const blocks = body.querySelectorAll('p, div, h1, h2, h3, h4, h5, h6, li, blockquote, pre, br');
@@ -1818,7 +1818,7 @@
                   lastWasBlock = false;
                 }
               } else if (node.nodeType === Node.ELEMENT_NODE) {
-                // 🟢-2: BR 特殊处理，始终插入换行（允许连续 BR 产生空行）
+                // 🟢-2: BR 特殊處理，始終插入換行（允許連續 BR 產生空行）
                 if (node.tagName === 'BR') {
                   parts.push('\n');
                 } else if (blockTags.has(node.tagName)) {
@@ -1835,18 +1835,18 @@
             textContent = (body.textContent || '').replace(/[ \t]+/g, ' ').replace(/\n\s*\n/g, '\n\n').trim();
           }
 
-          // 过滤空章节
+          // 過濾空章節
           if (!textContent.replace(/\s/g, '')) continue;
 
-          // 大章节二次分割：单个XHTML内容过长时，尝试用章节正则拆分
-          // 🟡-2 修复：要求至少分出3个子章节才采用，避免误匹配导致标题错乱
+          // 大章節二次分割：單個XHTML內容過長時，嘗試用章節正則分割
+          // 🟡-2 修復：要求至少分出3個子章節才採用，避免誤匹配導致標題錯亂
           if (textContent.length > 20000) {
             const subChapters = splitChapters(textContent);
             if (subChapters && subChapters.length >= 3) {
               for (const sc of subChapters) {
                 if (sc.content && sc.content.trim()) {
                   chapters.push({ title: sc.title, content: sc.content, checked: true });
-                  if (chapters.length > 5000) throw new Error('章节数量过多（超过5000章），请分批导入');
+                  if (chapters.length > 5000) throw new Error('章節數量過多（超過5000章），請分批匯入');
                 }
               }
               continue;
@@ -1854,14 +1854,14 @@
           }
 
           chapters.push({ title, content: textContent, checked: true });
-          if (chapters.length > 5000) throw new Error('章节数量过多（超过5000章），请分批导入');
+          if (chapters.length > 5000) throw new Error('章節數量過多（超過5000章），請分批匯入');
         }
 
-        if (chapters.length === 0) throw new Error('EPUB 中没有找到有效章节内容');
+        if (chapters.length === 0) throw new Error('EPUB 中沒有找到有效章節內容');
 
         epubChapters = chapters;
 
-        // 填充预览
+        // 填充預覽
         document.getElementById('epub-book-title').value = bookTitle;
         document.getElementById('epub-book-author').value = bookAuthor;
         document.getElementById('epub-book-desc').value = bookDesc;
@@ -1871,7 +1871,7 @@
 
       } catch (e) {
         document.getElementById('epub-parsing-msg').style.display = 'none';
-        showMsg('epub-msg', '解析失败：' + e.message, 'error');
+        showMsg('epub-msg', '解析失敗：' + e.message, 'error');
       }
     });
 
@@ -1893,11 +1893,11 @@
       `).join('');
     }
 
-    // 事件委托：章节勾选和标题编辑
+    // 事件委託：章節勾選和標題編輯
     document.getElementById('epub-chapters').addEventListener('change', function(e) {
       if (e.target.classList.contains('epub-check')) {
         epubChapters[e.target.dataset.idx].checked = e.target.checked;
-        // 更新统计
+        // 更新統計
         const checked = epubChapters.filter(c => c.checked);
         document.getElementById('epub-total').textContent = checked.length;
         document.getElementById('epub-words').textContent = checked.reduce((s, c) => s + c.content.length, 0).toLocaleString();
@@ -1918,9 +1918,9 @@
       showMsg('epub-msg', '', '');
     }
 
-    // ===== 标签系统（融合到书籍创建/编辑流程） =====
+    // ===== 標籤系統（融合到書籍建立/編輯流程） =====
     let _allTags = [];
-    let _createBookTags = []; // 创建书籍时选中的标签ID
+    let _createBookTags = []; // 建立書籍時選中的標籤ID
 
     async function loadTagList() {
       try {
@@ -1930,13 +1930,13 @@
       } catch { _allTags = []; }
     }
 
-    // 通用标签选择器渲染（用于创建和编辑书籍）
+    // 通用標籤選擇器繪製（用於建立和編輯書籍）
     function renderTagSelector(containerId, selectedIds, onToggle) {
       const container = document.getElementById(containerId);
       if (!container) return;
       if (_allTags.length === 0) {
         container.innerHTML = '';
-        // 隐藏父级 form-group
+        // 隱藏父級 form-group
         const parent = container.closest('.form-group');
         if (parent) parent.style.display = 'none';
         return;
@@ -1946,41 +1946,41 @@
       container.innerHTML = _allTags.map(t => {
         const checked = selectedIds.includes(t.id);
         return `<label data-tag-id="${t.id}" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;padding:4px 10px;border:1px solid ${checked ? t.color : 'var(--border)'};border-radius:12px;font-size:13px;background:${checked ? t.color + '22' : 'transparent'};color:${checked ? t.color : 'var(--text-light)'};transition:all .15s;user-select:none">
-          ${esc(t.name)}${currentRole !== 'demo' ? `<span class="tag-delete-x" data-tag-id="${t.id}" style="margin-left:2px;font-size:11px;opacity:0.5;cursor:pointer" title="删除标签">✕</span>` : ''}
+          ${esc(t.name)}${currentRole !== 'demo' ? `<span class="tag-delete-x" data-tag-id="${t.id}" style="margin-left:2px;font-size:11px;opacity:0.5;cursor:pointer" title="刪除標籤">✕</span>` : ''}
         </label>`;
       }).join('');
-      // 点击切换选中
+      // 點擊切換選中
       container.querySelectorAll('label[data-tag-id]').forEach(label => {
         label.addEventListener('click', (e) => {
-          if (e.target.classList.contains('tag-delete-x')) return; // 删除按钮单独处理
+          if (e.target.classList.contains('tag-delete-x')) return; // 刪除按鈕單獨處理
           const tagId = Number(label.dataset.tagId);
           onToggle(tagId);
         });
       });
-      // 删除标签（admin以上）
+      // 刪除標籤（admin以上）
       container.querySelectorAll('.tag-delete-x').forEach(x => {
         x.addEventListener('click', async (e) => {
           e.stopPropagation();
           const tagId = Number(x.dataset.tagId);
           const tag = _allTags.find(t => t.id === tagId);
           if (!tag) return;
-          if (!confirm(`删除标签「${tag.name}」？所有书籍上的此标签也会移除。`)) return;
+          if (!confirm(`刪除標籤「${tag.name}」？所有書籍上的此標籤也會移除。`)) return;
           try {
             const res = await api('DELETE', '/api/admin/tags', { id: tagId });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
             await loadTagList();
-            // 从选中列表中移除
+            // 從選中列表中移除
             _createBookTags = _createBookTags.filter(id => id !== tagId);
             _editBookTags = _editBookTags.filter(id => id !== tagId);
             renderCreateBookTags();
             renderEditBookTags();
-          } catch (e) { alert('删除失败：' + e.message); }
+          } catch (e) { alert('刪除失敗：' + e.message); }
         });
       });
     }
 
-    // 创建书籍的标签选择
+    // 建立書籍的標籤選擇
     function renderCreateBookTags() {
       renderTagSelector('create-book-tags', _createBookTags, (tagId) => {
         if (_createBookTags.includes(tagId)) _createBookTags = _createBookTags.filter(id => id !== tagId);
@@ -1989,7 +1989,7 @@
       });
     }
 
-    // ===== 书籍编辑弹窗 =====
+    // ===== 書籍編輯彈出視窗 =====
     const bookEditOverlay = document.getElementById('book-edit-overlay');
     let _editBookId = null;
     let _editBookTags = [];
@@ -2004,29 +2004,29 @@
       document.getElementById('edit-book-author').value = book.author || '';
       document.getElementById('edit-book-desc').value = book.description || '';
 
-      // 封面预览
+      // 封面預覽
       const preview = document.getElementById('edit-cover-preview');
       const removeBtn = document.getElementById('remove-cover-btn');
       if (book.cover_key) {
         preview.innerHTML = `<img src="/api/covers/${book.id}" style="width:100%;height:100%;object-fit:cover">`;
         removeBtn.style.display = '';
       } else {
-        preview.innerHTML = '<span style="color:var(--text-light);font-size:12px">无封面</span>';
+        preview.innerHTML = '<span style="color:var(--text-light);font-size:12px">無封面</span>';
         removeBtn.style.display = 'none';
       }
       document.getElementById('edit-cover-file').value = '';
 
-      // 加载标签
+      // 載入標籤
       if (_allTags.length === 0) await loadTagList();
-      // 批注开关：先用传入的 book 对象值（🟢-8: 兼容下架/回收站书籍）
+      // 批註開關：先用傳入的 book 物件值（🟢-8: 相容下架/回收站書籍）
       document.getElementById('edit-annotation-enabled').checked = !!book.annotation_enabled;
 
-      // 获取当前书籍标签
+      // 取得目前書籍標籤
       try {
         const res = await fetch(`/api/books/${book.id}`);
         const data = await res.json();
         _editBookTags = (data.book.tags || []).map(t => t.id);
-        // 如果 API 返回了更新的值，覆盖
+        // 如果 API 返回了更新的值，覆蓋
         if (data.book.annotation_enabled !== undefined) {
           document.getElementById('edit-annotation-enabled').checked = !!data.book.annotation_enabled;
         }
@@ -2042,12 +2042,12 @@
         else _editBookTags.push(tagId);
         renderEditBookTags();
       });
-      // demo用户隐藏内联创建标签
+      // demo用戶隱藏行內建立標籤
       const actions = document.getElementById('edit-tag-actions');
       if (actions) actions.style.display = currentRole === 'demo' ? 'none' : '';
     }
 
-    // 内联创建标签（编辑弹窗内）
+    // 行內建立標籤（編輯彈出視窗內）
     document.getElementById('inline-create-tag-btn').addEventListener('click', async () => {
       const nameInput = document.getElementById('inline-tag-name');
       const colorInput = document.getElementById('inline-tag-color');
@@ -2060,16 +2060,16 @@
         if (!res.ok) throw new Error(data.error);
         nameInput.value = '';
         await loadTagList();
-        // 自动选中新创建的标签
+        // 自動選中新建立的標籤
         if (data.tag && data.tag.id) {
           _editBookTags.push(data.tag.id);
         }
         renderEditBookTags();
         renderCreateBookTags();
-      } catch (e) { alert('创建失败：' + e.message); }
+      } catch (e) { alert('建立失敗：' + e.message); }
     });
 
-    // 封面上传压缩
+    // 封面上傳壓縮
     async function compressCoverImage(file) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -2090,9 +2090,9 @@
       if (!_editBookId) return;
       try {
         await api('DELETE', `/api/admin/covers?book_id=${_editBookId}`);
-        document.getElementById('edit-cover-preview').innerHTML = '<span style="color:var(--text-light);font-size:12px">无封面</span>';
+        document.getElementById('edit-cover-preview').innerHTML = '<span style="color:var(--text-light);font-size:12px">無封面</span>';
         document.getElementById('remove-cover-btn').style.display = 'none';
-      } catch (e) { alert('删除封面失败：' + e.message); }
+      } catch (e) { alert('刪除封面失敗：' + e.message); }
     });
 
     document.getElementById('edit-cover-file').addEventListener('change', async function() {
@@ -2108,16 +2108,16 @@
       const title = document.getElementById('edit-book-title').value.trim();
       const author = document.getElementById('edit-book-author').value.trim();
       const description = document.getElementById('edit-book-desc').value.trim();
-      if (!title) return alert('书名不能为空');
+      if (!title) return alert('書名不能為空');
 
       try {
-        // 保存基本信息（含批注开关）
+        // 儲存基本資訊（含批註開關）
         const annotationEnabled = document.getElementById('edit-annotation-enabled').checked ? 1 : 0;
         const res = await api('PUT', `/api/admin/books/${_editBookId}`, { title, author, description, annotation_enabled: annotationEnabled });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
 
-        // 上传封面
+        // 上傳封面
         const coverFile = document.getElementById('edit-cover-file').files[0];
         if (coverFile) {
           const compressed = await compressCoverImage(coverFile);
@@ -2130,15 +2130,15 @@
           });
         }
 
-        // 保存标签
+        // 儲存標籤
         await api('PUT', '/api/admin/book-tags', { book_id: _editBookId, tag_ids: _editBookTags });
 
         bookEditOverlay.classList.remove('active');
         refreshAllBooks();
-      } catch (e) { alert('保存失败：' + e.message); }
+      } catch (e) { alert('儲存失敗：' + e.message); }
     });
 
-    // 在 showAdminPanel 中也加载标签并渲染创建书籍的标签选择器
+    // 在 showAdminPanel 中也載入標籤並繪製建立書籍的標籤選擇器
     const _origShowAdminPanel = showAdminPanel;
     showAdminPanel = async function(username, role) {
       _origShowAdminPanel(username, role);
@@ -2149,14 +2149,14 @@
 
     async function startEpubImport() {
       const chapters = epubChapters.filter(c => c.checked);
-      if (chapters.length === 0) return showMsg('epub-msg', '没有选中任何章节', 'error');
+      if (chapters.length === 0) return showMsg('epub-msg', '沒有選中任何章節', 'error');
 
       const mode = document.querySelector('input[name="epub-import-mode"]:checked').value;
       let bookId;
 
       if (mode === 'new') {
         const title = document.getElementById('epub-book-title').value.trim();
-        if (!title) return showMsg('epub-msg', '请输入书名', 'error');
+        if (!title) return showMsg('epub-msg', '請輸入書名', 'error');
         const author = document.getElementById('epub-book-author').value.trim();
         const description = document.getElementById('epub-book-desc').value.trim();
         try {
@@ -2165,15 +2165,15 @@
           if (!res.ok) throw new Error(data.error);
           bookId = data.book.id;
         } catch (e) {
-          return showMsg('epub-msg', '创建书籍失败：' + e.message, 'error');
+          return showMsg('epub-msg', '建立書籍失敗：' + e.message, 'error');
         }
       } else {
         bookId = document.getElementById('epub-book-select').value;
-        if (!bookId) return showMsg('epub-msg', '请选择目标书籍', 'error');
+        if (!bookId) return showMsg('epub-msg', '請選擇目標書籍', 'error');
         bookId = Number(bookId);
       }
 
-      // 获取已有章节的最大sort_order作为基准（导入到已有书籍时）
+      // 取得已有章節的最大sort_order作為基準（匯入到已有書籍時）
       let baseOrder = 0;
       if (mode === 'existing') {
         try {
@@ -2184,7 +2184,7 @@
         } catch {}
       }
 
-      // 开始导入章节
+      // 開始匯入章節
       const bar = document.getElementById('epub-bar');
       const status = document.getElementById('epub-status');
       document.getElementById('epub-progress').style.display = '';
@@ -2209,15 +2209,15 @@
       await concurrentUpload(tracked, 3);
 
       if (errors.length > 0) {
-        // 如果是新建书且全部章节都失败，自动删除空书
+        // 如果是建立書且全部章節都失敗，自動刪除空書
         if (mode === 'new' && errors.length === chapters.length) {
           try { await api('DELETE', '/api/admin/books/' + bookId); } catch {}
-          showMsg('epub-msg', `导入全部失败，已自动删除空书。失败原因：\n${errors.join('\n')}`, 'error');
+          showMsg('epub-msg', `匯入全部失敗，已自動刪除空書。失敗原因：\n${errors.join('\n')}`, 'error');
         } else {
-          showMsg('epub-msg', `导入完成，${errors.length} 章失败：\n${errors.join('\n')}`, 'error');
+          showMsg('epub-msg', `匯入完成，${errors.length} 章失敗：\n${errors.join('\n')}`, 'error');
         }
       } else {
-        showMsg('epub-msg', `成功导入 ${uploaded} 章`, 'success');
+        showMsg('epub-msg', `成功匯入 ${uploaded} 章`, 'success');
       }
       cancelEpubImport();
       refreshAllBooks();

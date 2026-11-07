@@ -22,9 +22,9 @@ export async function onRequestPost(context) {
 
     if (!result.ok) {
       const status = result.reason === 'locked' ? 429 : 401;
-      const msg = result.reason === 'locked' ? '登录失败次数过多，请10分钟后再试'
-        : result.reason === 'github_only' ? '该账号请使用 GitHub 登录'
-        : '用户名或密码错误';
+      const msg = result.reason === 'locked' ? '登入失敗次數過多，請10分鐘後再試'
+        : result.reason === 'github_only' ? '該帳號請使用 GitHub 登入'
+        : '用戶名或密碼錯誤';
       return Response.json({ error: msg }, { status });
     }
 
@@ -64,24 +64,24 @@ export async function onRequestPost(context) {
       return Response.json({ error: 'Unauthorized' }, { status });
     }
     if (auth.passwordLocked || auth.role === 'demo') {
-      return Response.json({ error: '该账号不允许修改密码' }, { status: 403 });
+      return Response.json({ error: '該帳號不允許修改密碼' }, { status: 403 });
     }
     const body = await parseJsonBody(request);
     if (!body) return Response.json({ error: 'Invalid JSON' }, { status: 400 });
     const { oldPassword, newPassword } = body;
-    if (!oldPassword || !newPassword) return Response.json({ error: '请填写旧密码和新密码' }, { status: 400 });
+    if (!oldPassword || !newPassword) return Response.json({ error: '請填寫舊密碼和新密碼' }, { status: 400 });
 
     const result = await changePassword(env, auth.userId, oldPassword, newPassword);
     if (!result.ok) {
-      const msg = result.reason === 'wrong_old' ? '旧密码错误'
-        : result.reason === 'too_short' ? '新密码至少8位'
-        : result.reason === 'too_long' ? '新密码最长128位'
-        : result.reason === 'too_weak' ? '新密码需包含字母和数字'
-        : '修改失败';
+      const msg = result.reason === 'wrong_old' ? '舊密碼錯誤'
+        : result.reason === 'too_short' ? '新密碼至少8位'
+        : result.reason === 'too_long' ? '新密碼最長128位'
+        : result.reason === 'too_weak' ? '新密碼需包含字母和數字'
+        : '修改失敗';
       return Response.json({ error: msg }, { status: 400 });
     }
 
-    return Response.json({ success: true, message: '密码已修改，请重新登录' });
+    return Response.json({ success: true, message: '密碼已修改，請重新登入' });
   }
 
   return Response.json({ error: 'Unknown action' }, { status: 400 });
@@ -109,7 +109,7 @@ export async function onRequestGet(context) {
     // 从 DB 读取 GitHub OAuth 配置
     const enabled = await env.DB.prepare("SELECT value FROM site_settings WHERE key = 'github_oauth_enabled'").first();
     if (enabled?.value !== 'true') {
-      return Response.json({ error: 'GitHub 登录未启用' }, { status: 400 });
+      return Response.json({ error: 'GitHub 登入未啟用' }, { status: 400 });
     }
     const clientIdRow = await env.DB.prepare("SELECT value FROM site_settings WHERE key = 'github_client_id'").first();
     const clientSecret = await getGitHubClientSecret(env);
@@ -124,7 +124,7 @@ export async function onRequestGet(context) {
     if (rateRow) {
       const elapsed = Date.now() - new Date(rateRow.last_attempt).getTime();
       if (elapsed < 60000 && rateRow.fail_count >= 5) {
-        return Response.json({ error: '请求过于频繁，请稍后再试' }, { status: 429 });
+        return Response.json({ error: '請求過於頻繁，請稍後再試' }, { status: 429 });
       }
       if (elapsed < 60000) {
         await env.DB.prepare("UPDATE auth_attempts SET fail_count = fail_count + 1, last_attempt = datetime('now') WHERE ip_hash = ?").bind(ipHash).run();
@@ -145,7 +145,7 @@ export async function onRequestGet(context) {
 
     // HMAC 签名 state，用 ADMIN_PASSWORD 作为独立密钥
     if (!env.ADMIN_PASSWORD) {
-      return Response.json({ error: 'ADMIN_PASSWORD 未配置，无法启用 GitHub 登录' }, { status: 500 });
+      return Response.json({ error: 'ADMIN_PASSWORD 未配置，無法啟用 GitHub 登入' }, { status: 500 });
     }
     const hmacKey = env.ADMIN_PASSWORD;
     const signature = await hmacSign(state, hmacKey);

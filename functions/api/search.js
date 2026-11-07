@@ -20,7 +20,7 @@ export async function onRequestGet(context) {
   const entry = searchRateMap.get(ip);
   if (entry && now - entry.start < SEARCH_RATE_WINDOW) {
     if (entry.count >= SEARCH_RATE_LIMIT) {
-      return Response.json({ error: '搜索过于频繁，请稍后再试' }, { status: 429 });
+      return Response.json({ error: '搜尋過於頻繁，請稍後再試' }, { status: 429 });
     }
     entry.count++;
   } else {
@@ -42,7 +42,7 @@ export async function onRequestGet(context) {
   const offset = (page - 1) * limit;
 
   if (!q || q.length < 2) {
-    return Response.json({ error: '搜索词至少 2 个字符' }, { status: 400 });
+    return Response.json({ error: '搜尋詞至少 2 個字元' }, { status: 400 });
   }
 
   // 限制查询长度

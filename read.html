@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>阅读 - 我的书架</title>
+  <title>閱讀 - 我的書架</title>
   <meta name="description" content="">
   
-  <!-- P3修复：DNS预解析和预连接 -->
+  <!-- P3修復：DNS預解析和預連接 -->
   <link rel="preconnect" href="https://github.com" crossorigin>
   <link rel="dns-prefetch" href="https://github.com">
   
@@ -17,60 +17,60 @@
 <body>
   <div class="progress-bar" id="progress-bar"></div>
   <div class="navbar">
-    <h1><a href="/">📚 我的书架</a></h1>
+    <h1><a href="/">📚 我的書架</a></h1>
     <nav>
-      <a href="#" id="back-link">返回目录</a>
+      <a href="#" id="back-link">返回目錄</a>
       <span id="nav-user"></span>
     </nav>
   </div>
   <div class="reader" id="reader-area">
     <div class="breadcrumb" id="breadcrumb"></div>
-    <div id="content" class="loading">加载中...</div>
+    <div id="content" class="loading">載入中...</div>
   </div>
 
-  <!-- 底部工具栏 -->
+  <!-- 底部工具列 -->
   <div class="reader-bottom-bar" id="bottom-bar">
     <button class="bar-btn" id="bar-prev" title="上一章"><span class="bar-icon">◀</span>上一章</button>
-    <button class="bar-btn" id="bar-toc" title="目录"><span class="bar-icon">☰</span>目录</button>
-    <button class="bar-btn" id="bar-bookmark" title="书签"><span class="bar-icon" id="bookmark-icon">☆</span>书签</button>
-    <button class="bar-btn" id="bar-settings" title="设置"><span class="bar-icon">⚙</span>设置</button>
+    <button class="bar-btn" id="bar-toc" title="目錄"><span class="bar-icon">☰</span>目錄</button>
+    <button class="bar-btn" id="bar-bookmark" title="書籤"><span class="bar-icon" id="bookmark-icon">☆</span>書籤</button>
+    <button class="bar-btn" id="bar-settings" title="設定"><span class="bar-icon">⚙</span>設定</button>
     <button class="bar-btn" id="bar-immersive" title="沉浸模式"><span class="bar-icon">🔲</span>沉浸</button>
     <button class="bar-btn" id="bar-next" title="下一章"><span class="bar-icon">▶</span>下一章</button>
   </div>
 
-  <!-- 章节目录浮层 -->
+  <!-- 章節目錄浮層 -->
   <div class="toc-overlay" id="toc-overlay">
     <div class="toc-panel">
-      <h3 id="toc-title">目录</h3>
+      <h3 id="toc-title">目錄</h3>
       <ul class="toc-list" id="toc-list"></ul>
     </div>
   </div>
 
-  <!-- 设置面板 -->
+  <!-- 設定面板 -->
   <div class="settings-overlay" id="settings-overlay">
     <div class="settings-panel">
-      <h3>阅读设置<button class="close-btn" id="close-settings">✕</button></h3>
+      <h3>閱讀設定<button class="close-btn" id="close-settings">✕</button></h3>
       <div class="setting-row">
-        <span class="setting-label">主题</span>
+        <span class="setting-label">主題</span>
         <div class="theme-options" id="theme-options">
-          <div class="theme-dot" data-theme="light" title="默认"></div>
-          <div class="theme-dot" data-theme="dark" title="夜间"></div>
-          <div class="theme-dot" data-theme="green" title="护眼"></div>
-          <div class="theme-dot" data-theme="sepia" title="羊皮纸"></div>
-          <div class="theme-dot" data-theme="blue" title="淡蓝"></div>
+          <div class="theme-dot" data-theme="light" title="預設"></div>
+          <div class="theme-dot" data-theme="dark" title="夜間"></div>
+          <div class="theme-dot" data-theme="green" title="護眼"></div>
+          <div class="theme-dot" data-theme="sepia" title="羊皮紙"></div>
+          <div class="theme-dot" data-theme="blue" title="淡藍"></div>
         </div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">字体</span>
+        <span class="setting-label">字體</span>
         <div class="font-options" id="font-options">
-          <div class="font-option" data-font="'Georgia','Noto Serif SC','Source Han Serif CN',serif" style="font-family:Georgia,serif">宋体/衬线</div>
-          <div class="font-option" data-font="'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif" style="font-family:sans-serif">黑体/无衬线</div>
-          <div class="font-option" data-font="'KaiTi','STKaiti','AR PL UKai CN',serif" style="font-family:KaiTi,STKaiti,serif">楷体</div>
+          <div class="font-option" data-font="'Georgia','Noto Serif SC','Source Han Serif CN',serif" style="font-family:Georgia,serif">宋體/襯線</div>
+          <div class="font-option" data-font="'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif" style="font-family:sans-serif">黑體/無襯線</div>
+          <div class="font-option" data-font="'KaiTi','STKaiti','AR PL UKai CN',serif" style="font-family:KaiTi,STKaiti,serif">楷體</div>
           <div class="font-option" data-font="'FangSong','STFangsong',serif" style="font-family:FangSong,STFangsong,serif">仿宋</div>
         </div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">字号</span>
+        <span class="setting-label">字號</span>
         <div class="slider-row">
           <span style="font-size:12px">A</span>
           <input type="range" id="font-size-slider" min="14" max="28" step="1">
@@ -81,26 +81,26 @@
       <div class="setting-row">
         <span class="setting-label">行距</span>
         <div class="slider-row">
-          <span style="font-size:12px">紧</span>
+          <span style="font-size:12px">緊</span>
           <input type="range" id="line-height-slider" min="1.5" max="3" step="0.1">
-          <span style="font-size:12px">松</span>
+          <span style="font-size:12px">鬆</span>
           <span class="slider-val" id="line-height-val">2.0</span>
         </div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">页面宽度</span>
+        <span class="setting-label">頁面寬度</span>
         <div class="slider-row">
           <span style="font-size:12px">窄</span>
           <input type="range" id="width-slider" min="500" max="960" step="20">
-          <span style="font-size:12px">宽</span>
+          <span style="font-size:12px">寬</span>
           <span class="slider-val" id="width-val">720px</span>
         </div>
       </div>
       <div class="setting-row">
-        <span class="setting-label">阅读模式</span>
+        <span class="setting-label">閱讀模式</span>
         <div class="mode-options" id="mode-options">
-          <div class="mode-option" data-mode="scroll">📜 滚动</div>
-          <div class="mode-option" data-mode="pager">📖 翻页</div>
+          <div class="mode-option" data-mode="scroll">📜 滾動</div>
+          <div class="mode-option" data-mode="pager">📖 翻頁</div>
         </div>
       </div>
     </div>
@@ -108,40 +108,40 @@
 
   <button class="back-to-top has-bar" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-  <!-- 翻页模式：点击区域 + 页码 -->
+  <!-- 翻頁模式：點擊區域 + 頁碼 -->
   <div class="pager-tap-left" id="pager-tap-left" style="display:none"></div>
   <div class="pager-tap-right" id="pager-tap-right" style="display:none"></div>
   <div class="pager-indicator" id="pager-indicator"></div>
-  <div class="immersive-hint" id="immersive-hint">点击中央或按 Esc 退出沉浸模式</div>
+  <div class="immersive-hint" id="immersive-hint">點擊中央或按 Esc 退出沉浸模式</div>
 
-  <!-- 批注：浮动按钮（PC+移动端统一） -->
+  <!-- 批註：浮動按鈕（PC+行動端統一） -->
   <div id="anno-float-btn" class="anno-float-btn">📝</div>
 
-  <!-- 批注：输入框 -->
+  <!-- 批註：輸入框 -->
   <div id="anno-editor" class="anno-editor" style="display:none">
     <div class="anno-editor-quote" id="anno-quote"></div>
     <div class="anno-input-wrap">
-      <textarea id="anno-input" maxlength="500" placeholder="写下你的批注..."></textarea>
+      <textarea id="anno-input" maxlength="500" placeholder="寫下你的批註..."></textarea>
       <span class="anno-char-count"><span id="anno-char-num">0</span>/500</span>
     </div>
     <div class="anno-editor-footer">
-      <button id="anno-vis-btn" class="anno-vis-btn" type="button">🔒 仅自己可见</button>
+      <button id="anno-vis-btn" class="anno-vis-btn" type="button">🔒 僅自己可見</button>
       <div class="anno-editor-actions">
         <button class="btn btn-sm" id="anno-cancel" type="button">取消</button>
-        <button class="btn btn-sm anno-submit-btn" id="anno-submit" type="button">发表</button>
+        <button class="btn btn-sm anno-submit-btn" id="anno-submit" type="button">發表</button>
       </div>
     </div>
-    <div class="anno-editor-hint">Ctrl+Enter 发表 · Esc 取消</div>
+    <div class="anno-editor-hint">Ctrl+Enter 發表 · Esc 取消</div>
   </div>
 
-  <!-- 批注：查看弹窗 -->
+  <!-- 批註：查看彈出視窗 -->
   <div id="anno-popover" class="anno-popover" style="display:none"></div>
 
   <script>
-    // ===== 认证状态 =====
-    const authToken = ''; // token由HttpOnly Cookie自动携带
+    // ===== 認證狀態 =====
+    const authToken = ''; // token由HttpOnly Cookie自動攜帶
     let currentUser = null; // { userId, username, role }
-    let canAnnotate = false; // 当前书籍是否可批注
+    let canAnnotate = false; // 目前書籍是否可批註
     let currentBookId = null;
     let currentChapterId = null;
 
@@ -154,9 +154,9 @@
           const roleMap = {
             'super_admin': { label: '超管', cls: 'super' },
             'admin': { label: '管理', cls: 'admin' },
-            'demo': { label: '用户', cls: 'demo' }
+            'demo': { label: '用戶', cls: 'demo' }
           };
-          const r = roleMap[currentUser.role] || { label: '用户', cls: 'demo' };
+          const r = roleMap[currentUser.role] || { label: '用戶', cls: 'demo' };
           navUser.innerHTML = `<a href="/admin.html"><span class="role-badge ${r.cls}">${r.label}</span> ${esc(currentUser.username || '')}</a> <a href="#" onclick="doLogout();return false" style="font-size:12px;color:#e74c3c;margin-left:6px">退出</a>`;
         } else {
           navUser.innerHTML = '<a href="/admin.html">管理</a>';
@@ -184,8 +184,8 @@
     // ===== 句子分割工具 =====
     function splitSentences(text) {
       if (!text || !text.trim()) return [];
-      // 匹配句子：非句末标点的字符 + 可选的句末标点（含省略号…和连续英文句号..）
-      // 🟡-4: 连续英文句号 .. / ... 视为省略号，不逐个断句
+      // 匹配句子：非句末標點的字元 + 可選的句末標點（含省略號…和連續英文句號..）
+      // 🟡-4: 連續英文句號 .. / ... 視為省略號，不逐個斷句
       const raw = text.match(/[^。！？…!?\n]+(?:\.{2,}|[。！？…!?\n])?/g) || [text];
       const merged = [];
       let buf = '';
@@ -228,13 +228,13 @@
 
     function annotationOpacity(count) {
       if (count <= 0) return 0;
-      // 1人=0.3, 3人≈0.5, 10人≈0.75, 20人≈0.9（🟢-2: 改为20条达到最大浓度）
+      // 1人=0.3, 3人≈0.5, 10人≈0.75, 20人≈0.9（🟢-2: 改為20條達到最大濃度）
       const min = 0.3, max = 0.9;
       return Math.min(max, min + (max - min) * (Math.log10(count) / Math.log10(20)));
     }
 
-    // ===== 阅读设置初始化 =====
-    let immersiveActive = false; // 沉浸模式状态（提前声明供其他handler使用）
+    // ===== 閱讀設定初始化 =====
+    let immersiveActive = false; // 沉浸模式狀態（提前宣告供其他handler使用）
     const THEMES = ['light','dark','green','sepia','blue'];
     const FONTS = [
       "'Georgia','Noto Serif SC','Source Han Serif CN',serif",
@@ -258,7 +258,7 @@
 
     let settings = loadSettings();
 
-    // ===== 翻页模式变量（需在 applyAllSettings 之前声明）=====
+    // ===== 翻頁模式變數（需在 applyAllSettings 之前宣告）=====
     let pagerState = { currentPage: 0, totalPages: 1, columnWidth: 0 };
     const pagerTapLeft = document.getElementById('pager-tap-left');
     const pagerTapRight = document.getElementById('pager-tap-right');
@@ -281,11 +281,11 @@
       localStorage.setItem(key, val);
     }
 
-    // ===== 设置面板交互 =====
+    // ===== 設定面板互動 =====
     const settingsOverlay = document.getElementById('settings-overlay');
     const tocOverlay = document.getElementById('toc-overlay');
 
-    // 主题选择
+    // 主題選擇
     document.getElementById('theme-options').addEventListener('click', (e) => {
       const dot = e.target.closest('.theme-dot');
       if (!dot) return;
@@ -295,7 +295,7 @@
       updateSettingsUI();
     });
 
-    // 字体选择
+    // 字體選擇
     document.getElementById('font-options').addEventListener('click', (e) => {
       const opt = e.target.closest('.font-option');
       if (!opt) return;
@@ -303,20 +303,20 @@
       saveSetting('font-family', settings.fontFamily);
       applyAllSettings();
       updateSettingsUI();
-      // 字体变化后需要等渲染再重新分页
+      // 字體變化後需要等繪製再重新分頁
       if (settings.readingMode === 'pager') {
         requestAnimationFrame(() => { requestAnimationFrame(() => { pagerRecalc(); }); });
       }
     });
 
-    // 防抖工具函数（翻页模式滑块用）
+    // 防抖工具函式（翻頁模式滑塊用）
     let _pagerDebounceTimer = null;
     function debouncedPagerRecalc() {
       if (_pagerDebounceTimer) clearTimeout(_pagerDebounceTimer);
       _pagerDebounceTimer = setTimeout(pagerRecalc, 100);
     }
 
-    // 字号滑块
+    // 字號滑塊
     document.getElementById('font-size-slider').addEventListener('input', (e) => {
       settings.fontSize = parseInt(e.target.value);
       saveSetting('font-size', settings.fontSize);
@@ -325,7 +325,7 @@
       if (settings.readingMode === 'pager') debouncedPagerRecalc();
     });
 
-    // 行距滑块
+    // 行距滑塊
     document.getElementById('line-height-slider').addEventListener('input', (e) => {
       settings.lineHeight = parseFloat(e.target.value);
       saveSetting('line-height', settings.lineHeight);
@@ -334,7 +334,7 @@
       if (settings.readingMode === 'pager') debouncedPagerRecalc();
     });
 
-    // 页面宽度滑块
+    // 頁面寬度滑塊
     document.getElementById('width-slider').addEventListener('input', (e) => {
       settings.readingWidth = parseInt(e.target.value);
       saveSetting('reading-width', settings.readingWidth);
@@ -343,7 +343,7 @@
       if (settings.readingMode === 'pager') debouncedPagerRecalc();
     });
 
-    // 阅读模式切换
+    // 閱讀模式切換
     document.getElementById('mode-options').addEventListener('click', (e) => {
       const opt = e.target.closest('.mode-option');
       if (!opt) return;
@@ -373,7 +373,7 @@
       });
     }
 
-    // 打开/关闭设置
+    // 打開/關閉設定
     document.getElementById('bar-settings').addEventListener('click', () => {
       updateSettingsUI();
       settingsOverlay.classList.add('active');
@@ -385,10 +385,10 @@
       if (e.target === settingsOverlay) settingsOverlay.classList.remove('active');
     });
 
-    // 打开/关闭目录
+    // 打開/關閉目錄
     document.getElementById('bar-toc').addEventListener('click', () => {
       tocOverlay.classList.add('active');
-      // 滚动到当前章节
+      // 滾動到目前章節
       const cur = document.querySelector('.toc-list a.current');
       if (cur) cur.scrollIntoView({ block: 'center' });
     });
@@ -396,7 +396,7 @@
       if (e.target === tocOverlay) tocOverlay.classList.remove('active');
     });
 
-    // ===== 翻页模式引擎 =====
+    // ===== 翻頁模式引擎 =====
 
     function applyReadingMode() {
       const isPager = settings.readingMode === 'pager';
@@ -406,10 +406,10 @@
       if (isPager) {
         pagerRecalc();
       } else {
-        // 切回滚动模式：清除column样式和transform
+        // 切回滾動模式：清除column樣式和transform
         const content = document.querySelector('.reader-content');
         if (content) {
-          // 记住当前阅读比例
+          // 記住目前閱讀比例
           const ratio = pagerState.totalPages > 1 ? pagerState.currentPage / (pagerState.totalPages - 1) : 0;
           content.style.transition = 'none';
           content.style.transform = '';
@@ -418,7 +418,7 @@
           content.style.columnGap = '';
           content.offsetHeight; // force reflow
           content.style.transition = '';
-          // 恢复滚动位置
+          // 復原滾動位置
           if (ratio > 0) {
             requestAnimationFrame(() => {
               const h = document.documentElement.scrollHeight - window.innerHeight;
@@ -434,9 +434,9 @@
       if (settings.readingMode !== 'pager') return;
       const content = document.querySelector('.reader-content');
       if (!content) return;
-      // 保存当前阅读比例
+      // 儲存目前閱讀比例
       const oldRatio = pagerState.totalPages > 1 ? pagerState.currentPage / (pagerState.totalPages - 1) : 0;
-      // 获取容器可用高度
+      // 取得容器可用高度
       const reader = document.getElementById('reader-area');
       const readerRect = reader.getBoundingClientRect();
       const titleEl = reader.querySelector('h2');
@@ -445,25 +445,25 @@
       if (availH <= 0) return;
       const colW = readerRect.width;
       pagerState.columnWidth = colW;
-      // 批量设置样式，只触发一次 reflow
+      // 批次設定樣式，只觸發一次 reflow
       content.style.transition = 'none';
       content.style.transform = 'translateX(0)';
       content.style.height = availH + 'px';
       content.style.columnWidth = colW + 'px';
       content.style.columnGap = colW + 'px';
-      // 单次强制 reflow 获取 scrollWidth
+      // 單次強制 reflow 取得 scrollWidth
       const scrollW = content.scrollWidth;
-      // 优化页码计算：使用更精确的公式
-      // 每页宽度 = columnWidth + columnGap = colW * 2
+      // 最佳化頁碼計算：使用更精確的公式
+      // 每頁寬度 = columnWidth + columnGap = colW * 2
       const pageWidth = colW * 2;
       if (scrollW <= colW) {
         pagerState.totalPages = 1;
       } else {
-        // 使用 ceil 向上取整，确保最后一页也能显示
+        // 使用 ceil 向上取整，確保最後一頁也能顯示
         pagerState.totalPages = Math.ceil(scrollW / pageWidth);
       }
       pagerState.totalPages = Math.max(1, pagerState.totalPages);
-      // 恢复到相近的页码
+      // 復原到相近的頁碼
       if (pagerState.totalPages > 1) {
         pagerState.currentPage = Math.min(Math.round(oldRatio * (pagerState.totalPages - 1)), pagerState.totalPages - 1);
       } else {
@@ -491,7 +491,7 @@
         content.style.transition = '';
       }
       pagerUpdateIndicator();
-      // 保存进度（用页码比例模拟scrollPct）
+      // 儲存進度（用頁碼比例模擬scrollPct）
       if (window._chapterMeta) {
         const m = window._chapterMeta;
         const pct = pagerState.totalPages > 1 ? page / (pagerState.totalPages - 1) : 0;
@@ -526,10 +526,10 @@
       }
     }
 
-    // 翻页点击区域（有选区时不翻页，让批注交互优先）
+    // 翻頁點擊區域（有選區時不翻頁，讓批註互動優先）
     pagerTapLeft.addEventListener('click', (e) => {
       const sel = window.getSelection();
-      if (sel && !sel.isCollapsed) return; // 有选区时不翻页
+      if (sel && !sel.isCollapsed) return; // 有選區時不翻頁
       e.stopPropagation(); pagerPrev();
     });
     pagerTapRight.addEventListener('click', (e) => {
@@ -538,7 +538,7 @@
       e.stopPropagation(); pagerNext();
     });
 
-    // 触摸滑动翻页
+    // 觸摸滑動翻頁
     let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
     document.addEventListener('touchstart', (e) => {
       if (settings.readingMode !== 'pager') return;
@@ -554,14 +554,14 @@
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
       const dt = Date.now() - touchStartTime;
-      // 水平滑动距离>50px，且水平>垂直，且时间<500ms
+      // 水平滑動距離>50px，且水平>垂直，且時間<500ms
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) && dt < 500) {
         if (dx < 0) pagerNext();
         else pagerPrev();
       }
     }, { passive: true });
 
-    // resize时重新计算
+    // resize時重新計算
     let resizeTimer = null;
     window.addEventListener('resize', () => {
       if (settings.readingMode !== 'pager') return;
@@ -569,30 +569,30 @@
       resizeTimer = setTimeout(pagerRecalc, 200);
     });
 
-    // ===== 底部工具栏显示/隐藏 =====
+    // ===== 底部工具列顯示/隱藏 =====
     const bottomBar = document.getElementById('bottom-bar');
     let barVisible = true;
     bottomBar.classList.add('visible');
 
     document.getElementById('reader-area').addEventListener('click', (e) => {
-      if (immersiveActive) return; // 沉浸模式下由专门的handler处理
+      if (immersiveActive) return; // 沉浸模式下由專門的handler處理
       if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.reader-nav')) return;
-      // 翻页模式下，中间区域点击切换工具栏（左右区域由tap zone处理）
+      // 翻頁模式下，中間區域點擊切換工具列（左右區域由tap zone處理）
       if (settings.readingMode === 'pager') {
         const x = e.clientX;
         const w = window.innerWidth;
-        if (x < w * 0.35 || x > w * 0.65) return; // 左右区域不处理
+        if (x < w * 0.35 || x > w * 0.65) return; // 左右區域不處理
       }
       barVisible = !barVisible;
       bottomBar.classList.toggle('visible', barVisible);
     });
 
-    // ===== 进度条 + 滚动位置记忆 =====
-    // P2修复：优化进度保存频率，使用节流而非防抖
-    // 节流确保定期保存，防抖可能导致长时间不保存
+    // ===== 進度條 + 滾動位置記憶 =====
+    // P2修復：最佳化進度儲存頻率，使用節流而非防抖
+    // 節流確保定期儲存，防抖可能導致長時間不儲存
     let scrollSaveTimer = null;
     let lastSaveTime = 0;
-    const SCROLL_SAVE_INTERVAL = 2000; // 节流间隔：2秒保存一次，平衡性能和体验
+    const SCROLL_SAVE_INTERVAL = 2000; // 節流間隔：2秒儲存一次，平衡性能和體驗
     
     window.addEventListener('scroll', () => {
       if (settings.readingMode === 'pager') return;
@@ -601,14 +601,14 @@
       document.getElementById('progress-bar').style.width = pct + '%';
       document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
 
-      // 节流保存滚动位置：确保每2秒最多保存一次
+      // 節流儲存滾動位置：確保每2秒最多儲存一次
       const now = Date.now();
       if (now - lastSaveTime >= SCROLL_SAVE_INTERVAL) {
-        // 立即保存并更新时间戳
+        // 立即儲存並更新時間戳
         saveScrollPosition();
         lastSaveTime = now;
       } else {
-        // 在节流间隔内，设置定时器确保最终会保存
+        // 在節流間隔內，設定定時器確保最終會儲存
         if (scrollSaveTimer) clearTimeout(scrollSaveTimer);
         scrollSaveTimer = setTimeout(() => {
           saveScrollPosition();
@@ -619,7 +619,7 @@
 
     function saveScrollPosition() {
       if (!window._chapterMeta) return;
-      if (settings.readingMode === 'pager') return; // pager模式在pagerGoTo中保存
+      if (settings.readingMode === 'pager') return; // pager模式在pagerGoTo中儲存
       const m = window._chapterMeta;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       const pct = h > 0 ? (window.scrollY / h) : 0;
@@ -631,7 +631,7 @@
       localStorage.setItem(`reading_${m.bookId}`, JSON.stringify(progress));
     }
 
-    // ===== 键盘快捷键 =====
+    // ===== 鍵盤快捷鍵 =====
     let prevUrl = null, nextUrl = null, backUrl = null;
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -671,13 +671,13 @@
       }
     });
 
-    // ===== 加载站点设置 =====
+    // ===== 載入站點設定 =====
     fetch('/api/settings').then(r => r.json()).then(d => {
       const s = d.settings || {};
       if (s.site_name) document.querySelector('.navbar h1 a').textContent = '📚 ' + s.site_name;
     }).catch(() => {});
 
-    // ===== 加载自定义字体 =====
+    // ===== 載入自訂字體 =====
     fetch('/api/fonts').then(r => r.json()).then(d => {
       const fonts = d.fonts || [];
       const container = document.getElementById('font-options');
@@ -692,19 +692,19 @@
           div.style.fontFamily = familyName;
           div.textContent = name.replace(/\.woff2$/i, '');
           container.appendChild(div);
-          // 如果当前选中的就是这个字体，标记active
+          // 如果目前選中的就是這個字體，標記active
           if (settings.fontFamily === `'${familyName}'`) div.classList.add('active');
-        }).catch(() => {}); // 加载失败静默忽略
+        }).catch(() => {}); // 載入失敗靜默忽略
       });
     }).catch(() => {});
 
-    // ===== 预加载缓存 =====
+    // ===== 預載入快取 =====
     let prefetchedNext = null;
 
-    // ===== 加载章节 =====
+    // ===== 載入章節 =====
     const chapterId = new URLSearchParams(location.search).get('id');
     if (!chapterId || !/^\d+$/.test(chapterId)) {
-      document.getElementById('content').innerHTML = '<div class="msg msg-error">无效的章节ID</div>';
+      document.getElementById('content').innerHTML = '<div class="msg msg-error">無效的章節ID</div>';
     } else {
       loadChapter();
     }
@@ -712,19 +712,19 @@
     async function loadChapter() {
       const el = document.getElementById('content');
       try {
-        // 检查是否有预加载缓存
+        // 檢查是否有預載入快取
         let data;
         if (prefetchedNext && prefetchedNext.chapter && String(prefetchedNext.chapter.id) === chapterId) {
           data = prefetchedNext;
           prefetchedNext = null;
         } else {
           const res = await fetch(`/api/chapters/${chapterId}`);
-          if (!res.ok) throw new Error(res.status === 404 ? '章节不存在' : '加载失败');
+          if (!res.ok) throw new Error(res.status === 404 ? '章節不存在' : '載入失敗');
           data = await res.json();
         }
         const c = data.chapter;
 
-        // 存储元数据
+        // 儲存中繼資料
         window._chapterMeta = {
           chapterId: c.id, chapterTitle: c.title,
           bookTitle: c.book_title, bookId: c.book_id
@@ -736,18 +736,18 @@
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc) metaDesc.content = `${c.book_title} - ${c.title}`;
 
-        // 面包屑
+        // 麵包屑
         backUrl = `/book.html?id=${c.book_id}`;
         document.getElementById('back-link').href = backUrl;
         document.getElementById('breadcrumb').innerHTML =
-          `<a href="/">书架</a><span>›</span><a href="/book.html?id=${c.book_id}">${esc(c.book_title)}</a><span>›</span>${esc(c.title)}`;
+          `<a href="/">書架</a><span>›</span><a href="/book.html?id=${c.book_id}">${esc(c.book_title)}</a><span>›</span>${esc(c.title)}`;
 
-        // 正文 — 按段落渲染为 <p>（批注系统依赖段落索引）
+        // 正文 — 按段落繪製為 <p>（批註系統依賴段落索引）
         const contentDiv = document.createElement('div');
         contentDiv.className = 'reader-content';
         const rawParagraphs = data.content.split('\n');
         rawParagraphs.forEach((text, idx) => {
-          if (!text.trim()) return; // 跳过空行，但保留原始索引
+          if (!text.trim()) return; // 跳過空行，但保留原始索引
           const p = document.createElement('p');
           p.textContent = text;
           p.dataset.paraIdx = idx;
@@ -756,7 +756,7 @@
         currentBookId = c.book_id;
         currentChapterId = c.id;
 
-        // 导航
+        // 導航
         prevUrl = data.prevChapter ? `/read.html?id=${data.prevChapter.id}` : null;
         nextUrl = data.nextChapter ? `/read.html?id=${data.nextChapter.id}` : null;
 
@@ -764,9 +764,9 @@
         nav.className = 'reader-nav';
         nav.innerHTML = `
           ${prevUrl ? `<a href="${prevUrl}">← ${esc(data.prevChapter.title)}</a>` : '<span class="disabled">已是第一章</span>'}
-          <a href="/book.html?id=${c.book_id}">目录</a>
-          <a href="#" id="export-btn" style="font-size:13px">导出TXT</a>
-          <a href="#" id="download-book-btn" style="font-size:13px">📥 缓存全书</a>
+          <a href="/book.html?id=${c.book_id}">目錄</a>
+          <a href="#" id="export-btn" style="font-size:13px">匯出TXT</a>
+          <a href="#" id="download-book-btn" style="font-size:13px">📥 快取全書</a>
           ${nextUrl ? `<a href="${nextUrl}">${esc(data.nextChapter.title)} →</a>` : '<span class="disabled">已是最新章</span>'}
         `;
 
@@ -774,53 +774,53 @@
         el.appendChild(contentDiv);
         el.appendChild(nav);
 
-        // 导出按钮事件
+        // 匯出按鈕事件
         document.getElementById('export-btn').addEventListener('click', (e) => { e.preventDefault(); exportThis(); });
 
-        // 缓存全书按钮
+        // 快取全書按鈕
         document.getElementById('download-book-btn').addEventListener('click', async (e) => {
           e.preventDefault();
           const btn = e.target;
           try {
-            btn.textContent = '📥 获取目录...';
+            btn.textContent = '📥 取得目錄...';
             const bRes = await fetch(`/api/books/${c.book_id}`);
             const bData = await bRes.json();
             const chs = bData.chapters || [];
-            if (chs.length === 0) { btn.textContent = '📥 无章节'; return; }
+            if (chs.length === 0) { btn.textContent = '📥 無章節'; return; }
             let done = 0;
             for (const ch of chs) {
               await fetch(`/api/chapters/${ch.id}`);
               done++;
               btn.textContent = `📥 ${done}/${chs.length}`;
             }
-            btn.textContent = '✅ 缓存完成';
+            btn.textContent = '✅ 快取完成';
           } catch (err) {
-            btn.textContent = '❌ 缓存失败';
+            btn.textContent = '❌ 快取失敗';
           }
         });
 
-        // 底部工具栏按钮
+        // 底部工具列按鈕
         document.getElementById('bar-prev').onclick = () => { if (prevUrl) location.href = prevUrl; };
         document.getElementById('bar-next').onclick = () => { if (nextUrl) location.href = nextUrl; };
         document.getElementById('bar-prev').style.opacity = prevUrl ? '1' : '0.3';
         document.getElementById('bar-next').style.opacity = nextUrl ? '1' : '0.3';
 
-        // 保存阅读进度
+        // 儲存閱讀進度
         saveScrollPosition();
 
-        // 阅读统计：记录章节字数和阅读天数
+        // 閱讀統計：記錄章節字數和閱讀天數
         trackReadingStats(c.id, data.content.length);
 
-        // 更新书签图标
+        // 更新書籤圖示
         updateBookmarkIcon();
 
-        // 恢复滚动位置
+        // 復原滾動位置
         restoreScrollPosition(c.book_id, c.id);
 
-        // 加载目录
+        // 載入目錄
         loadTOC(c.book_id, c.id);
 
-        // 预加载下一章
+        // 預載入下一章
         if (data.nextChapter) {
           setTimeout(() => {
             fetch(`/api/chapters/${data.nextChapter.id}`)
@@ -830,7 +830,7 @@
           }, 2000);
         }
 
-        // 初始化批注系统
+        // 初始化批註系統
         initAnnotations();
       } catch (e) {
         el.innerHTML = `<div class="msg msg-error">${esc(e.message)}</div>`;
@@ -842,7 +842,7 @@
         const saved = JSON.parse(localStorage.getItem(`reading_${bookId}`));
         if (saved && saved.chapterId === currentChapterId && saved.scrollPct > 0) {
           if (settings.readingMode === 'pager') {
-            // 翻页模式：延迟到分页计算后恢复
+            // 翻頁模式：延遲到分頁計算後復原
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 pagerRecalc();
@@ -851,14 +851,14 @@
               });
             });
           } else {
-            // 滚动模式：恢复滚动位置
+            // 滾動模式：復原滾動位置
             requestAnimationFrame(() => {
               const h = document.documentElement.scrollHeight - window.innerHeight;
               if (h > 0) window.scrollTo(0, h * saved.scrollPct);
             });
           }
         } else if (settings.readingMode === 'pager') {
-          // 没有保存的位置，但需要初始化分页
+          // 沒有儲存的位置，但需要初始化分頁
           requestAnimationFrame(() => {
             requestAnimationFrame(() => { pagerRecalc(); });
           });
@@ -902,7 +902,7 @@
       URL.revokeObjectURL(url);
     }
 
-    // ===== 书签功能 =====
+    // ===== 書籤功能 =====
     function getBookmarks(bookId) {
       try { return JSON.parse(localStorage.getItem(`bookmarks_${bookId}`)) || []; }
       catch { return []; }
@@ -939,7 +939,7 @@
     }
     document.getElementById('bar-bookmark').addEventListener('click', toggleBookmark);
 
-    // ===== 阅读统计 =====
+    // ===== 閱讀統計 =====
     function getReadingStats() {
       try { return JSON.parse(localStorage.getItem('readingStats')) || {}; } catch { return {}; }
     }
@@ -952,10 +952,10 @@
       if (!s.totalChars) s.totalChars = 0;
       if (!Array.isArray(s.readChapterIds)) s.readChapterIds = [];
       if (!Array.isArray(s.days)) s.days = [];
-      // 记录今天
+      // 記錄今天
       const today = new Date().toISOString().slice(0, 10);
       if (!s.days.includes(today)) s.days.push(today);
-      // 首次阅读该章节才累加字数
+      // 首次閱讀該章節才累加字數
       if (!s.readChapterIds.includes(chId)) {
         s.readChapterIds.push(chId);
         s.totalChars += charCount;
@@ -963,8 +963,8 @@
       s.lastActiveDate = today;
       saveReadingStats(s);
     }
-    // 每30秒累加阅读时长
-    // 保存定时器引用，以便页面离开时清理
+    // 每30秒累加閱讀時長
+    // 儲存定時器引用，以便頁面離開時清理
     let readingStatsTimer = null;
     readingStatsTimer = setInterval(() => {
       if (document.hidden) return;
@@ -973,7 +973,7 @@
       saveReadingStats(s);
     }, 30000);
 
-    // 页面离开时清理定时器，防止内存泄漏
+    // 頁面離開時清理定時器，防止記憶體洩漏
     function cleanupReadingStats() {
       if (readingStatsTimer) {
         clearInterval(readingStatsTimer);
@@ -983,7 +983,7 @@
 
     // 使用 pagehide 事件（比 beforeunload 更可靠）
     window.addEventListener('pagehide', cleanupReadingStats);
-    // 同时监听 beforeunload 作为后备
+    // 同時監聽 beforeunload 作為後備
     window.addEventListener('beforeunload', cleanupReadingStats);
 
     // ===== 沉浸模式 =====
@@ -994,13 +994,13 @@
       document.body.classList.toggle('immersive', immersiveActive);
       if (immersiveActive) {
         document.documentElement.requestFullscreen().catch(() => {});
-        // 显示退出提示
+        // 顯示退出提示
         immersiveHint.classList.add('show');
         setTimeout(() => immersiveHint.classList.remove('show'), 2000);
       } else {
         if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
       }
-      // 翻页模式需要重新计算
+      // 翻頁模式需要重新計算
       if (settings.readingMode === 'pager') {
         requestAnimationFrame(() => requestAnimationFrame(() => pagerRecalc()));
       }
@@ -1018,16 +1018,16 @@
 
     document.getElementById('bar-immersive').addEventListener('click', toggleImmersive);
 
-    // 沉浸模式下中央区域点击退出
+    // 沉浸模式下中央區域點擊退出
     document.getElementById('reader-area').addEventListener('click', (e) => {
       if (!immersiveActive) return;
       if (e.target.closest('a') || e.target.closest('button')) return;
       const x = e.clientX, w = window.innerWidth;
-      // 翻页模式下左右区域用于翻页，只有中央退出
+      // 翻頁模式下左右區域用於翻頁，只有中央退出
       if (settings.readingMode === 'pager') {
         if (x > w * 0.3 && x < w * 0.7) exitImmersive();
       } else {
-        // 滚动模式下点击中央退出
+        // 滾動模式下點擊中央退出
         if (x > w * 0.25 && x < w * 0.75) exitImmersive();
       }
     });
@@ -1048,16 +1048,16 @@
       navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
 
-    // ===== 批注系统 =====
+    // ===== 批註系統 =====
     let annoState = {
       paraIdx: null, sentIdx: null, sentText: '', sentHash: '',
       visibility: 'private', editing: false,
-      // 保存选区状态，防止点击按钮时选区丢失
+      // 儲存選區狀態，防止點擊按鈕時選區遺失
       savedRange: null,
       savedSelectionText: ''
     };
 
-    // 保存选区状态（在选区变化时调用）
+    // 儲存選區狀態（在選區變化時呼叫）
     function saveSelectionState(sel) {
       if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
         annoState.savedRange = null;
@@ -1066,7 +1066,7 @@
       }
       try {
         const range = sel.getRangeAt(0);
-        // 克隆 Range 以防止选区清除后数据丢失
+        // 複製 Range 以防止選區清除後資料遺失
         annoState.savedRange = range.cloneRange();
         annoState.savedSelectionText = sel.toString();
       } catch (e) {
@@ -1076,7 +1076,7 @@
       }
     }
 
-    // 恢复选区状态
+    // 復原選區狀態
     function restoreSelectionState() {
       if (!annoState.savedRange) return false;
       try {
@@ -1090,7 +1090,7 @@
       }
     }
 
-    // 清除保存的选区状态
+    // 清除儲存的選區狀態
     function clearSavedSelectionState() {
       annoState.savedRange = null;
       annoState.savedSelectionText = '';
@@ -1098,7 +1098,7 @@
 
     async function initAnnotations() {
       await fetchCurrentUser();
-      // 检查书籍是否允许批注
+      // 檢查書籍是否允許批註
       if (currentBookId) {
         try {
           const res = await fetch(`/api/books/${currentBookId}`);
@@ -1108,13 +1108,13 @@
           }
         } catch {}
       }
-      // 渲染已有批注下划线
+      // 繪製已有批註底線
       await renderAnnotationUnderlines();
-      // 绑定交互事件
+      // 綁定互動事件
       if (canAnnotate) bindAnnotationEvents();
     }
 
-    // --- 下划线渲染 ---
+    // --- 底線繪製 ---
     function getTextNodes(el) {
       const nodes = [];
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -1124,7 +1124,7 @@
     }
 
     function findTextInParagraph(p, targetText, sentIdx) {
-      // 用 splitSentences 精确定位偏移量，避免 indexOf 重复文本问题（🟡-5 修复）
+      // 用 splitSentences 精確定位偏移量，避免 indexOf 重複文字問題（🟡-5 修復）
       const fullText = p.textContent;
       const sentences = splitSentences(fullText);
       let start = 0;
@@ -1159,14 +1159,14 @@
       return range;
     }
 
-    // 安全高亮：处理 range 跨越已有 span 节点的情况（🔴-2 修复）
+    // 安全突顯：處理 range 跨越已有 span 節點的情況（🔴-2 修復）
     function highlightRange(range, span) {
-      // 如果 start 和 end 在同一个文本节点，surroundContents 安全
+      // 如果 start 和 end 在同一個文字節點，surroundContents 安全
       if (range.startContainer === range.endContainer && range.startContainer.nodeType === 3) {
         range.surroundContents(span);
         return span;
       }
-      // 跨节点：提取内容再包裹
+      // 跨節點：提取內容再包裹
       try {
         const fragment = range.extractContents();
         span.appendChild(fragment);
@@ -1224,14 +1224,14 @@
           highlightRange(range, span);
         }
 
-        // 翻页模式下重新计算分页
+        // 翻頁模式下重新計算分頁
         if (settings.readingMode === 'pager') {
           requestAnimationFrame(() => requestAnimationFrame(() => pagerRecalc()));
         }
       } catch {}
     }
 
-    // --- 查看批注弹窗 ---
+    // --- 查看批註彈出視窗 ---
     let popoverSort = 'latest';
     let popoverContext = null; // { paraIdx, sentIdx, anchorEl }
 
@@ -1255,7 +1255,7 @@
           <div class="anno-popover-header">
             <div class="anno-sort-tabs">
               <button class="anno-sort-tab ${sort === 'latest' ? 'active' : ''}" data-sort="latest">最新</button>
-              <button class="anno-sort-tab ${sort === 'hot' ? 'active' : ''}" data-sort="hot">最热</button>
+              <button class="anno-sort-tab ${sort === 'hot' ? 'active' : ''}" data-sort="hot">最熱</button>
             </div>
           </div>
         `;
@@ -1269,7 +1269,7 @@
 
           return `
             <div class="anno-popover-item" data-id="${a.id}">
-              <div class="anno-popover-content ${isLong ? 'truncated' : ''}" data-full="${esc(content)}">${esc(displayContent)}${isLong ? '<span class="anno-expand">...展开</span>' : ''}</div>
+              <div class="anno-popover-content ${isLong ? 'truncated' : ''}" data-full="${esc(content)}">${esc(displayContent)}${isLong ? '<span class="anno-expand">...展開</span>' : ''}</div>
               <div class="anno-popover-footer">
                 <div class="anno-popover-meta">
                   ${esc(a.username || '匿名')} · ${timeAgo(a.created_at)}
@@ -1280,7 +1280,7 @@
                     <span class="like-icon">${liked ? '❤️' : '🤍'}</span>
                     <span class="like-count">${likeCount || ''}</span>
                   </button>
-                  ${a.is_mine ? `<button class="btn-link anno-delete-btn" data-id="${a.id}">删除</button>` : `<button class="btn-link anno-report-btn" data-id="${a.id}">举报</button>`}
+                  ${a.is_mine ? `<button class="btn-link anno-delete-btn" data-id="${a.id}">刪除</button>` : `<button class="btn-link anno-report-btn" data-id="${a.id}">檢舉</button>`}
                 </div>
               </div>
             </div>
@@ -1301,7 +1301,7 @@
         popover.style.top = top + 'px';
         popover.style.left = left + 'px';
 
-        // 绑定事件
+        // 綁定事件
         popover.querySelectorAll('.anno-sort-tab').forEach(btn => {
           btn.onclick = () => showAnnotationPopover(paraIdx, sentIdx, anchorEl, btn.dataset.sort);
         });
@@ -1330,7 +1330,7 @@
 
     async function toggleLike(annoId, btn) {
       if (!currentUser) {
-        alert('请先登录');
+        alert('請先登入');
         return;
       }
       try {
@@ -1356,35 +1356,35 @@
     function timeAgo(dateStr) {
       const diff = Date.now() - new Date(dateStr + 'Z').getTime();
       const m = Math.floor(diff / 60000);
-      if (m < 1) return '刚刚';
-      if (m < 60) return m + '分钟前';
+      if (m < 1) return '剛剛';
+      if (m < 60) return m + '分鐘前';
       const h = Math.floor(m / 60);
-      if (h < 24) return h + '小时前';
+      if (h < 24) return h + '小時前';
       const d = Math.floor(h / 24);
       if (d < 30) return d + '天前';
-      return new Date(dateStr).toLocaleDateString('zh-CN');
+      return new Date(dateStr).toLocaleDateString('zh-TW');
     }
 
     async function deleteAnnotation(id) {
-      if (!confirm('确定删除这条批注？')) return;
+      if (!confirm('確定刪除這條批註？')) return;
       try {
         const res = await annoApi('DELETE', `/api/annotations/${id}`);
         if (res.ok) {
           document.getElementById('anno-popover').style.display = 'none';
           await refreshAnnotations();
         } else {
-          alert('删除失败');
+          alert('刪除失敗');
         }
       } catch {
-        alert('网络错误');
+        alert('網路錯誤');
       }
     }
 
     function showReportDialog(annoId) {
-      const reason = prompt('请输入举报理由（至少10个字）：');
+      const reason = prompt('請輸入檢舉理由（至少10個字）：');
       if (!reason) return;
       if (reason.trim().length < 10) {
-        alert('举报理由至少10个字');
+        alert('檢舉理由至少10個字');
         return;
       }
       submitReport(annoId, reason.trim());
@@ -1394,45 +1394,45 @@
       try {
         const res = await annoApi('POST', '/api/reports', { annotationId: annoId, reason });
         if (res.ok) {
-          alert('举报已提交，感谢反馈');
+          alert('檢舉已提交，感謝回饋');
           document.getElementById('anno-popover').style.display = 'none';
         } else {
           const data = await res.json().catch(() => ({}));
-          alert(data.error || '举报失败');
+          alert(data.error || '檢舉失敗');
         }
       } catch {
-        alert('网络错误');
+        alert('網路錯誤');
       }
     }
 
-    // 清除所有下划线并重新渲染（🟡-3: 提取为公共函数 + 🟢-7: 错误处理）
+    // 清除所有底線並重新繪製（🟡-3: 提取為公共函式 + 🟢-7: 錯誤處理）
     async function refreshAnnotations() {
       document.querySelectorAll('.annotated').forEach(el => {
         const parent = el.parentNode;
         while (el.firstChild) parent.insertBefore(el.firstChild, el);
         parent.removeChild(el);
       });
-      // 合并相邻文本节点，防止碎片化
+      // 合併相鄰文字節點，防止碎片化
       document.querySelectorAll('.reader-content p').forEach(p => p.normalize());
       await renderAnnotationUnderlines();
     }
 
-    // --- 交互事件绑定 ---
+    // --- 互動事件綁定 ---
     function bindAnnotationEvents() {
       const readerContent = document.querySelector('.reader-content');
       if (!readerContent) return;
 
-      // PC + 移动端统一用 selectionchange + 浮动按钮
+      // PC + 行動端統一用 selectionchange + 浮動按鈕
       const selHandler = debounceSelection();
       document.addEventListener('selectionchange', selHandler);
 
-      // 阅读区域拦截右键菜单（有选区时阻止浏览器默认菜单）
+      // 閱讀區域攔截右鍵選單（有選區時阻止瀏覽器預設選單）
       readerContent.addEventListener('contextmenu', (e) => {
         const sel = window.getSelection();
         if (sel && !sel.isCollapsed) e.preventDefault();
       });
 
-      // mouseup 后：立即检测选区并显示浮动按钮
+      // mouseup 後：立即檢測選區並顯示浮動按鈕
       readerContent.addEventListener('mouseup', (e) => {
         console.log('[anno] mouseup on readerContent', { target: e.target.id || e.target.className });
         if (e.target.closest('#anno-float-btn')) return;
@@ -1443,7 +1443,7 @@
         }, 50);
       });
 
-      // 翻页模式下 tap 区域会拦截 mouseup，用 document 级别 fallback
+      // 翻頁模式下 tap 區域會攔截 mouseup，用 document 級別 fallback
       document.addEventListener('mouseup', (e) => {
         if (settings.readingMode !== 'pager') return;
         if (e.target.closest('#anno-float-btn') || e.target.closest('#anno-editor')) return;
@@ -1456,7 +1456,7 @@
         }, 50);
       });
 
-      // 浮动按钮：mousedown 直接触发编辑器（比 click 更可靠）
+      // 浮動按鈕：mousedown 直接觸發編輯器（比 click 更可靠）
       const floatBtn = document.getElementById('anno-float-btn');
       floatBtn.addEventListener('mousedown', (e) => {
         console.log('[anno] floatBtn mousedown fired', { annoState: {...annoState} });
@@ -1465,12 +1465,12 @@
         openAnnotationEditor();
       });
 
-      // 编辑器按钮
+      // 編輯器按鈕
       document.getElementById('anno-vis-btn').addEventListener('click', toggleVisibility);
       document.getElementById('anno-cancel').addEventListener('click', closeAnnotationEditor);
       document.getElementById('anno-submit').addEventListener('click', submitAnnotation);
 
-      // 字数统计
+      // 字數統計
       const annoInput = document.getElementById('anno-input');
       annoInput.addEventListener('input', () => {
         const len = annoInput.value.length;
@@ -1486,13 +1486,13 @@
         }
       });
 
-      // 点击外部关闭弹窗
+      // 點擊外部關閉彈出視窗
       document.addEventListener('click', (e) => {
         const popover = document.getElementById('anno-popover');
         if (popover.style.display !== 'none' && !popover.contains(e.target) && !e.target.closest('.annotated')) {
           popover.style.display = 'none';
         }
-        // 点击非浮动按钮且非选区时隐藏浮动按钮
+        // 點擊非浮動按鈕且非選區時隱藏浮動按鈕
         const floatBtn = document.getElementById('anno-float-btn');
         if (floatBtn.classList.contains('visible') && !floatBtn.contains(e.target)) {
           const sel = window.getSelection();
@@ -1500,7 +1500,7 @@
         }
       });
 
-      // Escape 关闭
+      // Escape 關閉
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           document.getElementById('anno-float-btn').classList.remove('visible');
@@ -1509,10 +1509,10 @@
         }
       });
 
-      // 滚动时关闭浮动按钮（但保留保存的选区状态，以便用户仍可创建批注）
+      // 滾動時關閉浮動按鈕（但保留儲存的選區狀態，以便用戶仍可建立批註）
       window.addEventListener('scroll', () => {
         document.getElementById('anno-float-btn').classList.remove('visible');
-        // 注意：不清除 savedRange，因为用户可能滚动后仍想创建批注
+        // 注意：不清除 savedRange，因為用戶可能滾動後仍想建立批註
       }, { passive: true });
     }
 
@@ -1565,7 +1565,7 @@
         return;
       }
 
-      // 保存选区状态，防止点击按钮时选区丢失
+      // 儲存選區狀態，防止點擊按鈕時選區遺失
       saveSelectionState(sel);
 
       annoState.paraIdx = paraIdx;
@@ -1573,7 +1573,7 @@
       annoState.sentText = snapped.text;
 
       const rect = range.getBoundingClientRect();
-      // 保存位置信息供编辑器使用（点击按钮时selection可能已清除）
+      // 儲存位置資訊供編輯器使用（點擊按鈕時selection可能已清除）
       annoState.selRect = { left: rect.left, top: rect.top, bottom: rect.bottom, width: rect.width };
       const btn = document.getElementById('anno-float-btn');
       console.log('[anno] showing floatBtn', { paraIdx, sentIdx: snapped.sentIdx, text: snapped.text.slice(0,30) });
@@ -1582,15 +1582,15 @@
       btn.style.top = (rect.top - 44) + 'px';
     }
 
-    // --- 批注编辑器 ---
+    // --- 批註編輯器 ---
     async function openAnnotationEditor() {
       document.getElementById('anno-float-btn').classList.remove('visible');
 
-      // 验证选区状态是否有效
+      // 驗證選區狀態是否有效
       if (!annoState.sentText) {
         console.warn('[anno] sentText empty, trying to recover from saved selection');
         
-        // 首先尝试从保存的选区恢复
+        // 首先嘗試從儲存的選區復原
         if (annoState.savedRange && annoState.savedSelectionText) {
           console.log('[anno] attempting to restore from saved range');
           const restored = restoreSelectionState();
@@ -1599,41 +1599,41 @@
             if (sel && !sel.isCollapsed) {
               showFloatBtnForSelection(sel);
               if (!annoState.sentText) {
-                alert('未能识别选中的句子，请重新选择');
+                alert('未能識別選中的句子，請重新選擇');
                 clearSavedSelectionState();
                 return;
               }
-              // 恢复成功，继续
+              // 復原成功，繼續
             } else {
-              alert('选区已失效，请重新选择要批注的文字');
+              alert('選區已失效，請重新選擇要批註的文字');
               clearSavedSelectionState();
               return;
             }
           } else {
-            alert('选区已失效，请重新选择要批注的文字');
+            alert('選區已失效，請重新選擇要批註的文字');
             clearSavedSelectionState();
             return;
           }
         } else {
-          // 尝试从当前选区恢复
+          // 嘗試從目前選區復原
           const sel = window.getSelection();
           if (sel && !sel.isCollapsed) {
             showFloatBtnForSelection(sel);
             if (!annoState.sentText) {
-              alert('未能识别选中的句子，请重新选择');
+              alert('未能識別選中的句子，請重新選擇');
               return;
             }
-            // 恢复成功，继续
+            // 復原成功，繼續
           } else {
-            alert('请先选中一段文字');
+            alert('請先選中一段文字');
             return;
           }
         }
       }
 
-      // 再次验证必要字段
+      // 再次驗證必要欄位
       if (!validateAnnotationState()) {
-        alert('选区信息不完整，请重新选择要批注的文字');
+        alert('選區資訊不完整，請重新選擇要批註的文字');
         return;
       }
 
@@ -1647,13 +1647,13 @@
         document.getElementById('anno-char-num').textContent = '0';
         annoState.visibility = 'private';
         const visBtn = document.getElementById('anno-vis-btn');
-        visBtn.textContent = '🔒 仅自己可见';
+        visBtn.textContent = '🔒 僅自己可見';
         visBtn.classList.remove('public');
 
         editor.style.display = 'block';
         document.getElementById('anno-input').focus();
 
-        // PC 端定位到选区附近
+        // PC 端定位到選區附近
         if (window.innerWidth > 768 && annoState.selRect) {
           const rect = annoState.selRect;
           editor.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 340)) + 'px';
@@ -1676,7 +1676,7 @@
       }
     }
 
-    // 验证批注状态是否有效
+    // 驗證批註狀態是否有效
     function validateAnnotationState() {
       return (
         annoState.paraIdx !== null &&
@@ -1691,7 +1691,7 @@
     function closeAnnotationEditor() {
       annoState.editing = false;
       document.getElementById('anno-editor').style.display = 'none';
-      // 关闭编辑器时清除保存的选区状态
+      // 關閉編輯器時清除儲存的選區狀態
       clearSavedSelectionState();
     }
 
@@ -1699,11 +1699,11 @@
       const btn = document.getElementById('anno-vis-btn');
       if (annoState.visibility === 'private') {
         annoState.visibility = 'public';
-        btn.textContent = '🌐 所有人可见';
+        btn.textContent = '🌐 所有人可見';
         btn.classList.add('public');
       } else {
         annoState.visibility = 'private';
-        btn.textContent = '🔒 仅自己可见';
+        btn.textContent = '🔒 僅自己可見';
         btn.classList.remove('public');
       }
     }
@@ -1711,35 +1711,35 @@
     async function submitAnnotation() {
       const content = document.getElementById('anno-input').value.trim();
       if (!content) {
-        alert('请输入批注内容');
+        alert('請輸入批註內容');
         return;
       }
       if (content.length > 500) {
-        alert('批注内容不能超过500字');
+        alert('批註內容不能超過500字');
         return;
       }
 
-      // 验证所有必需字段
+      // 驗證所有必需欄位
       if (!currentChapterId) {
-        alert('章节信息缺失，请刷新页面后重试');
+        alert('章節資訊缺失，請重新整理頁面後重試');
         return;
       }
       if (!currentBookId) {
-        alert('书籍信息缺失，请刷新页面后重试');
+        alert('書籍資訊缺失，請重新整理頁面後重試');
         return;
       }
       if (!validateAnnotationState()) {
-        alert('选区信息不完整，请关闭编辑器后重新选择要批注的文字');
+        alert('選區資訊不完整，請關閉編輯器後重新選擇要批註的文字');
         return;
       }
       if (!annoState.sentHash) {
-        alert('句子哈希计算失败，请重试');
+        alert('句子雜湊計算失敗，請重試');
         return;
       }
 
       const btn = document.getElementById('anno-submit');
       btn.disabled = true;
-      btn.textContent = '发表中...';
+      btn.textContent = '發表中...';
 
       try {
         const res = await annoApi('POST', '/api/annotations', {
@@ -1759,14 +1759,14 @@
           await refreshAnnotations();
         } else {
           const err = await res.json().catch(() => ({}));
-          alert(err.error || '发表失败');
+          alert(err.error || '發表失敗');
         }
       } catch (e) {
         console.error('[anno] submitAnnotation error:', e);
-        alert('网络错误');
+        alert('網路錯誤');
       } finally {
         btn.disabled = false;
-        btn.textContent = '发表';
+        btn.textContent = '發表';
       }
     }
   </script>

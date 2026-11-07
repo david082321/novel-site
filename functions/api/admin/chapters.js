@@ -1,7 +1,7 @@
-// POST /api/admin/chapters — 创建新章节
+// POST /api/admin/chapters — 建立新章節
 import { checkAdmin, validateId, parseJsonBody, checkBookOwnership, requireMinRole } from '../_utils.js';
 
-const MAX_CONTENT_LENGTH = 500000; // 50万字
+const MAX_CONTENT_LENGTH = 500000; // 50萬字
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -38,20 +38,20 @@ export async function onRequestPost(context) {
     .bind(book_id).first();
   if (!book) return Response.json({ error: 'Book not found' }, { status: 404 });
 
-  // demo只能往自己的书里添加章节
+  // demo只能往自己的書裡新增章節
   if (!await checkBookOwnership(auth, env, book_id)) {
-    return Response.json({ error: '只能向自己创建的书籍添加章节' }, { status: 403 });
+    return Response.json({ error: '只能向自己建立的書籍新增章節' }, { status: 403 });
   }
 
-  // demo 用户配额：每本书最多 200 章
+  // demo 用戶配額：每本書最多 200 章
   if (!requireMinRole(auth, 'admin')) {
     const { count } = await env.DB.prepare(
       'SELECT COUNT(*) as count FROM chapters WHERE book_id = ?'
     ).bind(book_id).first();
-    if (count >= 200) return Response.json({ error: '演示账号每本书最多 200 章' }, { status: 403 });
+    if (count >= 200) return Response.json({ error: '示範帳號每本書最多 200 章' }, { status: 403 });
   }
 
-  // sort_order：前端传了就用前端的（批量导入场景），否则自动递增（单章添加场景）
+  // sort_order：前端傳了就用前端的（批次匯入場景），否則自動遞增（單章新增場景）
   let sortOrder;
   if (clientSortOrder !== undefined && Number.isInteger(Number(clientSortOrder)) && Number(clientSortOrder) > 0 && Number(clientSortOrder) <= 2147483647) {
     sortOrder = Number(clientSortOrder);
@@ -73,27 +73,27 @@ export async function onRequestPost(context) {
     chapterId = result.meta.last_row_id;
   } catch (err) {
     if (err.message && err.message.includes('UNIQUE')) {
-      return Response.json({ success: true, duplicate: true, message: '章节已存在（重复请求）' });
+      return Response.json({ success: true, duplicate: true, message: '章節已存在（重複請求）' });
     }
     return Response.json({ error: 'Failed to create chapter' }, { status: 500 });
   }
 
-  // 用最终key写R2（只写一次）
+  // 用最終key寫R2（只寫一次）
   const contentKey = `novels/books/${book_id}/chapters/${chapterId}.txt`;
   try {
     await env.R2.put(contentKey, content.trim());
   } catch (err) {
-    // R2失败，回滚DB
+    // R2失敗，回滾DB
     await env.DB.prepare('DELETE FROM chapters WHERE id = ?').bind(chapterId).run().catch(() => {});
     return Response.json({ error: 'Failed to store content' }, { status: 500 });
   }
 
-  // 更新content_key为最终值
+  // 更新content_key為最終值
   try {
     await env.DB.prepare('UPDATE chapters SET content_key = ? WHERE id = ?')
       .bind(contentKey, chapterId).run();
   } catch (err) {
-    // content_key更新失败，回滚DB和R2
+    // content_key更新失敗，回滾DB和R2
     await env.DB.prepare('DELETE FROM chapters WHERE id = ?').bind(chapterId).run().catch(() => {});
     await env.R2.delete(contentKey).catch(() => {});
     return Response.json({ error: 'Failed to finalize chapter' }, { status: 500 });
@@ -102,7 +102,7 @@ export async function onRequestPost(context) {
   await env.DB.prepare("UPDATE books SET updated_at = datetime('now') WHERE id = ?")
     .bind(book_id).run();
 
-  // demo章节配额二次检查（防TOCTOU竞态绕过）
+  // demo章節配額二次檢查（防TOCTOU競態繞過）
   if (!requireMinRole(auth, 'admin')) {
     const { count } = await env.DB.prepare(
       'SELECT COUNT(*) as count FROM chapters WHERE book_id = ?'
@@ -110,7 +110,7 @@ export async function onRequestPost(context) {
     if (count > 200) {
       await env.DB.prepare('DELETE FROM chapters WHERE id = ?').bind(chapterId).run().catch(() => {});
       await env.R2.delete(contentKey).catch(() => {});
-      return Response.json({ error: '演示账号每本书最多 200 章' }, { status: 403 });
+      return Response.json({ error: '示範帳號每本書最多 200 章' }, { status: 403 });
     }
   }
 

@@ -17,16 +17,16 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireSuperAdmin(auth)) return Response.json({ error: '仅超级管理员可管理字体' }, { status: 403 });
+  if (!requireSuperAdmin(auth)) return Response.json({ error: '僅超級管理員可管理字體' }, { status: 403 });
 
   try {
     const formData = await request.formData();
     const file = formData.get('file');
-    if (!file || !file.name) return Response.json({ error: '请选择文件' }, { status: 400 });
+    if (!file || !file.name) return Response.json({ error: '請選擇文件' }, { status: 400 });
 
     const name = file.name.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
-    if (!/\.woff2$/i.test(name)) return Response.json({ error: '只支持 .woff2 格式' }, { status: 400 });
-    if (file.size > 10 * 1024 * 1024) return Response.json({ error: '文件不能超过10MB' }, { status: 400 });
+    if (!/\.woff2$/i.test(name)) return Response.json({ error: '只支援 .woff2 格式' }, { status: 400 });
+    if (file.size > 10 * 1024 * 1024) return Response.json({ error: '文件不能超過10MB' }, { status: 400 });
 
     // 上传到R2
     const arrayBuffer = await file.arrayBuffer();
@@ -42,7 +42,7 @@ export async function onRequestPost(context) {
     return Response.json({ success: true, name });
   } catch (e) {
     console.error('Font upload error:', e);
-    return Response.json({ error: '上传失败' }, { status: 500 });
+    return Response.json({ error: '上傳失敗' }, { status: 500 });
   }
 }
 
@@ -51,13 +51,13 @@ export async function onRequestDelete(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireSuperAdmin(auth)) return Response.json({ error: '仅超级管理员可管理字体' }, { status: 403 });
+  if (!requireSuperAdmin(auth)) return Response.json({ error: '僅超級管理員可管理字體' }, { status: 403 });
 
   try {
     const body = await request.json();
     const { filename } = body;
     if (!filename || !/^[\w\-\.]+\.woff2$/i.test(filename)) {
-      return Response.json({ error: '无效的文件名' }, { status: 400 });
+      return Response.json({ error: '無效的檔案名' }, { status: 400 });
     }
 
     // 先更新DB列表（可回滚），再删R2文件（孤儿无害）
@@ -71,6 +71,6 @@ export async function onRequestDelete(context) {
     return Response.json({ success: true });
   } catch (e) {
     console.error('Font delete error:', e);
-    return Response.json({ error: '删除失败' }, { status: 500 });
+    return Response.json({ error: '刪除失敗' }, { status: 500 });
   }
 }

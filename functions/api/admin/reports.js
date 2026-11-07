@@ -5,7 +5,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
 
   const auth = await checkAdmin(request, env);
-  if (!auth.ok) return Response.json({ error: '请先登录' }, { status: 401 });
+  if (!auth.ok) return Response.json({ error: '請先登入' }, { status: 401 });
 
   const url = new URL(request.url);
   const page = Math.max(1, parseInt(url.searchParams.get('page')) || 1);

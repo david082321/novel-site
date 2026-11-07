@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>作品详情</title>
+  <title>作品詳情</title>
   <meta name="description" content="">
   
-  <!-- P3修复：DNS预解析和预连接 -->
+  <!-- P3修復：DNS預解析和預連接 -->
   <link rel="preconnect" href="https://github.com" crossorigin>
   <link rel="dns-prefetch" href="https://github.com">
   
@@ -16,16 +16,16 @@
 </head>
 <body>
   <div class="navbar">
-    <h1><a href="/">📚 我的书架</a></h1>
+    <h1><a href="/">📚 我的書架</a></h1>
     <nav>
       <a href="https://github.com/xingzihai/novel-site" target="_blank" rel="noopener" title="GitHub">GitHub</a>
       <a href="/admin.html">管理</a>
-      <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="切換主題">🌙</button>
     </nav>
   </div>
   <div class="container">
-    <div class="breadcrumb"><a href="/">书架</a><span>›</span><span id="bc-title">加载中...</span></div>
-    <div id="content" class="loading">加载中...</div>
+    <div class="breadcrumb"><a href="/">書架</a><span>›</span><span id="bc-title">載入中...</span></div>
+    <div id="content" class="loading">載入中...</div>
   </div>
   <script>
     const THEMES = ['light','dark','green','sepia','blue'];
@@ -50,12 +50,12 @@
     const bookId = new URLSearchParams(location.search).get('id');
     let allChapters = [];
     if (!bookId || !/^\d+$/.test(bookId)) {
-      document.getElementById('content').innerHTML = '<div class="msg msg-error">无效的书籍ID</div>';
+      document.getElementById('content').innerHTML = '<div class="msg msg-error">無效的書籍ID</div>';
     } else {
       loadBook();
     }
 
-    // 加载站点设置
+    // 載入站點設定
     fetch('/api/settings').then(r => r.json()).then(d => {
       const s = d.settings || {};
       if (s.site_name) document.querySelector('.navbar h1 a').textContent = '📚 ' + s.site_name;
@@ -70,20 +70,20 @@
       const el = document.getElementById('content');
       try {
         const res = await fetch(`/api/books/${bookId}`);
-        if (!res.ok) throw new Error(res.status === 404 ? '书籍不存在' : '加载失败');
+        if (!res.ok) throw new Error(res.status === 404 ? '書籍不存在' : '載入失敗');
         const data = await res.json();
         const b = data.book;
         const chapters = data.chapters || [];
         allChapters = chapters;
 
-        document.title = esc(b.title) + ' - 我的书架';
+        document.title = esc(b.title) + ' - 我的書架';
         document.querySelector('meta[name="description"]').content = b.description || b.title;
         document.getElementById('bc-title').textContent = b.title;
 
         const tagsHtml = (b.tags || []).map(t => `<span class="tag-pill" style="background:${esc(t.color)}22;color:${esc(t.color)}">${esc(t.name)}</span>`).join('');
         const tagsBlock = tagsHtml ? `<div class="book-tags">${tagsHtml}</div>` : '';
 
-        const uploaderHtml = b.uploader ? `<div class="uploader" style="font-size:13px;color:var(--text-light);margin-top:4px">${b.uploader_avatar ? '<img src="'+esc(b.uploader_avatar)+'" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:3px">' : ''}上传：${esc(b.uploader)}</div>` : '';
+        const uploaderHtml = b.uploader ? `<div class="uploader" style="font-size:13px;color:var(--text-light);margin-top:4px">${b.uploader_avatar ? '<img src="'+esc(b.uploader_avatar)+'" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:3px">' : ''}上傳：${esc(b.uploader)}</div>` : '';
 
         let html;
         if (b.cover_key) {
@@ -113,17 +113,17 @@
           `;
         }
         if (chapters.length > 0) {
-          html += `<div class="search-bar" style="margin-top:16px;margin-bottom:0"><input type="text" id="chapter-search" placeholder="搜索章节标题..." autocomplete="off"><button onclick="filterChapters()">搜索</button></div>`;
+          html += `<div class="search-bar" style="margin-top:16px;margin-bottom:0"><input type="text" id="chapter-search" placeholder="搜尋章節標題..." autocomplete="off"><button onclick="filterChapters()">搜尋</button></div>`;
         }
         if (chapters.length === 0) {
-          html += '<div class="empty"><p>暂无章节</p></div>';
+          html += '<div class="empty"><p>暫無章節</p></div>';
         } else {
-          // P2修复：大量章节时分页加载，每页50章
+          // P2修復：大量章節時分頁載入，每頁50章
           const CHAPTERS_PER_PAGE = 50;
           const needsPagination = chapters.length > CHAPTERS_PER_PAGE;
           
           html += '<ul class="chapter-list" id="chapter-list">';
-          // 首次只渲染第一页
+          // 首次只繪製第一頁
           const initialChapters = needsPagination ? chapters.slice(0, CHAPTERS_PER_PAGE) : chapters;
           html += initialChapters.map(c => `
             <li>
@@ -135,23 +135,23 @@
           `).join('');
           html += '</ul>';
           
-          // 分页控制
+          // 分頁控制
           if (needsPagination) {
             const totalPages = Math.ceil(chapters.length / CHAPTERS_PER_PAGE);
             html += `<div class="chapter-pagination" id="chapter-pagination" data-page="1" data-per-page="${CHAPTERS_PER_PAGE}" data-total="${chapters.length}">
-              <button id="ch-prev" disabled>上一页</button>
-              <span class="page-info">第 <span id="ch-current">1</span> / ${totalPages} 页（共 ${chapters.length} 章）</span>
-              <button id="ch-next">下一页</button>
+              <button id="ch-prev" disabled>上一頁</button>
+              <span class="page-info">第 <span id="ch-current">1</span> / ${totalPages} 頁（共 ${chapters.length} 章）</span>
+              <button id="ch-next">下一頁</button>
             </div>`;
           }
           
-          html += `<div style="margin-top:20px;text-align:center"><a href="#" id="export-link" style="font-size:13px;color:var(--text-light);text-decoration:none;border-bottom:1px dashed var(--text-light);padding-bottom:1px">导出全书 TXT</a></div>`;
+          html += `<div style="margin-top:20px;text-align:center"><a href="#" id="export-link" style="font-size:13px;color:var(--text-light);text-decoration:none;border-bottom:1px dashed var(--text-light);padding-bottom:1px">匯出全書 TXT</a></div>`;
         }
 
-        // 书签列表
+        // 書籤列表
         const bookmarks = getBookmarks(bookId);
         if (bookmarks.length > 0) {
-          html += `<div style="margin-top:24px"><h3 style="font-size:16px;margin-bottom:12px;color:var(--text)">🔖 我的书签（${bookmarks.length}）</h3>`;
+          html += `<div style="margin-top:24px"><h3 style="font-size:16px;margin-bottom:12px;color:var(--text)">🔖 我的書籤（${bookmarks.length}）</h3>`;
           html += '<ul class="chapter-list">' + bookmarks.sort((a,b) => b.time - a.time).map(bm => `
             <li>
               <a href="/read.html?id=${bm.chapterId}">
@@ -164,13 +164,13 @@
 
         el.innerHTML = html;
 
-        // 安全绑定导出事件（避免onclick中拼接字符串）
+        // 安全綁定匯出事件（避免onclick中拼接字串）
         const exportLink = document.getElementById('export-link');
         if (exportLink) {
           exportLink.addEventListener('click', (e) => { e.preventDefault(); exportBook(b.id, b.title, b.author); });
         }
         
-        // P2修复：绑定章节分页事件
+        // P2修復：綁定章節分頁事件
         bindChapterPagination();
       } catch (e) {
         el.innerHTML = `<div class="msg msg-error">${esc(e.message)}</div>`;
@@ -193,10 +193,10 @@
     function formatTimeAgo(ts) {
       const diff = Date.now() - ts;
       const min = Math.floor(diff / 60000);
-      if (min < 1) return '刚刚';
-      if (min < 60) return min + '分钟前';
+      if (min < 1) return '剛剛';
+      if (min < 60) return min + '分鐘前';
       const hr = Math.floor(min / 60);
-      if (hr < 24) return hr + '小时前';
+      if (hr < 24) return hr + '小時前';
       return Math.floor(hr / 24) + '天前';
     }
 
@@ -208,7 +208,7 @@
       if (!listEl) return;
       const filtered = q ? allChapters.filter(c => c.title.toLowerCase().includes(q)) : allChapters;
       if (filtered.length === 0) {
-        listEl.innerHTML = '<li style="padding:16px;text-align:center;color:var(--text-light)">没有匹配的章节</li>';
+        listEl.innerHTML = '<li style="padding:16px;text-align:center;color:var(--text-light)">沒有匹配的章節</li>';
       } else {
         listEl.innerHTML = filtered.map(c => `
           <li><a href="/read.html?id=${c.id}">
@@ -223,7 +223,7 @@
       const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
       return text.replace(re, '<mark>$1</mark>');
     }
-    // 绑定搜索事件（DOM加载后立即执行，避免竞态条件）
+    // 綁定搜尋事件（DOM載入後立即執行，避免競態條件）
     function bindSearchEvents() {
       const searchInput = document.getElementById('chapter-search');
       if (searchInput) {
@@ -231,14 +231,14 @@
         searchInput.addEventListener('input', (e) => { if (!e.target.value.trim()) filterChapters(); });
       }
     }
-    // 如果DOM已加载完成，立即绑定；否则等待DOMContentLoaded
+    // 如果DOM已載入完成，立即綁定；否則等待DOMContentLoaded
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', bindSearchEvents);
     } else {
       bindSearchEvents();
     }
 
-    // P2修复：章节分页控制
+    // P2修復：章節分頁控制
     function bindChapterPagination() {
       const pagination = document.getElementById('chapter-pagination');
       if (!pagination) return;
@@ -290,7 +290,7 @@
         </a></li>
       `).join('');
       
-      // 滚动到章节列表顶部
+      // 滾動到章節列表頂部
       listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -299,19 +299,19 @@
         const res = await fetch(`/api/books/${bookId}`);
         const data = await res.json();
         const chapters = data.chapters || [];
-        if (chapters.length === 0) return alert('没有章节可导出');
+        if (chapters.length === 0) return alert('沒有章節可匯出');
         
-        // 使用流式处理避免大文件内存溢出
-        const CHUNK_SIZE = 100; // 每次处理的章节数
+        // 使用流式處理避免大文件記憶體溢位
+        const CHUNK_SIZE = 100; // 每次處理的章節數
         const sep = '\n\n' + '='.repeat(40) + '\n\n';
         const header = `《${title}》\n${author ? '作者：'+author+'\n' : ''}\n`;
         const BOM = '\uFEFF';
         
-        // 创建可写流
+        // 建立可寫流
         const chunks = [BOM + header];
         let processedCount = 0;
         
-        // 分块处理章节，避免一次性加载所有内容到内存
+        // 分塊處理章節，避免一次性載入所有內容到記憶體
         for (let i = 0; i < chapters.length; i += CHUNK_SIZE) {
           const batch = chapters.slice(i, i + CHUNK_SIZE);
           const batchPromises = batch.map(async (ch) => {
@@ -321,18 +321,18 @@
           });
           const batchResults = await Promise.all(batchPromises);
           
-          // 添加分隔符
+          // 新增分隔符號
           if (processedCount > 0) {
             chunks.push(sep);
           }
           chunks.push(...batchResults);
           processedCount += batchResults.length;
           
-          // 让出主线程，保持UI响应
+          // 讓出主執行緒，保持UI響應
           await new Promise(resolve => setTimeout(resolve, 0));
         }
         
-        // 使用 Blob 构造函数的分块模式，减少内存峰值
+        // 使用 Blob 建構子的分塊模式，減少記憶體峰值
         const blob = new Blob(chunks, {type:'text/plain;charset=utf-8'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -340,7 +340,7 @@
         a.download = (title + (author ? '_'+author : '') + '.txt').replace(/[<>:"/\\|?*]/g,'_');
         a.click();
         URL.revokeObjectURL(url);
-      } catch (e) { alert('导出失败：'+e.message); }
+      } catch (e) { alert('匯出失敗：'+e.message); }
     }
   </script>
 </body>

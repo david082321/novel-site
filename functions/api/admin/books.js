@@ -1,4 +1,4 @@
-// POST /api/admin/books — 创建新书籍
+// POST /api/admin/books — 建立新書籍
 import { checkAdmin, parseJsonBody, requireMinRole } from '../_utils.js';
 
 export async function onRequestPost(context) {
@@ -11,12 +11,12 @@ export async function onRequestPost(context) {
     return Response.json({ error: msg }, { status });
   }
 
-  // demo 用户配额：最多 10 本书
+  // demo 用戶配額：最多 10 本書
   if (!requireMinRole(auth, 'admin')) {
     const { count } = await env.DB.prepare(
       'SELECT COUNT(*) as count FROM books WHERE created_by = ?'
     ).bind(auth.userId).first();
-    if (count >= 10) return Response.json({ error: '演示账号最多创建 10 本书' }, { status: 403 });
+    if (count >= 10) return Response.json({ error: '示範帳號最多建立 10 本書' }, { status: 403 });
   }
 
   const body = await parseJsonBody(request);
@@ -40,14 +40,14 @@ export async function onRequestPost(context) {
     auth.userId
   ).run();
 
-  // demo配额二次检查（防TOCTOU竞态绕过）
+  // demo配額二次檢查（防TOCTOU競態繞過）
   if (!requireMinRole(auth, 'admin')) {
     const { count } = await env.DB.prepare(
       'SELECT COUNT(*) as count FROM books WHERE created_by = ?'
     ).bind(auth.userId).first();
     if (count > 10) {
       await env.DB.prepare('DELETE FROM books WHERE id = ?').bind(result.meta.last_row_id).run().catch(() => {});
-      return Response.json({ error: '演示账号最多创建 10 本书' }, { status: 403 });
+      return Response.json({ error: '示範帳號最多建立 10 本書' }, { status: 403 });
     }
   }
 

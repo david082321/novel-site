@@ -25,7 +25,7 @@ export async function onRequestPut(context) {
 
   // demo只能编辑自己书的章节
   if (!await checkBookOwnership(auth, env, chapter.book_id)) {
-    return Response.json({ error: '只能编辑自己书籍的章节' }, { status: 403 });
+    return Response.json({ error: '只能編輯自己書籍的章節' }, { status: 403 });
   }
 
   const body = await parseJsonBody(request);
@@ -33,13 +33,13 @@ export async function onRequestPut(context) {
 
   const { title, content, version } = body;
 
-  // 乐观锁：编辑内容时必须携带version字段
+  // 樂觀鎖：編輯內容時必須攜帶version欄位
   const currentVersion = chapter.version || 0;
   if (content && version === undefined) {
-    return Response.json({ error: '请提供 version 字段以防止并发冲突' }, { status: 400 });
+    return Response.json({ error: '請提供 version 欄位以防止並發衝突' }, { status: 400 });
   }
   if (version !== undefined && Number(version) !== currentVersion) {
-    return Response.json({ error: '内容已被其他人修改，请刷新后重试' }, { status: 409 });
+    return Response.json({ error: '內容已被其他人修改，請重新整理後重試' }, { status: 409 });
   }
 
   if (title && typeof title === 'string' && title.trim().length > 0) {
@@ -53,7 +53,7 @@ export async function onRequestPut(context) {
       return Response.json({ error: `Content too long (max ${MAX_CONTENT_LENGTH} chars)` }, { status: 400 });
     }
     const wordCount = content.trim().length;
-    // 先写R2 → 成功后更新D1 version
+    // 先寫R2 → 成功後更新D1 version
     const newVersion = (chapter.version || 0) + 1;
     try {
       await env.R2.put(chapter.content_key, content.trim());
@@ -65,7 +65,7 @@ export async function onRequestPut(context) {
         "UPDATE chapters SET word_count = ?, version = ?, updated_at = datetime('now') WHERE id = ?"
       ).bind(wordCount, newVersion, params.id).run();
     } catch (err) {
-      // DB失败，R2已写入新内容但version未更新，下次编辑会覆盖，无需回滚R2
+      // DB失敗，R2已寫入新內容但version未更新，下次編輯會覆蓋，無需回滾R2
       return Response.json({ error: 'Failed to update metadata' }, { status: 500 });
     }
   }
@@ -73,18 +73,18 @@ export async function onRequestPut(context) {
   await env.DB.prepare("UPDATE books SET updated_at = datetime('now') WHERE id = ?")
     .bind(chapter.book_id).run();
 
-  // 检查是否有批注可能失效
+  // 檢查是否有批註可能失效
   let warning = null;
   if (content) {
     const annoCount = await env.DB.prepare(
       "SELECT COUNT(*) as cnt FROM annotations WHERE chapter_id = ? AND status != 'removed'"
     ).bind(params.id).first();
     if (annoCount && annoCount.cnt > 0) {
-      warning = `该章节有 ${annoCount.cnt} 条批注，修改内容可能导致批注定位失效`;
+      warning = `該章節有 ${annoCount.cnt} 條批註，修改內容可能導致批註定位失效`;
     }
   }
 
-  // 返回新version供前端下次编辑使用
+  // 返回新version供前端下次編輯使用
   const newChapter = await env.DB.prepare('SELECT version FROM chapters WHERE id = ?').bind(params.id).first();
   return Response.json({ success: true, version: newChapter?.version || 0, ...(warning ? { warning } : {}) });
 }
@@ -98,16 +98,16 @@ export async function onRequestDelete(context) {
   const chapter = await env.DB.prepare('SELECT * FROM chapters WHERE id = ?').bind(params.id).first();
   if (!chapter) return Response.json({ error: 'Chapter not found' }, { status: 404 });
 
-  // demo只能删除自己书的章节
+  // demo只能刪除自己書的章節
   if (!await checkBookOwnership(auth, env, chapter.book_id)) {
-    return Response.json({ error: '只能删除自己书籍的章节' }, { status: 403 });
+    return Response.json({ error: '只能刪除自己書籍的章節' }, { status: 403 });
   }
 
-  // 使用批量操作确保数据一致性
-  // 注意：D1不支持传统事务，但支持batch操作
+  // 使用批次操作確保資料一致性
+  // 注意：D1不支援傳統事務，但支援batch操作
   try {
-    // 先删除关联数据，再删除章节本身
-    // 使用batch确保原子性
+    // 先刪除關聯資料，再刪除章節本身
+    // 使用batch確保原子性
     const deleteStatements = [
       env.DB.prepare('DELETE FROM chapter_stats WHERE chapter_id = ?').bind(params.id),
       env.DB.prepare('DELETE FROM annotation_likes WHERE annotation_id IN (SELECT id FROM annotations WHERE chapter_id = ?)').bind(params.id),
@@ -118,25 +118,25 @@ export async function onRequestDelete(context) {
       env.DB.prepare("UPDATE books SET updated_at = datetime('now') WHERE id = ?").bind(chapter.book_id)
     ];
     
-    // 执行批量操作
+    // 執行批次操作
     const batchResult = await env.DB.batch(deleteStatements);
     
-    // 检查章节是否成功删除
+    // 檢查章節是否成功刪除
     const chapterDeleteResult = batchResult[5];
     if (chapterDeleteResult.meta.changes === 0) {
       console.error('Chapter deletion failed: no rows affected');
-      return Response.json({ error: '删除章节失败' }, { status: 500 });
+      return Response.json({ error: '刪除章節失敗' }, { status: 500 });
     }
     
-    // 删除R2中的内容（在数据库操作成功后执行）
+    // 刪除R2中的內容（在資料庫操作成功後執行）
     await env.R2.delete(chapter.content_key).catch((e) => {
       console.error('Failed to delete R2 content:', e);
-      // R2删除失败不影响整体操作，但记录日志
+      // R2刪除失敗不影響整體操作，但記錄日誌
     });
     
     return Response.json({ success: true });
   } catch (e) {
     console.error('Chapter deletion error:', e);
-    return Response.json({ error: '删除章节失败: ' + e.message }, { status: 500 });
+    return Response.json({ error: '刪除章節失敗: ' + e.message }, { status: 500 });
   }
 }

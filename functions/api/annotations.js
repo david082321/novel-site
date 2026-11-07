@@ -6,7 +6,7 @@ export async function onRequestPost(context) {
   
   const auth = await checkAdmin(request, env);
   if (!auth.ok) {
-    return Response.json({ error: '请先登录' }, { status: 401 });
+    return Response.json({ error: '請先登入' }, { status: 401 });
   }
 
   await ensureAnnotationSchema(env);
@@ -14,7 +14,7 @@ export async function onRequestPost(context) {
   // 检查禁言/封禁状态
   const userStatus = await env.DB.prepare('SELECT muted_until, banned_at FROM admin_users WHERE id = ?').bind(auth.userId).first();
   if (userStatus?.banned_at) {
-    return Response.json({ error: '账号已被封禁' }, { status: 403 });
+    return Response.json({ error: '帳號已被封禁' }, { status: 403 });
   }
 
   let body;
@@ -28,46 +28,46 @@ export async function onRequestPost(context) {
 
   // 禁言期间不可发布公开批注
   if (visibility === 'public' && userStatus?.muted_until && new Date(userStatus.muted_until) > new Date()) {
-    return Response.json({ error: '禁言期间不可发布公开批注' }, { status: 403 });
+    return Response.json({ error: '禁言期間不可發布公開批註' }, { status: 403 });
   }
 
   // 参数校验
   if (!chapterId || !bookId || paraIdx == null || sentIdx == null || !sentHash || !sentText || !content) {
-    return Response.json({ error: '缺少必要参数' }, { status: 400 });
+    return Response.json({ error: '缺少必要參數' }, { status: 400 });
   }
   // 类型和范围校验
   if (!/^\d{1,18}$/.test(String(chapterId)) || !/^\d{1,18}$/.test(String(bookId))) {
-    return Response.json({ error: '无效的ID' }, { status: 400 });
+    return Response.json({ error: '無效的ID' }, { status: 400 });
   }
   if (!Number.isInteger(paraIdx) || paraIdx < 0 || !Number.isInteger(sentIdx) || sentIdx < 0) {
-    return Response.json({ error: '无效的索引' }, { status: 400 });
+    return Response.json({ error: '無效的索引' }, { status: 400 });
   }
   if (typeof sentHash !== 'string' || sentHash.length > 128) {
-    return Response.json({ error: '无效的哈希' }, { status: 400 });
+    return Response.json({ error: '無效的雜湊' }, { status: 400 });
   }
   if (typeof sentText !== 'string' || sentText.length > 1000) {
-    return Response.json({ error: '原文过长' }, { status: 400 });
+    return Response.json({ error: '原文過長' }, { status: 400 });
   }
   if (content.length > 500) {
-    return Response.json({ error: '批注内容不能超过500字' }, { status: 400 });
+    return Response.json({ error: '批註內容不能超過500字' }, { status: 400 });
   }
   if (!['public', 'private'].includes(visibility)) {
-    return Response.json({ error: '无效的可见性设置' }, { status: 400 });
+    return Response.json({ error: '無效的可見性設定' }, { status: 400 });
   }
 
   // 检查书籍是否允许批注 + 是否锁定
   const book = await env.DB.prepare('SELECT annotation_enabled, annotation_locked FROM books WHERE id = ?').bind(bookId).first();
   if (!book || !book.annotation_enabled) {
-    return Response.json({ error: '该书籍未开启批注功能' }, { status: 403 });
+    return Response.json({ error: '該書籍未開啟批註功能' }, { status: 403 });
   }
   if (book.annotation_locked) {
-    return Response.json({ error: '该书籍批注已锁定' }, { status: 403 });
+    return Response.json({ error: '該書籍批註已鎖定' }, { status: 403 });
   }
 
   // 校验 chapterId 属于 bookId
   const chapter = await env.DB.prepare('SELECT book_id FROM chapters WHERE id = ?').bind(chapterId).first();
   if (!chapter || chapter.book_id !== Number(bookId)) {
-    return Response.json({ error: '章节不属于该书籍' }, { status: 400 });
+    return Response.json({ error: '章節不屬於該書籍' }, { status: 400 });
   }
 
   // 速率限制：每用户每分钟最多10条
@@ -76,7 +76,7 @@ export async function onRequestPost(context) {
     'SELECT COUNT(*) as cnt FROM annotations WHERE user_id = ? AND created_at > ?'
   ).bind(auth.userId, oneMinAgo).first();
   if (recentCount && recentCount.cnt >= 10) {
-    return Response.json({ error: '操作过于频繁，请稍后再试' }, { status: 429 });
+    return Response.json({ error: '操作過於頻繁，請稍後再試' }, { status: 429 });
   }
 
   // 同一用户对同一句子最多3条批注
@@ -84,7 +84,7 @@ export async function onRequestPost(context) {
     'SELECT COUNT(*) as cnt FROM annotations WHERE user_id = ? AND chapter_id = ? AND para_idx = ? AND sent_idx = ?'
   ).bind(auth.userId, chapterId, paraIdx, sentIdx).first();
   if (dupCount && dupCount.cnt >= 3) {
-    return Response.json({ error: '同一句子最多添加3条批注' }, { status: 400 });
+    return Response.json({ error: '同一句子最多新增3條批註' }, { status: 400 });
   }
 
   try {
@@ -98,8 +98,8 @@ export async function onRequestPost(context) {
       id: result.meta.last_row_id 
     });
   } catch (e) {
-    console.error('创建批注失败:', e);
-    return Response.json({ error: '创建失败' }, { status: 500 });
+    console.error('建立批註失敗:', e);
+    return Response.json({ error: '建立失敗' }, { status: 500 });
   }
 }
 
@@ -120,11 +120,11 @@ export async function onRequestGet(context) {
   const sort = url.searchParams.get('sort') || 'latest';
 
   if (!chapterId || paraIdx == null || sentIdx == null) {
-    return Response.json({ error: '缺少参数' }, { status: 400 });
+    return Response.json({ error: '缺少參數' }, { status: 400 });
   }
   // 参数格式校验
   if (!/^\d{1,18}$/.test(chapterId) || !/^\d{1,10}$/.test(paraIdx) || !/^\d{1,10}$/.test(sentIdx)) {
-    return Response.json({ error: '参数格式错误' }, { status: 400 });
+    return Response.json({ error: '參數格式錯誤' }, { status: 400 });
   }
 
   await ensureAnnotationSchema(env);

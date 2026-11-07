@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>我的书架</title>
-  <meta name="description" content="我的私人小说站，零成本搭建在 Cloudflare 上">
-  <meta property="og:title" content="我的书架">
-  <meta property="og:description" content="私人小说站，零成本搭建在 Cloudflare 上">
+  <title>我的書架</title>
+  <meta name="description" content="我的私人小說站，零成本搭建在 Cloudflare 上">
+  <meta property="og:title" content="我的書架">
+  <meta property="og:description" content="私人小說站，零成本搭建在 Cloudflare 上">
   
-  <!-- P3修复：DNS预解析和预连接 - 优化资源加载性能 -->
+  <!-- P3修復：DNS預解析和預連接 - 最佳化資源載入性能 -->
   <link rel="preconnect" href="https://github.com" crossorigin>
   <link rel="dns-prefetch" href="https://github.com">
   
@@ -18,11 +18,11 @@
 </head>
 <body>
   <div class="navbar">
-    <h1><a href="/">📚 我的书架</a></h1>
+    <h1><a href="/">📚 我的書架</a></h1>
     <nav>
       <a href="https://github.com/xingzihai/novel-site" target="_blank" rel="noopener" title="GitHub">GitHub</a>
       <a href="/admin.html" id="nav-admin">管理</a>
-      <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="切換主題">🌙</button>
     </nav>
   </div>
   <div class="container">
@@ -30,14 +30,14 @@
     <div id="reading-stats"></div>
     <div id="tag-filter"></div>
     <div class="search-bar">
-      <input type="text" id="search-input" placeholder="搜索书名或作者..." autocomplete="off">
-      <button onclick="doSearch()">搜索</button>
+      <input type="text" id="search-input" placeholder="搜尋書名或作者..." autocomplete="off">
+      <button onclick="doSearch()">搜尋</button>
     </div>
     <div id="search-results" class="search-results" style="display:none"></div>
-    <div id="content" class="loading">加载中...</div>
+    <div id="content" class="loading">載入中...</div>
   </div>
   <script>
-    // 主题
+    // 主題
     const THEMES = ['light','dark','green','sepia','blue'];
     const THEME_ICONS = {'light':'🌙','dark':'☀️','green':'🍃','sepia':'📜','blue':'💧'};
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -57,7 +57,7 @@
       btn.textContent = THEME_ICONS[t] || '🌙';
     }
 
-    // 用户状态：登录后替换"管理"为角色+用户名
+    // 用戶狀態：登入後取代"管理"為角色+用戶名
     (async function renderUserStatus() {
       const adminLink = document.getElementById('nav-admin');
       try {
@@ -67,10 +67,10 @@
           const roleMap = {
             'super_admin': { label: '超管', cls: 'super' },
             'admin': { label: '管理', cls: 'admin' },
-            'demo': { label: '用户', cls: 'demo' }
+            'demo': { label: '用戶', cls: 'demo' }
           };
-          const r = roleMap[user.role] || { label: '用户', cls: 'demo' };
-          // 使用 textContent 安全地设置用户名，防止 XSS
+          const r = roleMap[user.role] || { label: '用戶', cls: 'demo' };
+          // 使用 textContent 安全地設定用戶名，防止 XSS
           const badge = document.createElement('span');
           badge.className = 'role-badge ' + r.cls;
           badge.textContent = r.label;
@@ -92,7 +92,7 @@
       location.reload();
     }
 
-    // 继续阅读
+    // 繼續閱讀
     function renderContinueReading() {
       const container = document.getElementById('continue-reading');
       const entries = [];
@@ -111,8 +111,8 @@
       container.innerHTML = `
         <a class="continue-reading" href="/read.html?id=${latest.chapterId}">
           <div class="continue-info">
-            <div class="continue-label">继续阅读</div>
-            <div class="continue-title">${esc(latest.bookTitle || '未知书籍')}</div>
+            <div class="continue-label">繼續閱讀</div>
+            <div class="continue-title">${esc(latest.bookTitle || '未知書籍')}</div>
             <div class="continue-chapter">${esc(latest.chapterTitle || '')} · ${timeAgo}</div>
           </div>
           <div class="continue-arrow">→</div>
@@ -130,7 +130,7 @@
         const hours = (stats.totalSeconds / 3600).toFixed(1);
         const wanChars = (stats.totalChars / 10000).toFixed(1);
         const days = (stats.days || []).length;
-        container.innerHTML = `<div style="text-align:center;padding:8px 0;font-size:13px;color:var(--text-light)">已读 ${hours} 小时 · ${wanChars} 万字 · 累计 ${days} 天</div>`;
+        container.innerHTML = `<div style="text-align:center;padding:8px 0;font-size:13px;color:var(--text-light)">已讀 ${hours} 小時 · ${wanChars} 萬字 · 累計 ${days} 天</div>`;
       } catch {
         container.innerHTML = '';
       }
@@ -138,15 +138,15 @@
     function formatTimeAgo(ts) {
       const diff = Date.now() - ts;
       const min = Math.floor(diff / 60000);
-      if (min < 1) return '刚刚';
-      if (min < 60) return min + '分钟前';
+      if (min < 1) return '剛剛';
+      if (min < 60) return min + '分鐘前';
       const hr = Math.floor(min / 60);
-      if (hr < 24) return hr + '小时前';
+      if (hr < 24) return hr + '小時前';
       const day = Math.floor(hr / 24);
       return day + '天前';
     }
 
-    // 搜索
+    // 搜尋
     let allBooks = [];
     let allTags = [];
     let activeTagId = null;
@@ -165,7 +165,7 @@
         (b.author || '').toLowerCase().includes(q)
       );
       if (matched.length === 0) {
-        resultsEl.innerHTML = '<div style="padding:16px;color:var(--text-light);text-align:center">没有找到匹配的书籍</div>';
+        resultsEl.innerHTML = '<div style="padding:16px;color:var(--text-light);text-align:center">沒有找到匹配的書籍</div>';
       } else {
         resultsEl.innerHTML = matched.map(b => `
           <a class="result-item" href="/book.html?id=${b.id}">
@@ -182,13 +182,13 @@
       const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
       return text.replace(re, '<mark>$1</mark>');
     }
-    // 搜索防抖定时器
+    // 搜尋防抖定時器
     let searchDebounceTimer = null;
-    const SEARCH_DEBOUNCE_MS = 300; // 防抖时间300ms，平衡响应速度和性能
+    const SEARCH_DEBOUNCE_MS = 300; // 防抖時間300ms，平衡響應速度和性能
 
     document.getElementById('search-input').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        // 回车键立即搜索，清除防抖
+        // Enter 鍵立即搜尋，清除防抖
         if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
         doSearch();
       }
@@ -196,13 +196,13 @@
     document.getElementById('search-input').addEventListener('input', (e) => {
       const query = e.target.value.trim();
       if (!query) {
-        // 清空时立即隐藏结果
+        // 清空時立即隱藏結果
         if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
         document.getElementById('search-results').style.display = 'none';
         document.getElementById('content').style.display = '';
         return;
       }
-      // 防抖搜索：300ms后自动执行
+      // 防抖搜尋：300ms後自動執行
       if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
       searchDebounceTimer = setTimeout(doSearch, SEARCH_DEBOUNCE_MS);
     });
@@ -215,7 +215,7 @@
           fetch('/api/tags').catch(() => ({ json: () => ({ tags: [] }) }))
         ]);
         const booksData = await booksRes.json();
-        if (!booksRes.ok) throw new Error('加载失败');
+        if (!booksRes.ok) throw new Error('載入失敗');
         allBooks = booksData.books || [];
 
         try { allTags = (await tagsRes.json()).tags || []; } catch { allTags = []; }
@@ -225,7 +225,7 @@
         renderReadingStats();
         renderBooks(allBooks);
       } catch (e) {
-        el.innerHTML = `<div class="msg msg-error">加载失败：${esc(e.message)}</div>`;
+        el.innerHTML = `<div class="msg msg-error">載入失敗：${esc(e.message)}</div>`;
       }
     }
 
@@ -266,7 +266,7 @@
       renderBooks(filtered);
     }
 
-    // 封面颜色生成
+    // 封面顏色生成
     const COVER_COLORS = ['#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c','#3498db','#9b59b6','#e91e63','#00bcd4','#ff5722'];
     function coverColor(title) { let h = 0; for (let i = 0; i < (title||'').length; i++) h = ((h << 5) - h + title.charCodeAt(i)) | 0; return COVER_COLORS[Math.abs(h) % COVER_COLORS.length]; }
 
@@ -275,10 +275,10 @@
       if (books.length === 0) {
         if (allBooks.length === 0) {
           el.className = '';
-          el.innerHTML = '<div class="empty"><p>📖 书架空空如也</p><p>去<a href="/admin.html">管理后台</a>添加第一本书吧</p></div>';
+          el.innerHTML = '<div class="empty"><p>📖 書架空空如也</p><p>去<a href="/admin.html">管理後台</a>新增第一本書吧</p></div>';
         } else {
           el.className = '';
-          el.innerHTML = '<div class="empty"><p>没有匹配的书籍</p></div>';
+          el.innerHTML = '<div class="empty"><p>沒有匹配的書籍</p></div>';
         }
         return;
       }
@@ -310,7 +310,7 @@
     }
     function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
     function formatWords(n) {
-      if (n >= 10000) return (n / 10000).toFixed(1) + ' 万字';
+      if (n >= 10000) return (n / 10000).toFixed(1) + ' 萬字';
       return n + ' 字';
     }
     loadBooks();
@@ -320,7 +320,7 @@
       navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
 
-    // 加载站点设置
+    // 載入站點設定
     fetch('/api/settings').then(r => r.json()).then(d => {
       const s = d.settings || {};
       if (s.site_name) {

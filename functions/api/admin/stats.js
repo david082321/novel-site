@@ -54,6 +54,6 @@ export async function onRequestGet(context) {
     });
   } catch (e) {
     console.error('Stats error:', e);
-    return Response.json({ error: '获取统计失败' }, { status: 500 });
+    return Response.json({ error: '取得統計失敗' }, { status: 500 });
   }
 }

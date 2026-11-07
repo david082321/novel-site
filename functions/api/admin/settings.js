@@ -15,7 +15,7 @@ export async function onRequestPut(context) {
     const msg = auth.reason === 'locked' ? 'Too many failed attempts, try again later' : 'Unauthorized';
     return Response.json({ error: msg }, { status });
   }
-  if (!requireSuperAdmin(auth)) return Response.json({ error: '仅超级管理员可修改设置' }, { status: 403 });
+  if (!requireSuperAdmin(auth)) return Response.json({ error: '僅超級管理員可修改設定' }, { status: 403 });
 
   const body = await parseJsonBody(request);
   if (!body || typeof body.settings !== 'object') {
@@ -44,7 +44,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireSuperAdmin(auth)) return Response.json({ error: '仅超级管理员可查看' }, { status: 403 });
+  if (!requireSuperAdmin(auth)) return Response.json({ error: '僅超級管理員可查看' }, { status: 403 });
 
   const url = new URL(request.url);
   // GET /api/admin/settings?section=github
@@ -68,7 +68,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const auth = await checkAdmin(request, env);
   if (!auth.ok) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  if (!requireSuperAdmin(auth)) return Response.json({ error: '仅超级管理员可修改' }, { status: 403 });
+  if (!requireSuperAdmin(auth)) return Response.json({ error: '僅超級管理員可修改' }, { status: 403 });
 
   const body = await parseJsonBody(request);
   if (!body) return Response.json({ error: 'Invalid JSON' }, { status: 400 });
